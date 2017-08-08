@@ -2,6 +2,7 @@
 
 import cv2
 import copy as cp
+import numpy as np
 
 input = cv2.imread('../input/p0-1-0.jpg')
 
@@ -52,6 +53,17 @@ def replaceChannelGreen(imgC, input):
     cv2.imwrite('../output/p0-3-1.png', input)
     return input
 
+def maxMinMean(img):
+    print("Min: {0} Max: {1} Mean: {2} Standard Deviation: {3}".format(np.min(img), np.max(img), np.mean(img), np.std(img)))
+
+def normalize(img):
+    mean = np.mean(img)
+    deviation = np.std(img)
+
+    img = (((img - mean)/deviation) * 10) + mean
+
+    cv2.imwrite('../output/p0-4-b-0.png', input)
+
 swapRedBlue(cp.copy(input))
 
 imgA = monochromeGreen(cp.copy(input))
@@ -62,4 +74,6 @@ imgC = insertImage(imgA, cp.copy(imgB))
 
 replaceChannelGreen(imgC, cp.copy(input))
 
+maxMinMean(imgA)
 
+normalize(cp.copy(imgA))
