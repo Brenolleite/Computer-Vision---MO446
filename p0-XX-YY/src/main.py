@@ -12,16 +12,19 @@ def swapRedBlue(img):
     aux = img[:,:,0]
     img[:,:,0] = img[:,:,2]
     img[:,:,2] = aux
+
     cv2.imwrite('../output/p0-2-a-0.png', img)
     return img
 
 def monochromeGreen(img):
     img = img[:,:,1]
+
     cv2.imwrite('../output/p0-2-b-0.png', img)
     return img
 
 def monochromeRed(img):
     img = img[:,:,0]
+
     cv2.imwrite('../output/p0-2-c-0.png', img)
     return img
 
@@ -39,12 +42,8 @@ def insertImage(imgA, imgB):
     xfB = int(widthB/2) + 50
 
     imgB[yiB:yfB, xiB:xfB] = imgA[yiA:yfA, xiA:xfA]
-    #imgB[yiB:yfB, xiB:xfB, 0] = imgA[yiA:yfA, xiA:xfA]
-    #imgB[yiB:yfB, xiB:xfB, 1] = imgA[yiA:yfA, xiA:xfA]
-    #imgB[yiB:yfB, xiB:xfB, 2] = imgA[yiA:yfA, xiA:xfA]
 
     cv2.imwrite('../output/p0-3-0.png', imgB)
-
     return imgB
 
 def replaceChannelGreen(imgC, imgD):
@@ -63,19 +62,26 @@ def normalize(img):
 
     cv2.imwrite('../output/p0-4-b-0.png', img)
 
-def shiftLeft(img):
-    shift = 2
+def shiftLeft(img, shift):
     img = np.roll(img, (-1 * shift))
     height, width = img.shape
-
     img[:,width-shift:] = 0
-    cv2.imwrite('../output/p0-4-c-0.png', img)
 
+    cv2.imwrite('../output/p0-4-c-0.png', img)
     return img
 
 def subtractImages(img, imgSub):
     img[:,:] = img[:,:] - imgSub
+
     cv2.imwrite('../output/p0-4-c-1.png', img)
+
+def addNoise(img, channel, sigma, index):
+    height, width, depth = img.shape
+
+    noise = np.random.normal(0, sigma, (height,width))
+    img[:,:,channel] = img[:,:,channel] + noise
+
+    cv2.imwrite('../output/p0-5-{0}-0.png'.format(index), img)
 
 swapRedBlue(cp.copy(input))
 
@@ -91,6 +97,12 @@ maxMinMean(imgA)
 
 normalize(cp.copy(imgA))
 
-imgShifted = shiftLeft(cp.copy(imgA))
+imgShifted = shiftLeft(cp.copy(imgA), 2)
 
 subtractImages(cp.copy(imgA), imgShifted)
+
+sigma = 50
+
+addNoise(cp.copy(input), 1, sigma, 'a')
+
+addNoise(cp.copy(input), 2, sigma, 'b')
