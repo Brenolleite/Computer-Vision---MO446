@@ -47,10 +47,10 @@ def insertImage(imgA, imgB):
 
     return imgB
 
-def replaceChannelGreen(imgC, input):
-    input[:,:,1] = imgC[:,:]
+def replaceChannelGreen(imgC, imgD):
+    imgD[:,:,1] = imgC[:,:]
 
-    cv2.imwrite('../output/p0-3-1.png', input)
+    cv2.imwrite('../output/p0-3-1.png', imgD)
     return input
 
 def maxMinMean(img):
@@ -59,10 +59,23 @@ def maxMinMean(img):
 def normalize(img):
     mean = np.mean(img)
     deviation = np.std(img)
-
     img = (((img - mean)/deviation) * 10) + mean
 
-    cv2.imwrite('../output/p0-4-b-0.png', input)
+    cv2.imwrite('../output/p0-4-b-0.png', img)
+
+def shiftLeft(img):
+    shift = 2
+    img = np.roll(img, (-1 * shift))
+    height, width = img.shape
+
+    img[:,width-shift:] = 0
+    cv2.imwrite('../output/p0-4-c-0.png', img)
+
+    return img
+
+def subtractImages(img, imgSub):
+    img[:,:] = img[:,:] - imgSub
+    cv2.imwrite('../output/p0-4-c-1.png', img)
 
 swapRedBlue(cp.copy(input))
 
@@ -77,3 +90,7 @@ replaceChannelGreen(imgC, cp.copy(input))
 maxMinMean(imgA)
 
 normalize(cp.copy(imgA))
+
+imgShifted = shiftLeft(cp.copy(imgA))
+
+subtractImages(cp.copy(imgA), imgShifted)
