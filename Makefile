@@ -1,11 +1,10 @@
 DOCKER_IMAGE = adnrv/opencv
 
-SOURCE_DIR = ~/Dropbox/UNICAMP/Computer\ Vision/p0-XX-YY
+SOURCE_DIR = /home/breno/git/Computer_Vision-MO446/p0-XX-YY/
 DOCKER_DIR = /builds
 
 DOCKER_DISPLAY_ARGS = --env="DISPLAY" --net=host --env="QT_X11_NO_MITSHM=1" \
                       --volume="${HOME}/.Xauthority:/root/.Xauthority:rw" \
-                      --device="/dev/video0:/dev/video0"
 
 DOCKER_VOLUMES = --volume=$(SOURCE_DIR):$(DOCKER_DIR) --workdir=$(DOCKER_DIR)
 
