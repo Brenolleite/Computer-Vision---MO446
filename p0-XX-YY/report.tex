@@ -1,4 +1,5 @@
-\documentclass[12pt,a4paper]{article}
+
+cumentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc} % sempre salve seus arquivos como UTF8
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
@@ -36,44 +37,118 @@
 \maketitle
 
 \begin{enumerate}
-\item
+\item The following image (Figura \ref{fig:p0-1-0}) was used to perform all the exercises, as specified it is colored, rectangular and its type is .PNG.\\
+
+\begin{figure}[ht]
+\centering
+\includegraphics{input/p0-1-0}
+\caption{p0-1-0}
+\label{fig:p0-1-0}
+\end{figure}
+
 \item
 \begin{enumerate}
-\item The operation was made by switching the two components (Red and Blue) of the image, since the colored image has three components (Red, Green and Blue) the Green one was left untouched and the two remaining were switched between themselves, resulting in image \ref{p0-2-a-0}.
+\item PNG colored pictures has three channels of color, the Red, Green and Blue, the image (Figura \ref{fig:p0-2-a-0}) was obtained by swapping the values of the red channel with the blue channel, the green channel was left untouched.
 
-\includegraphics[]{p0-2-a-0}
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-2-a-0}
+\caption{p0-2-a-0}
+\label{fig:p0-2-a-0}
+\end{figure}
 
-\item Monochrome images are composed only with shades of gray, represented in a discrete matrix of values between 0 to 255, in the other hand colored images are represents by three components which also range from 0 to 255 each. It was possible to create a monochrome image by using the value of the green channel alone and ignoring the other two, resulting in image IMAGE\_NUMBER.
+\item Monochrome or grayscale images are composed by one single channel which ranges from 0 to 255, thus all it takes to create a monochrome image from the green channel is to copy the green channel values, the result can be seen in Figura \ref{fig:img-green}
 
-\item The same as above was done here, now using only the red value of the image, resulting in image IMAGE\_NUMBER.
+\begin{figure}[ht]
+\centering
+\includegraphics{output/img-green}
+\caption{img-green}
+\label{fig:img-green}
+\end{figure}
 
-\item The image made from the green channel looks more like what we expected, probably because of our nature sensibility to the green color, hence using it to create a image looks more aligned with what a human would expect.
+\item Similar to the question above, except the red channel is used instead, result in Figura \ref{fig:img-red}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{output/img-red}
+\caption{img-red}
+\label{fig:img-red}
+\end{figure}
+
+\item 
+
+The image made from the green channel looks more like what we expected, probably because of our nature sensibility to the green color, hence using it to create a image looks more aligned with what a human would expect.
 \end{enumerate}
 
+\item Q 3
+
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-3-0}
+\caption{p0-3-0}
+\label{fig:p0-3-0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-3-1}
+\caption{p0-3-1}
+\label{fig:p0-3-1}
+\end{figure}
+
 \item
 \begin{enumerate}
-\item .
+\item Q 4a
 
-\item .
+\item Q 4b
+
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-4-b-0}
+\caption{p0-4-b-0}
+\label{fig:p0-4-b-0}
+\end{figure}
+
+\item Q 4c
 \end{enumerate}
 
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-4-c-0}
+\caption{p0-4-c-0}
+\label{fig:p0-4-c-0}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-4-c-1}
+\caption{p0-4-c-1}
+\label{fig:p0-4-c-1}
+\end{figure}
+
 \item
 \begin{enumerate}
-\item .
+\item Q 5a
 
-\item .
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-5-a-0}
+\caption{p0-5-a-0}
+\label{fig:p0-5-a-0}
+\end{figure}
 
-\item .
-\end{enumerate}
+\item Q 5b
 
-\item
-\begin{enumerate}
-\item .
+\begin{figure}[ht]
+\centering
+\includegraphics{output/p0-5-b-0}
+\caption{p0-5-b-0}
+\label{fig:p0-5-b-0}
+\end{figure}
 
-\item .
-
-\item .
+\item Q 5c
 \end{enumerate}
 
 \end{enumerate}
 \end{document}
+
