@@ -44,9 +44,9 @@
 
 %% ---------------- Starts here --------------------------------
 
-\textbf{Question 1.} \\
+\textbf{Question 1 - Input images} \\
 
-The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specified it is a color image, rectangular and its type is \emph{PNG}. Th image dimensions are 400x300, which satisfies the required size. \\
+The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specified it is a colored image, rectangular and its type is \emph{PNG}. Th image dimensions are 400x300, which satisfies the required size. \\
 
 \begin{figure}[!h]
 	\centering
@@ -64,10 +64,9 @@ The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specif
 \newpage
 
 
-\textbf{Question 2.} \\
+\textbf{Question 2 - Color planes} \\
 
 \textbf{2-a) } A PNG image is represented in RGB format, which means that there is three channels for each pixel. These channels represents the intensity of each color, in a determined pixel, RGB stands for: Red, Green, and Blue. The Figure \ref{fig:p0-2-a-0} represents an image obtained by swapping the red and blue channel in the input image.
-
 
 \begin{figure}[!h]
 	\centering
@@ -121,7 +120,7 @@ In this image, we are able to see more blurred areas. The reason for this result
 
 In contrast, we would expect to a computer work better in a image extracted from a red channel, the intuition is that the color red gives a better contrast to the image. In this way, the information like shapes of objects on the image are highlighted in the monochrome image, example are the contrast between the sky and the clouds in the Figure \ref{fig:img-red} (\textbf{p0-2-c-0}). \\
 
-\textbf{Question 3.} \\
+\textbf{Question 3 - Replacements of pixels} \\
 
 In this question we merge the results shown in Figures \ref{fig:img-green} (\textbf{p0-2-b-0}) and \ref{fig:img-red} (\textbf{p0-2-c-0}). In order to do that, we inserted the centered 100x100 pixels from image \textbf{p0-2-b-0} into the image \textbf{p0-2-c-0}, the result is shown in Figure \ref{fig:p0-3-0}. 
 
@@ -150,9 +149,22 @@ After that, we inserted the generated image (\textbf{p0-3-0}) into its respectiv
 	\label{fig:p0-3-1}
 \end{figure}
 
-Our conclusion about it .........\\
+As we can see, the image is almost the same as the original input, except by the center part. If we recall, the Figure \ref{fig:img-green} is formed by two different images. And, each of them are monochrome images created from the green and red channels of the original input. The Figure \ref{fig:channels} shows how the channels representations is represented in the Figure \ref{fig:p0-3-1}, which was created by the insertion. \\
 
-\textbf{Question 4.} \\
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.5]{report/image-color}}%
+	}%
+	\caption{Channels representation layout in the Figure \ref{fig:p0-3-0}}
+	\label{fig:channels}
+\end{figure}
+
+When we replace the image \textbf{p0-3-0} inside the green channel of the original input, all the pixels outsize the box at the center are equal, which keeps the same pixels for all the outside-box part. In contrast, the pixels inside the box, which represents the red color, overwrites the green pixels in that region forming a different image. \\
+
+\textbf{Question 4 - Arithmetic and geometric operations} \\
 
 \begin{figure}[!h]
 	\centering
@@ -187,6 +199,11 @@ Our conclusion about it .........\\
 	\caption{p0-4-c-1}
 	\label{fig:p0-4-c-1}
 \end{figure}
+
+\newpage
+
+\textbf{Question 5 - Noise} \\
+
 
 
 \begin{figure}[!h]

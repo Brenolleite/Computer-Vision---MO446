@@ -101,7 +101,7 @@ imgShifted = shiftLeft(cp.copy(B), 2)
 
 subtractImages(cp.copy(B), imgShifted)
 
-sigma = 50
+sigma = 10
 
 addNoise(cp.copy(input), 1, sigma, 'a')
 
