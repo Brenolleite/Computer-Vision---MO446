@@ -85,24 +85,24 @@ def addNoise(img, channel, sigma, index):
 
 swapRedBlue(cp.copy(input))
 
-imgA = monochromeGreen(cp.copy(input))
+B = monochromeGreen(cp.copy(input))
 
-imgB = monochromeRed(cp.copy(input))
+A = monochromeRed(cp.copy(input))
 
-imgC = insertImage(imgA, cp.copy(imgB))
+C = insertImage(A, cp.copy(B))
 
-replaceChannelGreen(imgC, cp.copy(input))
+replaceChannelGreen(C, cp.copy(input))
 
-maxMinMean(imgA)
+maxMinMean(B)
 
-normalize(cp.copy(imgA))
+normalize(cp.copy(B))
 
-imgShifted = shiftLeft(cp.copy(imgA), 2)
+imgShifted = shiftLeft(cp.copy(B), 2)
 
-subtractImages(cp.copy(imgA), imgShifted)
+subtractImages(cp.copy(B), imgShifted)
 
 sigma = 50
 
 addNoise(cp.copy(input), 1, sigma, 'a')
 
-addNoise(cp.copy(input), 2, sigma, 'b')
+addNoise(cp.copy(input), 0, sigma, 'b')

@@ -111,39 +111,48 @@ As shown in the figure, the representation of the image stills really good. The 
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.7]{output/p0-2-c-0}}%
 	}%
-	\caption{Monochrome image created from green channel (\textbf{p0-2-c-0})}
+	\caption{Monochrome image created from red channel (\textbf{p0-2-c-0})}
 	\label{fig:img-red}
 \end{figure}
 
 In this image, we are able to see more blurred areas. The reason for this result is the low intensity of the red channel over the image pixels, which makes just the channel red not as good representation as the green channel.
 
-\textbf{2-c) } The image created from the green channel looks more like what we expected, this is explained by the intensity of the three channels of the image. As said before, the original image is more intense on the green channel than in the red channel\footnote{Numbers to compare green and red channels (we need to collect that, maybe the mean of R and G?)}. We normally would expect to the green approach work better, mainly because the nature of the green color in the real world. However, we can not expect this result for every type of image. \\
+\textbf{2-d) } The image created from the green channel (\textbf{p0-2-b-0}) looks more like what we expected, this is explained by three channels of the image. As said before, the original image is more intense on the green channel than in the red channel\footnote{Mean values for each channel in the original image: Red: 127.40, Green: 149.85, Blue: 173.02}. We normally would expect to the green approach better express the image, mainly because the nature of the green color in the real world. However, we can not expect this result for every image. \\
+
+In contrast, we would expect to a computer work better in a image extracted from a red channel, the intuition is that the color red gives a better contrast to the image. In this way, the information like shapes of objects on the image are highlighted in the monochrome image, example are the contrast between the sky and the clouds in the Figure \ref{fig:img-red} (\textbf{p0-2-c-0}). \\
 
 \textbf{Question 3.} \\
 
+In this question we merge the results shown in Figures \ref{fig:img-green} (\textbf{p0-2-b-0}) and \ref{fig:img-red} (\textbf{p0-2-c-0}). In order to do that, we inserted the centered 100x100 pixels from image \textbf{p0-2-b-0} into the image \textbf{p0-2-c-0}, the result is shown in Figure \ref{fig:p0-3-0}. 
+
+
 \begin{figure}[!h]
 	\centering
 	{%
 		\setlength{\fboxsep}{1pt}%
 		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.8]{output/p0-3-0}}%
+		\fbox{\includegraphics[scale=0.5]{output/p0-3-0}}%
 	}%
-	\caption{p0-3-0}
+	\caption{Pixels centered (100x100) from Figure \ref{fig:img-green} into Figure \ref{fig:img-red} (\textbf{p0-3-0})}
 	\label{fig:p0-3-0}
 \end{figure}
 
+After that, we inserted the generated image (\textbf{p0-3-0}) into its respective channel (green) in the original image. The results is shown in Figure \ref{fig:p0-3-1}.
 
 \begin{figure}[!h]
 	\centering
 	{%
 		\setlength{\fboxsep}{1pt}%
 		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.8]{output/p0-3-1}}%
+		\fbox{\includegraphics[scale=0.6]{output/p0-3-1}}%
 	}%
-	\caption{p0-3-1}
+	\caption{Original image with green channel replaced from Figure \ref{fig:p0-3-0} (\textbf{p0-3-1})}
 	\label{fig:p0-3-1}
 \end{figure}
 
+Our conclusion about it .........\\
+
+\textbf{Question 4.} \\
 
 \begin{figure}[!h]
 	\centering
