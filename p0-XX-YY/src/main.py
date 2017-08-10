@@ -4,7 +4,7 @@ import cv2
 import copy as cp
 import numpy as np
 
-input = cv2.imread('./input/p0-1-0.jpg')
+input = cv2.imread('./input/p0-1-0.png')
 
 # I know that the function cvtColor exists, however as we are new to OpenCV we prefered to learn the hand coded way.
 

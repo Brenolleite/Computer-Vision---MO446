@@ -25,8 +25,13 @@
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
-
-\definecolor{mygray}{gray}{0.4}
+% Foot without marker
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
 
 \title{MO446 -- Introduction to Computer Vision  \\ Project 0}
 \author{Breno Leite  \\ Guilherme Leite}
@@ -35,120 +40,168 @@
 \begin{document}
 
 \maketitle
+\blfootnote{\textit{\textbf{Important note:} The borders seen in the figures are not part of the image, they are figurative information about the starting and ending points of the image. Moreover, all the image scales in this report were changed in order to make the text more readable.}} \\
 
-\begin{enumerate}
-\item The following image (Figura \ref{fig:p0-1-0}) was used to perform all the exercises, as specified it is colored, rectangular and its type is .PNG.\\
+%% ---------------- Starts here --------------------------------
 
-\begin{figure}[ht]
-\centering
-\includegraphics{input/p0-1-0}
-\caption{p0-1-0}
-\label{fig:p0-1-0}
+\textbf{Question 1.} \\
+
+The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specified it is a color image, rectangular and its type is \emph{PNG}. Th image dimensions are 400x300, which satisfies the required size. \\
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{input/p0-1-0}}%
+	}%
+	\caption{Input image used in the questions (\textbf{p0-1-0})}
+	\label{fig:p0-1-0}
 \end{figure}
 
-\item
-\begin{enumerate}
-\item PNG colored pictures has three channels of color, the Red, Green and Blue, the image (Figura \ref{fig:p0-2-a-0}) was obtained by swapping the values of the red channel with the blue channel, the green channel was left untouched.
+\textit{Note:} The image was converted from \emph{JPG} to \emph{PNG} format. 
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-2-a-0}
-\caption{p0-2-a-0}
-\label{fig:p0-2-a-0}
+\newpage
+
+
+\textbf{Question 2.} \\
+
+\textbf{2-a) } A PNG image is represented in RGB format, which means that there is three channels for each pixel. These channels represents the intensity of each color, in a determined pixel, RGB stands for: Red, Green, and Blue. The Figure \ref{fig:p0-2-a-0} represents an image obtained by swapping the red and blue channel in the input image.
+
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-2-a-0}}%
+	}%
+	\caption{Input image with red and blue channels swapped (\textbf{p0-2-a-0})}
+	\label{fig:p0-2-a-0}
 \end{figure}
 
-\item Monochrome or grayscale images are composed by one single channel which ranges from 0 to 255, thus all it takes to create a monochrome image from the green channel is to copy the green channel values, the result can be seen in Figura \ref{fig:img-green}
+We can note a heavy intensity of green in the image after the swap, the reason for that is explained looking at the original image. Most of the pixels in the original image has a low intensity of red, in opposite, the intensity of blue is quite high mainly because of the water and sky. When the swap occurs, all the blue intensity goes to red highlighting things that had a little bit of red intensity on the original image, like the fences. \\
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/img-green}
-\caption{img-green}
-\label{fig:img-green}
+In other hand, all the intensity from the red (really low on the original image) goes to blue. So, that makes the intensity of blue goes down in places that blue was too high (e.g. water and sky). This way, the green color becomes more intense on places that blue was predominant on the original image, explaining the green lake.\\
+
+\newpage
+
+
+\textbf{2-b) } A monochrome or grayscale images is composed by a single channel, which ranges from 0 to 255 as RGB channels. Thus, create a monochrome image from the green channel is a straightforward procedure, it is just a copy of the green channel into a new image. The result obtained using this procedure on the input image is seen in the Figure \ref{fig:img-green}.
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.7]{output/p0-2-b-0}}%
+	}%
+	\caption{Monochrome image created from green channel (\textbf{p0-2-b-0})}
+	\label{fig:img-green}
 \end{figure}
 
-\item Similar to the question above, except the red channel is used instead, result in Figura \ref{fig:img-red}
+As shown in the figure, the representation of the image stills really good. The reason for this is the high intensity of the green channel in the original image, which makes this channels, by its own, a good representation for image.\\
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/img-red}
-\caption{img-red}
-\label{fig:img-red}
+\textbf{2-c) } Using the same structure as in \textbf{2-c}, we this time use the red channel to create the new monochrome image, which is shown in Figure \ref{fig:img-red}.
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.7]{output/p0-2-c-0}}%
+	}%
+	\caption{Monochrome image created from green channel (\textbf{p0-2-c-0})}
+	\label{fig:img-red}
 \end{figure}
 
-\item 
+In this image, we are able to see more blurred areas. The reason for this result is the low intensity of the red channel over the image pixels, which makes just the channel red not as good representation as the green channel.
 
-The image made from the green channel looks more like what we expected, probably because of our nature sensibility to the green color, hence using it to create a image looks more aligned with what a human would expect.
-\end{enumerate}
+\textbf{2-c) } The image created from the green channel looks more like what we expected, this is explained by the intensity of the three channels of the image. As said before, the original image is more intense on the green channel than in the red channel\footnote{Numbers to compare green and red channels (we need to collect that, maybe the mean of R and G?)}. We normally would expect to the green approach work better, mainly because the nature of the green color in the real world. However, we can not expect this result for every type of image. \\
 
-\item Q 3
+\textbf{Question 3.} \\
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-3-0}
-\caption{p0-3-0}
-\label{fig:p0-3-0}
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-3-0}}%
+	}%
+	\caption{p0-3-0}
+	\label{fig:p0-3-0}
 \end{figure}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-3-1}
-\caption{p0-3-1}
-\label{fig:p0-3-1}
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-3-1}}%
+	}%
+	\caption{p0-3-1}
+	\label{fig:p0-3-1}
 \end{figure}
 
-\item
-\begin{enumerate}
-\item Q 4a
 
-\item Q 4b
-
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-4-b-0}
-\caption{p0-4-b-0}
-\label{fig:p0-4-b-0}
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-4-b-0}}%
+	}%
+	\caption{p0-4-b-0}
+	\label{fig:p0-4-b-0}
 \end{figure}
 
-\item Q 4c
-\end{enumerate}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-4-c-0}
-\caption{p0-4-c-0}
-\label{fig:p0-4-c-0}
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-4-c-0}}%
+	}%
+	\caption{p0-4-c-0}
+	\label{fig:p0-4-c-0}
 \end{figure}
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-4-c-1}
-\caption{p0-4-c-1}
-\label{fig:p0-4-c-1}
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-4-c-1}}%
+	}%
+	\caption{p0-4-c-1}
+	\label{fig:p0-4-c-1}
 \end{figure}
 
-\item
-\begin{enumerate}
-\item Q 5a
 
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-5-a-0}
-\caption{p0-5-a-0}
-\label{fig:p0-5-a-0}
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-5-a-0}}%
+	}%
+	\caption{p0-5-a-0}
+	\label{fig:p0-5-a-0}
 \end{figure}
 
-\item Q 5b
-
-\begin{figure}[ht]
-\centering
-\includegraphics{output/p0-5-b-0}
-\caption{p0-5-b-0}
-\label{fig:p0-5-b-0}
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.8]{output/p0-5-b-0}}%
+	}%
+	\caption{p0-5-b-0}
+	\label{fig:p0-5-b-0}
 \end{figure}
 
-\item Q 5c
-\end{enumerate}
 
-\end{enumerate}
 \end{document}
 
