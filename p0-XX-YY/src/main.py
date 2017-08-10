@@ -23,7 +23,7 @@ def monochromeGreen(img):
     return img
 
 def monochromeRed(img):
-    img = img[:,:,0]
+    img = img[:,:,2]
 
     cv2.imwrite('./output/p0-2-c-0.png', img)
     return img
