@@ -232,9 +232,9 @@ The negative values means that the right adjacent pixel was a brighter one, the 
 
 \textbf{Question 5 - Noise} \\
 
-In this question we added some noise to the input image, using a Gaussian function. The Gaussian function normally depends of three variables, however, we are going to vary just the $\sigma$, which is responsible for the range of the generated numbers.
+In this question we added some noise to the input image, using a Gaussian function. The Gaussian function normally depends of three variables, however, we are going to vary just the $\sigma$, which is responsible for the range of the generated numbers. \\
 
-\textbf{5-a) }  In this item, we use the generated number to add a noise into the green channel of the image. The Figure \ref{fig:green-sigma} shows different images obtained with different values to $\sigma$ in the Gaussian function.
+\textbf{5-a) }  In this item, we use the generated number to add a noise into the green channel of the image. The Figure \ref{fig:green-sigma} shows different images obtained with different values to $\sigma$ in the Gaussian function. \\
 
 \begin{figure}[!h]%
 	\centering
@@ -249,7 +249,9 @@ In this question we added some noise to the input image, using a Gaussian functi
 	\label{fig:green-sigma}%
 \end{figure}
 
-As we can see, the number of noise in the image increases 
+As we can see, the number of noise in the image increases proportionally with the $\sigma$. The noise is noticeable since $\sigma = 0.5$, the reason for that is the color of the pixels added. As we are changing the values to the green channel, it makes colors that were white become something similar to pink, which is pretty contrasting between white pixels. We can also see some green points, those come obviously because sometimes the Gaussian adds some intensity to some dark green pixel points.
+
+The final result reported was obtained using a  $\sigma = 10$, and the Figure \ref{fig:p0-5-a-0} shows the result.
 
 \begin{figure}[!h]
 	\centering
@@ -262,7 +264,9 @@ As we can see, the number of noise in the image increases
 	\label{fig:p0-5-a-0}
 \end{figure}
 
+\newpage
 
+\textbf{5-b) } In this question, we used the same function as before, but now we add the values to the blue channel instead of  green. The Figure \ref{fig:blue-sigma} shows the result when using different $\sigma$ values. \\
 
 \begin{figure}[!h]%
 	\centering
@@ -274,9 +278,12 @@ As we can see, the number of noise in the image increases
 	\quad
 	\subfloat[$\sigma = 10$]{{\includegraphics[scale=0.25]{report/sigma-b10} }}%
 	\caption{Noise in the blue channel  from the Gaussian function with different $\sigma$ values}%
-	\label{fig:green-sigma}%
+	\label{fig:blue-sigma}%
 \end{figure}
 
+As the other example, the number of noise increases with the $\sigma$ value. However, as we change the blue channel white pixels tend to become a yellow color, which makes the contrast smoother than the pink as seen before.
+
+The Figure \ref{fig:p0-5-b-0} shows the result submitted in the project, which is using $\sigma = 10$.
 
 \begin{figure}[!h]
 	\centering
@@ -288,6 +295,10 @@ As we can see, the number of noise in the image increases
 	\caption{p0-5-b-0}
 	\label{fig:p0-5-b-0}
 \end{figure}
+
+
+\textbf{5-c) }
+
 
 
 \end{document}
