@@ -46,7 +46,7 @@
 
 \textbf{Question 1 - Input images} \\
 
-The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specified it is a colored image, rectangular and its type is \emph{PNG}. Th image dimensions are 400x300, which satisfies the required size. \\
+The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specified it is a colored image, rectangular and its type is \emph{PNG}. The image dimensions are 400x300, which satisfies the required size. \\
 
 \begin{figure}[!h]
 	\centering
@@ -66,7 +66,7 @@ The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specif
 
 \textbf{Question 2 - Color planes} \\
 
-\textbf{2-a) } A PNG image is represented in RGB format, which means that there is three channels for each pixel. These channels represents the intensity of each color, in a determined pixel, RGB stands for: Red, Green, and Blue. The Figure \ref{fig:p0-2-a-0} represents an image obtained by swapping the red and blue channel in the input image.
+\textbf{2-a) } A PNG image is represented in RGB format, which means that there are three channels for each pixel. These channels represents the intensity of each color, in a determined pixel, RGB stands for: Red, Green, and Blue. The Figure \ref{fig:p0-2-a-0} represents an image obtained by swapping the red and blue channel in the input image.
 
 \begin{figure}[!h]
 	\centering
@@ -85,7 +85,7 @@ In other hand, all the intensity from the red (really low on the original image)
 
 \newpage
 
-\textbf{2-b) } A monochrome or grayscale images is composed by a single channel, which ranges from 0 to 255 as RGB channels. Thus, create a monochrome image from the green channel is a straightforward procedure, it is just a copy of the green channel into a new image. The result obtained using this procedure on the input image is seen in the Figure \ref{fig:img-green}.
+\textbf{2-b) } A monochrome or grayscale images is composed by a single channel, which ranges from 0 to 255 as RGB channels. Thus, create a monochrome image from the green channel is a straightforward procedure, it is just a copy of the green channel into a new image. The result obtained using this procedure on the input image is seen on image (\textbf{p0-2-b-0}).
 
 \begin{figure}[!h]
 	\centering
@@ -100,7 +100,7 @@ In other hand, all the intensity from the red (really low on the original image)
 
 As shown in the figure, the representation of the image stills really good. The reason for this is the high intensity of the green channel in the original image, which makes this channels, by its own, a good representation for image.\\
 
-\textbf{2-c) } Using the same structure as in \textbf{2-c}, we this time use the red channel to create the new monochrome image, which is shown in Figure \ref{fig:img-red}.
+\textbf{2-c) } Using the same structure as in \textbf{2-c}, we this time use the red channel to create the new monochrome image, which is shown on image (\textbf{p0-2-c-0}).
 
 \begin{figure}[!h]
 	\centering
@@ -115,9 +115,9 @@ As shown in the figure, the representation of the image stills really good. The 
 
 In this image, we are able to see more blurred areas. The reason for this result is the low intensity of the red channel over the image pixels, which makes just the channel red not as good representation as the green channel.
 
-\textbf{2-d) } The image created from the green channel (\textbf{p0-2-b-0}) looks more like what we expected, this is explained by three channels of the image. As said before, the original image is more intense on the green channel than in the red channel\footnote{Mean values for each channel in the original image: Red: 127.40, Green: 149.85, Blue: 173.02}. We normally would expect to the green approach better express the image, mainly because the nature of the green color in the real world. However, we can not expect this result for every image. \\
+\textbf{2-d) } The image created from the green channel (\textbf{p0-2-b-0}) looks more like what we expected, this is explained by three channels of the image. As said before, the original image is more intense on the green channel than in the red channel\footnote{Mean values for each channel in the original image: Red: 127.40, Green: 149.85, Blue: 173.02}. We normally would expect that the green approach better express the image, mainly because the nature of the green color in the real world. However, we can not expect this result for every image. \\
 
-In contrast, we would expect to a computer work better in a image extracted from a red channel, the intuition is that the color red gives a better contrast to the image. In this way, the information like shapes of objects on the image are highlighted in the monochrome image, example are the contrast between the sky and the clouds in the Figure \ref{fig:img-red} (\textbf{p0-2-c-0}). \\
+In contrast, we would expect a computer to work better in an image extracted from the red channel, the intuition is that the color red gives a better contrast to the image. In this way, the information like shapes of objects on the image are highlighted in the monochrome image, one example is the contrast between the sky and the clouds on image (\textbf{p0-2-c-0}). \\
 
 \textbf{Question 3 - Replacements of pixels} \\
 
@@ -301,5 +301,6 @@ The Figure \ref{fig:p0-5-b-0} shows the result submitted in the project, which i
 
 
 \end{document}
+
 
 
