@@ -45,7 +45,7 @@
 
 \textbf{Question 1.} \\
 
-The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specified it is a color image, rectangular and its type is \emph{PNG}. Th image dimensions are 400x300, which satisfies the required size. \\
+The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specified it is a color image, rectangular and its type is \emph{PNG}. The image dimensions are 400x300, which satisfies the required size. \\
 
 \begin{figure}[!h]
 	\centering
@@ -154,33 +154,23 @@ Our conclusion about it .........\\
 
 \textbf{Question 4.} \\
 
-\textbf{4-a) } The min and max values of img-green respectively are 0 and 255.	The mean value is X and the deviation is X. The computation for all these values were made using the python library numpy, the computation for the min and max value is pretty straightforward they are the highest and lowest values in the image, the computation of the mean value is explained in Figure \ref{fig:mean}, where \textbf{X} is each pixel in the image and \textbf{n} is the total amount of pixels in the image, the standard deviation value is explained in Figure \ref{fig:deviation}, where \textbf{X} is every pixel in the image, \textbf{X|} is the mean value and \textbf{N} is the total amount of pixels in the image.
+\textbf{4-a) } The min and max values of img-green respectively are 0 and 255.	The mean value is 149,85 and the deviation is 57,94. The computation for all these values were made using the python library numpy, the computation for the min and max value is pretty straightforward they are the highest and lowest values in the image, the computation of the mean value is explained in Figure \ref{eq:mean}, where $X_i$ is each pixel in the image and $N$ is the total amount of pixels in the image, the standard deviation value is explained in Figure \ref{eq:deviation}, where \textbf{$X_i$} is each pixel in the image, $\bar X$ is the mean value and $N$ is the total amount of pixels in the image.
 
 \begin{figure}[!h]
 	\centering
-	{%
-		\setlength{\fboxsep}{1pt}%
-		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.8]{mean}}%
-	}%
+	\[ \bar X = \frac{\sum X_i}{N} \]
 	\caption{Mean formula}
-	\label{fig:mean}
+    \label{eq:mean}
 \end{figure}
 
 \begin{figure}[!h]
 	\centering
-	{%
-		\setlength{\fboxsep}{1pt}%
-		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.8]{deviation}}%
-	}%
-	\caption{Standard deviation formula}
-	\label{fig:deviation}
+	\[ S = \frac{\sqrt[]{\sum {(x_i - \bar{x})^2}}}{N} \]
+	\caption{Deviation formula}
+    \label{eq:deviation}
 \end{figure}
 
-\newpage
-
-\textbf{4-b) } In this question using image-green we subtracted the mean value from all of the pixels, divided them by the standard deviation, multiplied them by 10 and added back the mean value. Figure \ref{fig:p0-4-b-0} is the output image after these operations.
+\textbf{4-b) } In this question using image-green we subtracted the mean value from all of the pixels, divided them by the standard deviation, multiplied them by 10 and added back the mean value. Image (\textbf{p0-4-b-0})  is the output image after these operations.
 
 \begin{figure}[!h]
 	\centering
@@ -189,15 +179,13 @@ Our conclusion about it .........\\
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.8]{output/p0-4-b-0}}%
 	}%
-	\caption{p0-4-b-0}
+	\caption{Normalized image from image-green (\textbf{p0-4-b-0})}
 	\label{fig:p0-4-b-0}
 \end{figure}
 
 The image lost a great portion of it's contrast and that is the objective of a normalization, to reduce the presence of pixels values too far apart.\\
 
-\newpage
-
-\textbf{4-c) } In this question using image-green we shifted twice all pixels to their left, in here it was possible to do either take the two left most columns and put them back in the two pixels wide gap in the right side or leave the right side gap as black pixels, we choose the later one, Figure \ref{fig:p0-4-c-0} is the output.
+\textbf{4-c) } In this question using image-green we shifted twice all pixels to their left, in here it was possible to do either take the two left most columns and put them back in the two pixels wide gap in the right side or leave the right side gap as black pixels, we choose the later one, image (\textbf{p0-4-c-0}) is the output.
 
 \begin{figure}[!h]
 	\centering
@@ -206,11 +194,11 @@ The image lost a great portion of it's contrast and that is the objective of a n
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.8]{output/p0-4-c-0}}%
 	}%
-	\caption{p0-4-c-0}
+	\caption{2 pixels shifted image from image-green (\textbf{p0-4-c-0})}
 	\label{fig:p0-4-c-0}
 \end{figure}
 
-After the previous steps we subtracted the shifted image to the original colored one, making sure all the values were valid ones, Figure \ref{fig:p0-4-c-1} is the output.
+After the previous steps we subtracted the shifted image to the original colored one, making sure all the values were valid ones, image (\textbf{p0-4-c-1}) is the output.
 
 \begin{figure}[!h]
 	\centering
@@ -219,7 +207,7 @@ After the previous steps we subtracted the shifted image to the original colored
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.8]{output/p0-4-c-1}}%
 	}%
-	\caption{p0-4-c-1}
+	\caption{Subtracted image (p0-4-c-0) to (p0-1-0) (\textbf{p0-4-c-1})}
 	\label{fig:p0-4-c-1}
 \end{figure}
 
