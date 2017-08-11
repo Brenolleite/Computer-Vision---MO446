@@ -181,7 +181,7 @@ In which, $X_i$ is each pixel in the image, $\bar X$ is the mean value and $N$ i
 
 \newpage
 
-\textbf{4-b) } In this question using image-green we subtracted the mean value from all of the pixels, divided them by the standard deviation, multiplied them by 10 and added back the mean value. Figure \ref{fig:p0-4-b-0} is the output image after these operations.
+\textbf{4-b) } In this question the image \textbf{p0-2-b-0} (\emph{image-green}) was used, we subtracted the mean value from all of the pixels, divided them by the standard deviation, multiplied them by 10 and added back the mean value. Figure \ref{fig:p0-4-b-0} is the output image after these operations.
 
 
 \begin{figure}[!h]
@@ -189,29 +189,29 @@ In which, $X_i$ is each pixel in the image, $\bar X$ is the mean value and $N$ i
 	{%
 		\setlength{\fboxsep}{1pt}%
 		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.8]{output/p0-4-b-0}}%
+		\fbox{\includegraphics[scale=0.7]{output/p0-4-b-0}}%
 	}%
 	\caption{Normalized image from image-green (\textbf{p0-4-b-0})}
 	\label{fig:p0-4-b-0}
 \end{figure}
 
-The image lost a great portion of it's contrast and that is the objective of a normalization, to reduce the presence of pixels values too far apart.\\
+The image lost a great portion of it's contrast, which could help removing noise from the image or maybe adjust the overall contrast of it. The idea behind it is that, the operations applied reduces the presence of pixels with values too far apart from the others, meaning, pixels that diverge too much are normalized within a certain range of values. \\
 
 
-\textbf{4-c) } In this question using image-green we shifted twice all pixels to their left, in here it was possible to do either take the two left most columns and put them back in the two pixels wide gap in the right side or leave the right side gap as black pixels, we choose the later one, Figure \ref{fig:p0-4-c-0} is the output.
+\textbf{4-c) } The image \textbf{p0-2-b-0} was also used in this question, so, we shifted twice all pixels to their left. In here, we could either fill the new values in the right size with zero, or we could move the shifted-off part to the right part of the image. The first one was selected because of simplicity to work. The Figure \ref{fig:p0-4-c-0} shows the result image after the shift.
 
 \begin{figure}[!h]
 	\centering
 	{%
 		\setlength{\fboxsep}{1pt}%
 		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.8]{output/p0-4-c-0}}%
+		\fbox{\includegraphics[scale=0.7]{output/p0-4-c-0}}%
 	}%
 	\caption{2 pixels shifted image from image-green (\textbf{p0-4-c-0})}
 	\label{fig:p0-4-c-0}
 \end{figure}
 
-After the previous steps we subtracted the shifted image to the original colored one, making sure all the values were valid ones, image (\textbf{p0-4-c-1}) is the output.
+After the previous steps, we subtracted the shifted image to the original (not shifted), making sure all the values were valid ones. After this process, the image shown in Figure \ref{fig:p0-4-c-1} was created.
 
 \begin{figure}[!h]
 	\centering
@@ -225,7 +225,7 @@ After the previous steps we subtracted the shifted image to the original colored
 \end{figure}
 
 
-The negative values means that the right adjacent pixel was a brighter one, the resulting image highlights the horizontal gradients that darkens from left to right as black regions and the opposite as white regions, the remaining vertical gradients are shown as random black and white regions.
+The negative values means that the right adjacent pixel was a brighter than the actual pixel, in other words, the intensity of that specific color at that specific pixel is higher than the right pixel next to it.
 
 \newpage
 
