@@ -172,12 +172,12 @@ All these function are already implemented into the \emph{numpy} library, so, in
 
 Moreover, in order to obtain the mean, we used the \emph{numpy.mean()} that returns the average value given an array. This function implements the following formula: 
 
-$$\bar X = \frac{\sum_{1}^{n} X_i}{N}$$
+$$\bar X = \frac{\sum_{0}^{n-1} \ x_i}{N}$$
 
-where $X_i$ is each pixel in the image and $N$ is the total number of pixels in the image. The standard deviation is implemented by the function called \emph{numpy.std()}, this function is based in the following equation:
-$$ S = \frac{\sqrt[]{\sum {(x_i - \bar{x})^2}}}{N} $$
+where $x_i$ represents each pixel in the image and $N$ is the total number of pixels in the image. The standard deviation is implemented by the function called \emph{numpy.std()}, this function is based in the following equation:
+$$ S = \frac{\sqrt[]{\sum_{0}^{n-1} \ (x_i - \bar{x})^2}}{N} $$
 
-In which, $X_i$ is each pixel in the image, $\bar X$ is the mean value and $N$ is the total number of pixels in the image.
+In which, $x_i$ is each pixel in the image, $\bar X$ is the mean value and $N$ is the total number of pixels in the image.
 
 \newpage
 
@@ -291,11 +291,11 @@ Image (\textbf{p0-5-b-0}) shows the result submitted in the project, which is us
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.8]{output/p0-5-b-0}}%
 	}%
-	\caption{p0-5-b-0}
+	\caption{Noise added to the blue channel (\textbf{p0-5-b-0})}
 	\label{fig:p0-5-b-0}
 \end{figure}
 
 
-\textbf{5-c) } The image (\textbf{p0-5-b-0}) looks better, the reason is the low level of the contrast that happens between the white and yellow pixels. In image (\textbf{p0-5-a-0}), the high contrast between white and pink makes the image looks too different from the original version.
+\textbf{5-c) } The image (\textbf{p0-5-b-0}) looks better, the reason is the low level of contrast that happens between the white and yellow pixels. In image (\textbf{p0-5-a-0}), the high contrast between white and pink makes the image looks too different from the original version.
 
 \end{document}
