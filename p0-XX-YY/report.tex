@@ -66,7 +66,7 @@ The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specif
 
 \textbf{Question 2 - Color planes} \\
 
-\textbf{2-a) } A PNG image is represented in RGB format, which means that there are three channels for each pixel. These channels represents the intensity of each color, in a determined pixel, RGB stands for: Red, Green, and Blue. The Figure \ref{fig:p0-2-a-0} represents an image obtained by swapping the red and blue channel in the input image.
+\textbf{2-a) } A PNG image is represented in RGB format, which means that there are three channels for each pixel. These channels represent the intensity of each color, in a determined pixel, RGB stands for Red, Green, and Blue. The Figure \ref{fig:p0-2-a-0} represents an image obtained by swapping the red and blue channel in the input image.
 
 \begin{figure}[!h]
 	\centering
@@ -79,13 +79,13 @@ The Figure \ref{fig:p0-1-0} was used as an input to all the exercises, as specif
 	\label{fig:p0-2-a-0}
 \end{figure}
 
-We can note a heavy intensity of green in the image after the swap, the reason for that is explained looking at the original image. Most of the pixels in the original image has a low intensity of red, in opposite, the intensity of blue is quite high mainly because of the water and sky. When the swap occurs, all the blue intensity goes to red highlighting things that had a little bit of red intensity on the original image, like the fences. \\
+We can note a heavy intensity of green in the image after the swap, the reason for that is explained looking at the original image. Most of the pixels in the original image has a low intensity of red, in opposite, the intensity of blue is quite high, mainly because of the water and sky. When the swap occurs, all the blue intensity goes to red highlighting things that had a little bit of red intensity on the original image, like the fences. \\
 
-In other hand, all the intensity from the red (really low on the original image) goes to blue. So, that makes the intensity of blue goes down in places that blue was too high (e.g. water and sky). This way, the green color becomes more intense on places that blue was predominant on the original image, explaining the green lake.\\
+In other hand, all the intensity from the red (really low on the original image) goes to blue. So, that makes the intensity of blue goes down in places that blue was too high (e.g. water and sky). This way, the green color becomes more intense on places that blue was predominant on the original image, explaining the green lake. \\
 
 \newpage
 
-\textbf{2-b) } A monochrome or grayscale images is composed by a single channel, which ranges from 0 to 255 as RGB channels. Thus, create a monochrome image from the green channel is a straightforward procedure, it is just a copy of the green channel into a new image. The result obtained using this procedure on the input image is seen on image (\textbf{p0-2-b-0}).
+\textbf{2-b) } A monochrome or grayscale images is composed by a single channel, which ranges from 0 to 255 as RGB channels. Thus, create a monochrome image from the green channel is a straightforward procedure, it is just a copy of the green channel into a new image. The result obtained using this procedure on the input image is seen on Figure \ref{fig:img-green}.
 
 \begin{figure}[!h]
 	\centering
@@ -98,9 +98,9 @@ In other hand, all the intensity from the red (really low on the original image)
 	\label{fig:img-green}
 \end{figure}
 
-As shown in the figure, the representation of the image stills really good. The reason for this is the high intensity of the green channel in the original image, which makes this channels, by its own, a good representation for image.\\
+As shown in the figure, the representation of the image stills really good. The reason for this is the high intensity of the green channel in the original image, which makes this channels, by its own, a good representation for the image. \\
 
-\textbf{2-c) } Using the same structure as in \textbf{2-c}, we this time use the red channel to create the new monochrome image, which is shown on image (\textbf{p0-2-c-0}).
+\textbf{2-c) } Using the same structure as in \textbf{2-b}, we this time use the red channel to create the new monochrome image, which is shown on Figure \ref{fig:img-red}.
 
 \begin{figure}[!h]
 	\centering
@@ -115,13 +115,13 @@ As shown in the figure, the representation of the image stills really good. The 
 
 In this image, we are able to see more blurred areas. The reason for this result is the low intensity of the red channel over the image pixels, which makes just the channel red not as good representation as the green channel.
 
-\textbf{2-d) } The image created from the green channel (\textbf{p0-2-b-0}) looks more like what we expected, this is explained by three channels of the image. As said before, the original image is more intense on the green channel than in the red channel\footnote{Mean values for each channel in the original image: Red: 127.40, Green: 149.85, Blue: 173.02}. We normally would expect that the green approach better express the image, mainly because the nature of the green color in the real world. However, we can not expect this result for every image. \\
+\textbf{2-d) } The image created from the green channel (Figure \ref{fig:img-green}) looks more like what we expected, this is explained by three channels of the image. As said before, the original image is more intense on the green channel than in the red channel\footnote{Mean values for each channel in the original image: Red: 127.40, Green: 149.85, Blue: 173.02}. We normally would expect that the green approach better express the image, mainly because the nature of the green color in the real world. However, we can not expect this result for every image. \\
 
-In contrast, we would expect a computer to work better in an image extracted from the red channel, the intuition is that the color red gives a better contrast to the image. In this way, the information like shapes of objects on the image are highlighted in the monochrome image, one example is the contrast between the sky and the clouds on image (\textbf{p0-2-c-0}). \\
+In contrast, we would expect a computer to work better in an image extracted from the red channel, the intuition is that the color red gives a better contrast to the image. In this way, the information like shapes of objects on the image are highlighted in the monochrome image, one example is the contrast between the sky and the clouds on Figure \ref{fig:img-red}. \\
 
 \textbf{Question 3 - Replacements of pixels} \\
 
-In this question we merge the results shown on image (\textbf{p0-2-b-0}) and image (\textbf{p0-2-c-0}). In order to do that, we inserted the centered 100x100 pixels from image \textbf{p0-2-b-0} into the image \textbf{p0-2-c-0}, the result is shown on image \textbf{(p0-3-0)}. 
+In this question we merge the results shown on Figures \ref{fig:img-green} and \ref{fig:img-red}. In order to do that, we inserted the centered 100x100 pixels from image \textbf{p0-2-b-0} into the image \textbf{p0-2-c-0}, the result is shown on Figure \ref{fig:p0-3-0}. 
 
 
 \begin{figure}[!h]
@@ -131,11 +131,11 @@ In this question we merge the results shown on image (\textbf{p0-2-b-0}) and ima
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.5]{output/p0-3-0}}%
 	}%
-	\caption{Pixels centered (100x100) from Figure \ref{fig:img-green} into Figure \ref{fig:img-red} (\textbf{p0-3-0})}
+	\caption{Pixels centered 100x100 from Figure \ref{fig:img-green} into Figure \ref{fig:img-red} (\textbf{p0-3-0})}
 	\label{fig:p0-3-0}
 \end{figure}
 
-After that, we inserted the generated image (\textbf{p0-3-0}) into its respective channel (green) in the original image. The result is shown on image (\textbf{p0-3-1}).
+After that, we inserted the generated image shown in Figure \ref{fig:p0-3-0} into its respective channel (green) in the original image. The result is shown in Figure \ref{fig:p0-3-1}.
 
 \begin{figure}[!h]
 	\centering
@@ -148,7 +148,7 @@ After that, we inserted the generated image (\textbf{p0-3-0}) into its respectiv
 	\label{fig:p0-3-1}
 \end{figure}
 
-As we can see, the image is almost the same as the original input, except by the center part. If we recall, image (\textbf{p0-2-b-0}) is formed by two different images. And, each of them are monochrome images created from the green and red channels of the original input. Figure \ref{fig:channels} shows how the channels representations is represented on image (\textbf{p0-3-1}), which was created by the insertion. \\
+As we can see, the image is almost the same as the original input, except by the center part. If we recall, image \textbf{p0-2-b-0} is formed by two different images. And, each of them are monochrome images created from the green and red channels of the original input. Figure \ref{fig:channels} shows how the channels representations is represented on image \textbf{p0-3-1}, which was created by the insertion. \\
 
 \begin{figure}[!h]
 	\centering
@@ -250,7 +250,7 @@ In this question we added some noise to the input image, using a Gaussian functi
 
 As we can see, the number of noise in the image increases proportionally to $\sigma$. The noise is noticeable once $\sigma = 0.5$, the reason for that is the color of the pixels added. As we are changing the values to the green channel, it makes colors that were white become something similar to pink, which is pretty contrasting between white pixels. We can also see some green points, those come obviously because sometimes the Gaussian adds some intensity to some dark green pixel points.
 
-The final result reported was obtained using a  $\sigma = 10$, and image (\textbf{p0-5-a-0}) shows the result.
+The final result reported was obtained using a  $\sigma = 10$, and image \textbf{p0-5-a-0} shows the result.
 
 \begin{figure}[!h]
 	\centering
@@ -282,7 +282,7 @@ The final result reported was obtained using a  $\sigma = 10$, and image (\textb
 
 As the other example, the number of noise increases with the $\sigma$ value. However, as we change the blue channel white pixels tend to become a yellow color, which makes the contrast smoother than the pink as seen before.
 
-Image (\textbf{p0-5-b-0}) shows the result submitted in the project, which is using $\sigma = 10$.
+Figure \ref{fig:p0-5-b-0} shows the result submitted in the project, which is using $\sigma = 10$.
 
 \begin{figure}[!h]
 	\centering
@@ -296,6 +296,6 @@ Image (\textbf{p0-5-b-0}) shows the result submitted in the project, which is us
 \end{figure}
 
 
-\textbf{5-c) } The image (\textbf{p0-5-b-0}) looks better, the reason is the low level of contrast that happens between the white and yellow pixels. In image (\textbf{p0-5-a-0}), the high contrast between white and pink makes the image looks too different from the original version.
+\textbf{5-c) } The image \textbf{p0-5-b-0} looks better, the reason is the low level of contrast that happens between the white and yellow pixels. In image \textbf{p0-5-a-0}, the high contrast between white and pink makes the image looks too different from the original version.
 
 \end{document}
