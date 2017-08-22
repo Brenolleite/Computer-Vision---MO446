@@ -2,6 +2,7 @@ import cv2
 import math
 import copy as cp
 import numpy as np
+import os
 
 # Python uses the BGR color scheme
 
@@ -72,6 +73,7 @@ def pyrAccLvl(pyrImg, lvl):
 def filter2d(img, kernel, anchor):
     # Image dimensions
     i_height, i_width, i_channels = img.shape
+    print(i_height, " Image Size")
 
     # Kernel dimensions
     k_height, k_width = kernel.shape
@@ -79,13 +81,46 @@ def filter2d(img, kernel, anchor):
     # Anchor distance to border
     anchor_distance = math.floor(k_height / 2)
 
+    newImg = np.zeros((i_height, i_width, 3), np.uint8)
+
     # Apply the filter in every pixel
     for i in range(0, i_height):
         for j in range(0, i_width):
             
+            # Kernel factor
+            k_weight = 0
+            sum = 0
+            channel_0 = 0
+            channel_1 = 0
+            channel_2 = 0
+
+            # print("Velho ", i, "-", j, ": ", newImg.item((i, j, 0)))
+
             # Operate with kernel
             for g in range(0, k_height):
                 for h in range (0, k_width):
+                    k_weight = 0
+
+                    if i - abs(g - anchor_distance) >= 0 and j - abs(h - anchor_distance) >= 0:
+                        print("[", i,"-", j,"] With [", g,"-", h,"]")
+                        k_weight = kernel.item((g, h))
+                    if i + (g - anchor_distance) < i_height and j + (h - anchor_distance) < i_width:
+                        k_weight = kernel.item((g, h))
+
+                    channel_0 += k_weight * img.item((i, j, 0))
+                    channel_1 += k_weight * img.item((i, j, 1))
+                    channel_2 += k_weight * img.item((i, j, 2))
+                    sum += k_weight
+
+            newImg.itemset((i, j, 0), channel_0 / sum)
+            newImg.itemset((i, j, 1), channel_1 / sum)
+            newImg.itemset((i, j, 2), channel_2 / sum)
+
+            # print("Novo ", i, "-", j, ": ", newImg.item((i, j, 0)))
+
+    cv2.imwrite('../output/TESTE.jpg', newImg)
+    print(kernel)
+    # print("Begin\n", newImg, "\nEnd")
 
 def gaussianSomething():
     # Usar a função filter2D para gerar o kernel, http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/filter_2d/filter_2d.html
