@@ -102,7 +102,7 @@ def filter2d(img, kernel, anchor):
                     k_weight = 0
 
                     if i - abs(g - anchor_distance) >= 0 and j - abs(h - anchor_distance) >= 0:
-                        print("[", i,"-", j,"] With [", g,"-", h,"]")
+                        # print("[", i,"-", j,"] With [", g,"-", h,"]")
                         k_weight = kernel.item((g, h))
                     if i + (g - anchor_distance) < i_height and j + (h - anchor_distance) < i_width:
                         k_weight = kernel.item((g, h))
@@ -112,9 +112,12 @@ def filter2d(img, kernel, anchor):
                     channel_2 += k_weight * img.item((i, j, 2))
                     sum += k_weight
 
+            print("Channel_0 Value ", channel_0, sum)
             newImg.itemset((i, j, 0), channel_0 / sum)
             newImg.itemset((i, j, 1), channel_1 / sum)
             newImg.itemset((i, j, 2), channel_2 / sum)
+
+            print("Sum: ", sum)
 
             # print("Novo ", i, "-", j, ": ", newImg.item((i, j, 0)))
 
