@@ -13,8 +13,8 @@ time = ut.time()
 output = cv.convolve(cp.copy(input), mask.g_3)
 print("Convolution time:" + time.elapsed())
 
-
 cv2.imwrite('../output/p1-1-0.png', output)
+
 
 time = ut.time()
 cv2.filter2D(cp.copy(input), -1, np.flip(np.flip(mask.g_3, 0), 1), output)

@@ -1,41 +1,40 @@
+import cv2
 import numpy as np
-import copy as cp
 
-def convolve(input, mask):
-    input = np.array(input)
-    mask = np.array(mask)
-
-    output = cp.copy(input)
-    np.array(output)
+def convolve(input, kernel):
+    # Create the output matrix
+    output = np.zeros(input.shape)
     
+    # Verify the convolution type chrome or BGR
     if(input.ndim == 2):
-        convolution(input, mask, output, -1)
+        convolution(input, kernel, output, -1)
     else:
         for i in range(3):
-            convolution(input[:,:,i], mask, output, i)
+            convolution(input[:,:,i], kernel, output, i)
 
     return output
 
-def convolution(input, mask, output, channel):   
-    mask = np.flip(np.flip(mask,0),1)
+def convolution(input, kernel, output, channel):
+    # Flips kernel to convolve
+    kernel = np.flip(np.flip(kernel,0),1)
 
-    heightI, widthI = input.shape    
-    heightM, widthM = mask.shape
-    c = (int) (heightM/2)
+    # Get image information
+    heightI, widthI = input.shape[:2]    
+    heightK, widthK = kernel.shape[:2]
+
+    # Calculate the center, It will be used as difference between input and kernel
+    diff = (int) (heightK/2)
     
-    for i, row in enumerate(input):
-        for j, col in enumerate(row):
-            value = 0
-            for x in range(heightM):
-                for y in range(widthM):
-                    indexI = i+(x-c)
-                    indexJ = j+(y-c)
-                    
-                    if(indexI >= 0 and indexI < heightI and 
-                       indexJ >= 0 and indexJ < widthI):
-                        value = value + input[indexI, indexJ] * mask[x,y]
+    # Create border on image before convolving (using difference between kernel and input)
+    input = cv2.copyMakeBorder(input, diff, diff, diff, diff, cv2.BORDER_CONSTANT, 0)
+
+    # Slides kernel over the new bordered image
+    for i in range(diff, heightI + diff):
+        for j in np.arange(diff, widthI + diff):
+            value = np.sum(input[i-diff:i+diff +1, j-diff:j+diff+1] * kernel)
+            
             if(channel == -1):
-                output[i,j] = value
+                output[i-diff,j-diff] = value
             else:
-                output[i,j,channel] = value
+                output[i-diff,j-diff,channel] = value
 
