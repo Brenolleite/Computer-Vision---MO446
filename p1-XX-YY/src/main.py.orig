@@ -1,13 +1,15 @@
 import cv2
 import copy as cp
 import numpy as np
+import utils as ut
 
 import masks as mask
 import convolution as cv
 
 # Python uses the BGR color scheme
-input = cv2.imread('../input/input.jpg')
+input = cv2.imread('../input/p1-1-2.jpg')
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 # Gaussian Mask 3X3
 g_mask_3 = np.matrix([
@@ -131,11 +133,23 @@ def gaussianSomething():
     gaussian = cv2.getGaussianKernel(9, 1.7)
     cv2.imwrite('../output/gaussian.jpg', gaussian)
 =======
+||||||| merged common ancestors
+=======
+time = ut.time()
+>>>>>>> 7921378064647595ea7b18009c0d23ca7f566658
 output = cv.convolve(cp.copy(input), mask.g_3)
+<<<<<<< HEAD
 >>>>>>> ee4d5feeed70e0d7718031c53b3cd2263a45df19
+||||||| merged common ancestors
+=======
+print("Convolution time:" + time.elapsed())
+>>>>>>> 7921378064647595ea7b18009c0d23ca7f566658
 
-cv2.imwrite('../output/TESTE.jpg', output)
+cv2.imwrite('../output/p1-1-0.png', output)
 
+
+time = ut.time()
 cv2.filter2D(cp.copy(input), -1, np.flip(np.flip(mask.g_3, 0), 1), output)
+print("OpenCV Convolution time:" + time.elapsed())
 
-cv2.imwrite('../output/TESTE2.jpg', output)
+cv2.imwrite('../output/p1-1-1.png', output)
