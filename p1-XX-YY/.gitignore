@@ -2,3 +2,5 @@
 *.log
 *.gz
 .DS_Store
+src/__pycache__/*
+*.#*

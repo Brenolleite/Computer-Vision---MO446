@@ -11,7 +11,7 @@ def convolve(input, mask):
     if(input.ndim == 2):
         convolution(input, mask, output, -1)
     else:
-        for i in range(2):
+        for i in range(3):
             convolution(input[:,:,i], mask, output, i)
 
     return output
@@ -31,7 +31,8 @@ def convolution(input, mask, output, channel):
                     indexI = i+(x-c)
                     indexJ = j+(y-c)
                     
-                    if(indexI >= 0 and indexI < heightI and indexJ >= 0 and indexJ < widthI):
+                    if(indexI >= 0 and indexI < heightI and 
+                       indexJ >= 0 and indexJ < widthI):
                         value = value + input[indexI, indexJ] * mask[x,y]
             if(channel == -1):
                 output[i,j] = value
