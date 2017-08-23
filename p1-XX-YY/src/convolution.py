@@ -4,7 +4,7 @@ import numpy as np
 def convolve(input, kernel):
     # Create the output matrix
     output = np.zeros(input.shape)
-    
+
     # Verify the convolution type chrome or BGR
     if(input.ndim == 2):
         convolution(input, kernel, output, -1)
@@ -19,20 +19,28 @@ def convolution(input, kernel, output, channel):
     kernel = np.flip(np.flip(kernel,0),1)
 
     # Get image information
-    heightI, widthI = input.shape[:2]    
+    heightI, widthI = input.shape[:2]
     heightK, widthK = kernel.shape[:2]
 
     # Calculate the center, It will be used as difference between input and kernel
     diff = (int) (heightK/2)
-    
+
     # Create border on image before convolving (using difference between kernel and input)
     input = cv2.copyMakeBorder(input, diff, diff, diff, diff, cv2.BORDER_CONSTANT, 0)
 
+    # print("Borda Nova:\n", input)
+
     # Slides kernel over the new bordered image
     for i in range(diff, heightI + diff):
-        for j in np.arange(diff, widthI + diff):
-            value = np.sum(input[i-diff:i+diff +1, j-diff:j+diff+1] * kernel)
-            
+        for j in range(diff, widthI + diff):
+            # EU ACHO QUE TEM DE FAZER ESSA CONTA NA MAO
+            value = np.sum(input[i - diff : i + diff + 1, j - diff : j + diff + 1] * kernel)
+
+            print("Multi:\n", input[i - diff : i + diff + 1, j - diff : j + diff + 1] * kernel)
+            print("Input:\n", input[i - diff : i + diff + 1, j - diff : j + diff + 1])
+            print("Kernel:\n", kernel)
+            print("Value:\n", value)
+
             if(channel == -1):
                 output[i-diff,j-diff] = value
             else:
