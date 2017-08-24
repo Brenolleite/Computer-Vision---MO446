@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 
 def convolve(input, kernel):
+    # Makes sure all the data is ndarray
+    input = np.array(input)
+    kernel = np.array(kernel)
+
     # Create the output matrix
     output = np.zeros(input.shape)
 
