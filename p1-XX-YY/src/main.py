@@ -26,4 +26,5 @@ print("OpenCV Convolution time:" + time.elapsed())
 cv2.imwrite('../output/p1-1-1.png', output)
 
 # 2.2
-pyramidDown = pyr.pyrDown(cp.copy(input), 1)
+# pyramidDown = pyr.pyrDown(cp.copy(input), 5)
+# pyramidUp = pyr.pyrUp(cp.copy(input), 3)
