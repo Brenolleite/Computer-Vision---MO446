@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 
 def convolve(input, kernel):
+    # Makes sure all the data is ndarray
+    input = np.array(input)
+    kernel = np.array(kernel)
+
     # Create the output matrix
     output = np.zeros(input.shape)
 
@@ -24,16 +28,16 @@ def convolution(input, kernel, output, channel):
 
     # Calculate the center, It will be used as difference between input and kernel
     diff = int(heightK/2)
-    
+
     # Create border on image before convolving (using difference between kernel and input)
-    input = cv2.copyMakeBorder(input, diff, diff, diff, diff, cv2.BORDER_CONSTANT, 0)    
+    input = cv2.copyMakeBorder(input, diff, diff, diff, diff, cv2.BORDER_CONSTANT, 0)
 
     # Slides kernel over the new bordered image
     for i in range(diff, heightI + diff):
-        for j in range(diff, widthI + diff):            
-            value = np.sum(input[i - diff : i + diff + 1, j - diff : j + diff + 1] * kernel)     
-                       
+        for j in range(diff, widthI + diff):
+            value = np.sum(input[i - diff : i + diff + 1, j - diff : j + diff + 1] * kernel)
+
             if(channel == -1):
                 output[i-diff,j-diff] = value
             else:
-                output[i-diff,j-diff,channel] = value        
+                output[i-diff,j-diff,channel] = value

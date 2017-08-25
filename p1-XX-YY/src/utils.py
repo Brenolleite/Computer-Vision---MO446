@@ -8,6 +8,6 @@ class time:
     def __init__(self):
         self.start_time = t.time()
         self.time_started = 1
-    
-    def elapsed(self):        
-        return str(t.time() - self.start_time)    
+
+    def elapsed(self):
+        return str(t.time() - self.start_time)
