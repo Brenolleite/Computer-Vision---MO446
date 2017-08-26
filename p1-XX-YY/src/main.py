@@ -5,10 +5,11 @@ import utils as ut
 
 import masks as mask
 import convolution as cv
-import pyramids as pyr
+import gaussian_pyramid as gPyr
+import place_pyramid as pPyr
 
 # Python uses the BGR color scheme
-input = cv2.imread('../input/p1-1-0.png')
+input = cv2.imread('../input/messi5.png')
 
 # 2.1
 time = ut.time()
@@ -26,5 +27,9 @@ print("OpenCV Convolution time:" + time.elapsed())
 cv2.imwrite('../output/p1-1-1.png', output)
 
 # 2.2
-# pyramidDown = pyr.pyrDown(cp.copy(input), 5)
-# pyramidUp = pyr.pyrUp(cp.copy(input), 3)
+# gPyramidDown = gPyr.gauPyrDown(cp.copy(input), 5)
+# gPyramidUp = gPyr.gauPyrUp(cp.copy(input), 3)
+
+# 2.3
+output = pPyr.pyrDown(cp.copy(input), 3)
+pPyr.pyrUp(output, 3)
