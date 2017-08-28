@@ -45,9 +45,9 @@ def reconstruct(magnitude, phase, type, perc, order):
     phase = np.exp(phase/40)
 
     # Apply the porcentage into the frequency
-    if(type == "phase"):
+    if type == "phase":
         phase = clearValues(phase, perc, order)
-    else:
+    else if type == "magnitude":
         magnitude = clearValues(magnitude, perc, order)
 
     # Creates comples function
@@ -66,3 +66,17 @@ def reconstruct(magnitude, phase, type, perc, order):
     image_back = cv2.warpAffine(image_back, rotation, (width, height))
 
     return image_back
+
+def blend_frequencies(img1, img2, mask):
+    img1 = img1 * (mask/255)
+    img2 = img2 * (mask/255)
+
+    img1_mag, img1_phase = transform(img1)
+    img2_mag, img2_phase = transform(img2)
+
+    img_mag = img1_mag + img2_mag
+    img_phase = img1_phase + img2_phase
+
+    reconstruct(img_mag, img_phase)
+
+
