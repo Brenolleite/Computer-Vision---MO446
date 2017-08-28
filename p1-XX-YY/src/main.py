@@ -11,38 +11,71 @@ import blending as bl
 import fourier as ft
 
 # Python uses the BGR color scheme
-input = cv2.imread('../input/messi5.png')
+input = cv2.imread('../input/p1-1-0.png')
 
 # 2.1
+
+filter = []
+filter.append(mask.g_3)
+filter.append(mask.g_7)
+filter.append(mask.g_15)
+
 time = ut.time()
-output = cv.convolve(cp.copy(input), mask.g_3)
-print("Convolution time:" + time.elapsed())
 
-#cv2.imwrite('../output/p1-1-0.png', output)
+for i in range(len(filter)):
+    time = ut.time()
+    output = cv.convolve(cp.copy(input), filter[i])
+    print("Convolution time[", i, "]: ", time.elapsed())
+    cv2.imwrite('../output/p1-2-1-{}.png'.format(i), output)
 
-time = ut.time()
-
-output = cv2.filter2D(cp.copy(input), -1, np.flip(np.flip(mask.g_3, 0), 1))
-
-print("OpenCV Convolution time:" + time.elapsed())
-
-# cv2.imwrite('../output/p1-1-1.png', output)
+    time = ut.time()
+    output = cv2.filter2D(cp.copy(input), -1, np.flip(np.flip(filter[i], 0), 1))
+    print("OpenCV Convolution time[", i, "]: ", time.elapsed())
+    print("")
 
 # 2.2
-# gPyramidDown = gPyr.gauPyrDown(cp.copy(input), 5)
-# gPyramidUp = gPyr.gauPyrUp(cp.copy(input), 3)
+
+output = gPyr.gaussianPyramid(cp.copy(input), 3)
+
+for i in range(len(output)):
+    cv2.imwrite('../output/p1-2-2-{}.png'.format(i), output[i])
 
 # 2.3
-lPyramid = pPyr.placePyramid(input, 4)
+
+output = pPyr.placePyramid(cp.copy(input), 3)
+
+for i in range(len(output)):
+    cv2.imwrite('../output/p1-2-3-{}.png'.format(i), output[i])
+
+# 2.3 Reconstruct
+
+aux = output[len(output) - 1]
+for j in range(len(output) - 1,  0, -1):
+    aux = pPyr.pyrExpand(aux, output[j - 1])
+
+i += 1
+cv2.imwrite('../output/report/p1-2-3-reconstruction.png', aux)
 
 # 2.4
+
 img1 = cv2.imread('../input/img1.png')
 img2 = cv2.imread('../input/img2.png')
 b_mask = cv2.imread('../input/b_mask.png')
 
-# output = bl.blend(img1, img2, b_mask)
+output = bl.blend(img1, img2, b_mask, 4)
+cv2.imwrite('../output/p1-2-4.png', output)
 
-# cv2.imwrite('../output/blended.png', output)
+# 3.2
+
+img1 = cv2.imread('../input/img1.png')
+img2 = cv2.imread('../input/img2.png')
+b_mask = cv2.imread('../input/b_mask.png')
+
+i1_mask = img1 * (b_mask / 255)
+cv2.imwrite('../output/report/freq_img1_mask.png', i1_mask)
+
+i2_mask = img2 * (1 - (b_mask / 255))
+cv2.imwrite('../output/report/freq_img2_mask.png', i2_mask)
 
 #3.1
 

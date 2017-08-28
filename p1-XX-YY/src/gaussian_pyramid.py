@@ -9,12 +9,11 @@ import math
 def gaussianPyramid(img, lvl):
     gPyramid = []
     gPyramid.append(img)
+    lvl -= 1
 
     aux = img
 
     for i in range(lvl):
-        cv2.imwrite('../output/p1-2-2-{}.png'.format(i), aux)
-
         aux = pyrContract(aux)
         gPyramid.append(aux)
 
