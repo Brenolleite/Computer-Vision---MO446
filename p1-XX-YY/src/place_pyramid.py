@@ -13,11 +13,9 @@ def placePyramid(img, lvl):
 
         aux = pyrContract(current_img, low_pass)
 
-        cv2.imwrite('../output/p1-2-3-{}.png'.format(i), aux)
         lPyramid.append(aux)
 
     i += 1
-    cv2.imwrite('../output/p1-2-3-{}.png'.format(i), gPyramid[i])
     lPyramid.append(gPyramid[i])
 
     return lPyramid
