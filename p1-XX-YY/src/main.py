@@ -8,6 +8,7 @@ import convolution as cv
 import gaussian_pyramid as gPyr
 import place_pyramid as pPyr
 import blending as bl
+import fourier as ft
 
 # Python uses the BGR color scheme
 input = cv2.imread('../input/messi5.png')
@@ -43,46 +44,17 @@ b_mask = cv2.imread('../input/b_mask.png')
 
 # cv2.imwrite('../output/blended.png', output)
 
-# Helpers
+#3.1
 
-# OpenCV LaPlace Pyramid
-def CVLaPlacePyramid(img, lvl):
-    lPyramid = []
-    gauPyramid = gPyr.pyrDown(img, lvl)
+# The type of file (0) is necessary in this case
+input = cv2.imread('../input/frequency.png', 0)
 
-    for i in range(lvl - 1):
-        low_pass = gPyr.pyrUpLvl(gauPyramid[i + 1])
-        current_img = gauPyramid[i]
+magnitude, phase = transform(input)
 
-        aux = CVLaPlacePyramidContract(current_img, low_pass)
+cv2.imwrite('../output/phase.png', phase)
+cv2.imwrite('../output/magnitude.png', magnitude)
 
-        cv2.imwrite('../output/OpenCV-LaPlace-Contract-{}.png'.format(i), aux)
-        lPyramid.append(aux)
+phase_back = reconstruct(magnitude, phase, "phase", 1, "desc")
 
-    i += 1
-    cv2.imwrite('../output/OpenCV-LaPlace-Contract-{}.png'.format(i), gauPyramid[i])
-    lPyramid.append(gauPyramid[i])
-
-    return lPyramid
-
-def CVLaPlacePyramidContract(current_img, low_pass):
-    while low_pass.shape[0] < current_img.shape[0]:
-        current_img = np.delete(current_img,(-1),axis=0)
-    while low_pass.shape[1] < current_img.shape[1]:
-        current_img = np.delete(current_img,(-1),axis=1)
-
-    cv2.imwrite('../output/1.png', current_img)
-    cv2.imwrite('../output/2.png', low_pass)
-
-    aux = current_img
-    aux = aux.astype(np.int16)
-
-    for i in range(aux.shape[0]):
-        for j in range(aux.shape[1]):
-            for k in range(aux.shape[2]):
-                pixel = aux.item(i, j, k) - low_pass.item(i, j, k)
-                aux.itemset((i, j, k), pixel)
-
-    cv2.imwrite('../output/3.png', aux)
-
-    return aux
+cv2.imwrite('../output/phase_back.png', phase_back)
+#cv2.imwrite('../output/magnitude_back.png', magnitude_back)

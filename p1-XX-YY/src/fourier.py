@@ -1,5 +1,30 @@
 import cv2
 import numpy as np
+import heapq
+
+def clearValues(matrix, perc, min):
+    # Create 1D array to find min
+    array = matrix.flatten()
+
+    # Find nth value depending on %
+    nth = int((array.shape[0]*perc)/100)
+
+    # In decresing order change values
+    if min == "desc":
+        array = array * -1
+        matrix = matrix * -1
+
+    # Find nth min element
+    cut = heapq.nsmallest(nth, array)[-1]
+
+    # Zeroing values
+    matrix[matrix > cut] = 0
+
+    # In decresing order change values back
+    if min == "desc":
+        matrix = matrix * -1
+
+    return matrix
 
 def transform(img):
     # Uses discrete fourier transformation
@@ -14,10 +39,16 @@ def transform(img):
 
     return magnitude, phase
 
-def reconstruct(magnitude, phase, perc):
+def reconstruct(magnitude, phase, type, perc, order):
     # Reconstruct values of magnitude and phase
     magnitude = np.exp(magnitude/20)
     phase = np.exp(phase/40)
+
+    # Apply the porcentage into the frequency
+    if(type == "phase"):
+        phase = clearValues(phase, perc, order)
+    else:
+        magnitude = clearValues(magnitude, perc, order)
 
     # Creates comples function
     func = magnitude * np.exp(1j*phase)
@@ -35,16 +66,3 @@ def reconstruct(magnitude, phase, perc):
     image_back = cv2.warpAffine(image_back, rotation, (width, height))
 
     return image_back
-
-# The type of file (0) is necessary in this case
-input = cv2.imread('../input/p1-1-0.png', 0)
-
-magnitude, phase = transform(input)
-
-cv2.imwrite('../output/phase.png', phase)
-cv2.imwrite('../output/magnitude.png', magnitude)
-
-phase_back = reconstruct(magnitude, phase, 100)
-
-cv2.imwrite('../output/back.png', phase_back)
-#cv2.imwrite('../output/magnitude_back.png', magnitude_back)
