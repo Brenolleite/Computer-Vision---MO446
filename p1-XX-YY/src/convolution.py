@@ -14,13 +14,13 @@ def convolve(input, kernel):
         convolution(input, kernel, output, -1)
     else:
         for i in range(3):
-            convolution(input[:,:,i], kernel, output, i)
+            convolution(input[:, :, i], kernel, output, i)
 
     return output
 
 def convolution(input, kernel, output, channel):
     # Flips kernel to convolve
-    kernel = np.flip(np.flip(kernel,0),1)
+    kernel = np.flip(np.flip(kernel, 0), 1)
 
     # Get image information
     heightI, widthI = input.shape[:2]
