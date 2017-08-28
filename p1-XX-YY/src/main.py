@@ -79,12 +79,12 @@ cv2.imwrite('../output/report/freq_img2_mask.png', i2_mask)
 # The type of file (0) is necessary in this case
 input = cv2.imread('../input/frequency.png', 0)
 
-magnitude, phase = ft.transform(input)
+magnitude, phase = ft.transform(input, True)
 
 cv2.imwrite('../output/phase.png', phase)
 cv2.imwrite('../output/magnitude.png', magnitude)
 
-phase_back = ft.reconstruct(magnitude, phase, "phase", 1, "desc")
+phase_back = ft.reconstruct(magnitude, phase, "phase", 1, "desc", True)
 
 cv2.imwrite('../output/phase_back.png', phase_back)
 #cv2.imwrite('../output/magnitude_back.png', magnitude_back)
