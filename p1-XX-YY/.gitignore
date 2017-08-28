@@ -1,6 +1,8 @@
 *.aux
 *.log
 *.gz
+output/*
 .DS_Store
 src/__pycache__/*
+.vscode/*
 *.#*
