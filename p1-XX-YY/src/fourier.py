@@ -10,24 +10,31 @@ def transform(img):
 
     # Gets magnitude and phase
     magnitude = 20*np.log(cv2.magnitude(dft_center[:, :, 0], dft_center[:, :, 1]))
-    phase = 20*np.log(cv2.phase(dft_center[:, :, 0], dft_center[:, :, 1], True))
+    phase = 40*np.log(cv2.phase(dft_center[:, :, 0], dft_center[:, :, 1], True))
 
     return magnitude, phase
 
 def reconstruct(magnitude, phase, perc):
-    # Reshifts the images out off center
-    magnitude = np.fft.ifftshift(magnitude)
-    phase = np.fft.ifftshift(phase)
+    # Reconstruct values of magnitude and phase
+    magnitude = np.exp(magnitude/20)
+    phase = np.exp(phase/40)
 
-    # Performs inverse discrete fourier transformation
-    idft_magnitude = cv2.idft(magnitude)
-    idft_phase = cv2.idft(phase)
+    # Creates comples function
+    func = magnitude * np.exp(1j*phase)
 
-    # Performs inverse magnitude/phase process
-    img_magnitude = cv2.magnitude(idft_magnitude[:, :, 0], idft_magnitude[:, :, 1])
-    img_phase = cv2.phase(idft_phase[:, :, 0], idft_phase[:, :, 1])
+    # Executes inverse fourier transformation
+    idf = np.fft.ifft2(func)
 
-    return img_magnitude, img_phase
+    # Create new image
+    image_back = np.abs(idf)
+
+    # Rotate image because of shift operation
+    height, width = image_back.shape
+    center = (width/2, height/2)
+    rotation = cv2.getRotationMatrix2D(center, 180, 1)
+    image_back = cv2.warpAffine(image_back, rotation, (width, height))
+
+    return image_back
 
 # The type of file (0) is necessary in this case
 input = cv2.imread('../input/p1-1-0.png', 0)
@@ -37,7 +44,7 @@ magnitude, phase = transform(input)
 cv2.imwrite('../output/phase.png', phase)
 cv2.imwrite('../output/magnitude.png', magnitude)
 
-magnitude_back, phase_back = reconstruct(magnitude, phase, 100)
+phase_back = reconstruct(magnitude, phase, 100)
 
-cv2.imwrite('../output/phase_back.png', phase_back)
-cv2.imwrite('../output/magnitude_back.png', magnitude_back)
+cv2.imwrite('../output/back.png', phase_back)
+#cv2.imwrite('../output/magnitude_back.png', magnitude_back)
