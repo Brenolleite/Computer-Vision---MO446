@@ -39,10 +39,14 @@ for i in range(len(output)):
 
 # 2.3
 
+# Image numbering control
+k = 0
+
 output = pPyr.placePyramid(cp.copy(input), 3)
 
 for i in range(len(output)):
-    cv2.imwrite('../output/p1-2-3-{}.png'.format(i), output[i])
+    cv2.imwrite('../output/p1-2-3-{}.png'.format(k), output[i])
+    k += 1
 
 # 2.3 Reconstruct
 
@@ -51,22 +55,23 @@ for j in range(len(output) - 1,  0, -1):
     aux = pPyr.pyrExpand(aux, output[j - 1])
 
 i += 1
-cv2.imwrite('../output/report/p1-2-3-reconstruction.png', aux)
+cv2.imwrite('../output/report/p1-2-3-{}.png'.format(k), aux)
+k += 1
 
 # 2.4
 
-img1 = cv2.imread('../input/img1.png')
-img2 = cv2.imread('../input/img2.png')
-b_mask = cv2.imread('../input/b_mask.png')
+img1 = cv2.imread('../input/p1-2-4-0.png')
+img2 = cv2.imread('../input/p1-2-4-1.png')
+b_mask = cv2.imread('../input/p1-2-4-2.png')
 
 output = bl.blend(img1, img2, b_mask, 4)
 cv2.imwrite('../output/p1-2-4.png', output)
 
 # 3.2
 
-img1 = cv2.imread('../input/img1.png')
-img2 = cv2.imread('../input/img2.png')
-b_mask = cv2.imread('../input/b_mask.png')
+img1 = cv2.imread('../input/p1-2-4-0.png')
+img2 = cv2.imread('../input/p1-2-4-1.png')
+b_mask = cv2.imread('../input/p1-2-4-2.png')
 
 i1_mask = img1 * (b_mask / 255)
 cv2.imwrite('../output/report/freq_img1_mask.png', i1_mask)
