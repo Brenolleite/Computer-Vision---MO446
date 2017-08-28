@@ -15,10 +15,7 @@ input = cv2.imread('../input/p1-1-0.png')
 
 # 2.1
 
-filter = []
-filter.append(mask.g_3)
-filter.append(mask.g_7)
-filter.append(mask.g_15)
+filter = [mask.g_3, mask.g_7, mask.g_15]
 
 time = ut.time()
 
