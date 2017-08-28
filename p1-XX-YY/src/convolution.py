@@ -38,6 +38,6 @@ def convolution(input, kernel, output, channel):
             value = np.sum(input[i - diff : i + diff + 1, j - diff : j + diff + 1] * kernel)
 
             if(channel == -1):
-                output[i-diff,j-diff] = value
+                output[i-diff, j-diff] = value
             else:
-                output[i-diff,j-diff,channel] = value
+                output[i-diff, j-diff, channel] = value
