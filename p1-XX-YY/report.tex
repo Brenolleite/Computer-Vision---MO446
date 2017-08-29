@@ -197,7 +197,7 @@ This pixels might be extract in two different ways, greatest or lowest (e.g. 25\
 In order to show the differences when changing the phase or magnitude image, we will divide the experiments into two parts:
 
 \begin{itemize}
-	\item \textbf{Phase} - Fist we will be changing the phase image and performing the inverse of Fourier. In this experiment we were expecting to the position of the objects on the image to move. The Figure \ref{fig:phaseINC} show the results when using only the lowest values of the phase image.
+	\item \textbf{Phase} - First we will be changing the phase image and performing the inverse of Fourier. In this experiment we were expecting to the position of the objects on the image to move. The Figure \ref{fig:phaseINC} show the results when using only the lowest values of the phase image.
 
 	\begin{figure}[!h]
 		\centering
@@ -442,5 +442,50 @@ In order to use a colored image, the Fourier transformation was processed three 
 \newpage
 
 \textbf{3.2 )} Blending \\
+
+In order to do the blending on the frequency domain, we first transformed both images from spatial to frequency domain, using Fourier transform. After this, we have two vectors for each image representing the magnitude and phase values. Our first approach was to sum the vectors together, this approach obviously did not work (Figure \ref{fig:fourier1}). The phase vector, responsible to the imaginary part (on polar coordinates), could not be summed in this way, the reason is we would lose information. \\
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.5]{report/Fourier.png}}%
+	}%
+	\caption{Blending adding phase and magnitude vectors.}
+	\label{fig:fourier1}
+\end{figure}
+
+After this approach, we have tried to implement the blending using a different values for the images into the magnitude as phase. As example: we would get 50\% of highest values of both images and them sum them up. We were expecting that the sum of the zeros, inserted on the 50\% lowest values, would work using a certain mask. This approach was not a disaster, but it still a bad blending over all (Figure \ref{fig:fourier2}). \\
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.5]{report/Fourier50.png}}%
+	}%
+	\caption{Blending adding phase and magnitude vectors using only 50\% highest values.}
+	\label{fig:fourier2}
+\end{figure}
+
+Also these tries, we started thinking about our results. Our conclusion was that no merging between the phase and magnitude would work as a blending, moreover, we concluded that our approach was not working as expected. Looking at the images we could see that a great number of information was being lost, even just adding them or trying to use a mixture of pixels from magnitude and phase. \\
+
+After some thinking, we figure it that the summation should work. However, we were dealing with complex numbers and we were adding the phase as it was a normal number. In order to fix it, we first construct a \emph{numpy} complex function using $magnitude * np.exp(1j*phase)$, in which $magnitude$ and $phase$ are vectors. After creating one function for each image, we were able to sum them up, which the \emph{numpy} would do using the correct complex summation. The Figure \ref{fig:blending} shows the result of this process.
+
+\begin{figure}[!h]
+	\centering
+	{%
+		\setlength{\fboxsep}{1pt}%
+		\setlength{\fboxrule}{1pt}%
+		\fbox{\includegraphics[scale=0.5]{output/p1-3-2-0.png}}%
+	}%
+	\caption{Blended image using the \emph{numpy} summation of complex numbers.}
+	\label{fig:fourier2}
+\end{figure}
+
+The generated image is a blend of two images, but if it is compared to the blending generated using pyramids (Figure \ref{fig:aksda}) the contrast of the images are too high. After that some filtering approaches were tried to solve the contrast, but nothing gave a better result. \\
+
+We then tried to use the pyramids with the frequency domain, but we had problem with the up sampling and down sampling. Because we could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information from the image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not have enough time to explore more this blending, but our intuition is that it might be possible if some ``tricks'' are applied to the frequency domain in order to blend the images. 
 
 \end{document}
