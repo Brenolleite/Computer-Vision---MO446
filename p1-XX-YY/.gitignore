@@ -8,3 +8,4 @@ src/__pycache__/*
 *.#*
 *.fls
 *.fdb_latexmk
+*.orig

@@ -55,7 +55,7 @@ for j in range(len(output) - 1,  0, -1):
     aux = pPyr.pyrExpand(aux, output[j - 1])
 
 i += 1
-cv2.imwrite('output/report/p1-2-3-{}.png'.format(k), aux)
+cv2.imwrite('output/p1-2-3-{}.png'.format(k), aux)
 k += 1
 
 # 2.4
@@ -65,7 +65,14 @@ img2 = cv2.imread('input/p1-2-4-1.png')
 b_mask = cv2.imread('input/p1-2-4-2.png')
 
 output = bl.blend(img1, img2, b_mask, 4)
-cv2.imwrite('output/p1-2-4.png', output)
+cv2.imwrite('output/p1-2-4-0.png', output)
+
+img1 = cv2.imread('input/p1-2-4-3.png')
+img2 = cv2.imread('input/p1-2-4-4.png')
+b_mask = cv2.imread('input/p1-2-4-5.png')
+
+output = bl.blend(img1, img2, b_mask, 4)
+cv2.imwrite('output/p1-2-4-1.png', output)
 
 #3.1
 

@@ -63,53 +63,68 @@ Throughout this project some images were used as input to test the algorithms. F
 
 \newpage
 
-The Figures in \ref{fig:blending} are used for the blending exercises (\textbf{2.4} and \textbf{3.2}), all of them have dimensions 540x392 and are colored. Note that the images are slightly rotated, this will affect some results which comes from the image and not by any error on the process itself. \\
+Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf{2.4} and \textbf{3.2}), their dimensions is 540x392. Note that the images are slightly rotated, this will affect some results which comes from the image and not by any error on the process itself.\\
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[Image 1 (\textbf{p1-2-4-0})]{
+	\subfloat[(\textbf{p1-2-4-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.75]{input/p1-2-4-0}}
+			\fbox{\includegraphics[scale=0.5]{input/p1-2-4-0}}
 		}
 	}
 	\quad
-	\subfloat[Image 2 (\textbf{p1-2-4-1})]{
+	\subfloat[(\textbf{p1-2-4-1})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.75]{input/p1-2-4-1}}
+			\fbox{\includegraphics[scale=0.5]{input/p1-2-4-1}}
 		}
 	}
-	\caption{Images 1 and 2 used for the blending operations.}
+	\quad
+	\subfloat[(\textbf{p1-2-4-2})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-2}}
+		}
+	}
+	\caption{Images (a), (b) and (c) used for the blending operations.}
 	\label{fig:blending}
 \end{figure}
-
+	
 \textbf{\LARGE Question 2 - Spatial blending}\\
 
-\textbf{2.1 )} In the spectrum of image processing, convolution can be understood as the action of applying a mask to an image, in this case every pixel in the image is affected by the weighted sum of the filter applied to the pixel neighborhood. This approach requires some special attention when dealing with the edges of the image, since the application of the mask will overshoot the image borders, our solution to this problem was to extend the original image filling it's new borders with zeros, as seen in Figure \ref{fig:make-border}, by doing so the convolution simply ignore those values and don't account them into the result, a minor downside to this approach is the lessen effect of the mask around the edges, this solution was chosen for it's simplicity to implement. Additionally the convolution was tested with three smoothing masks, 3x3, 7x7 and 15x15, in comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. As expected the masks smooth the edges around the image and suffers with a darkening close to the borders as seeing in Figure \ref{fig:p1-2-1-0}, with bigger masks the image suffered more distortion to the point of loosing all of its fine details, see Figure \ref{fig:p1-2-1-2}, the loss of such details is accounted by the size of the neighborhood that affect each pixel, thus a larger mask smooths more than a smaller one.\\
+\textbf{2.1 )} In the spectrum of image processing, convolution can be understood as the action of applying a mask to an image, in this case every pixel in the image is affected by the weighted sum of the filter applied to the pixel neighborhood. This approach requires some special attention when dealing with the edges of the image, since the application of the mask will overshoot the image borders, our solution to this problem was to extend the original image filling its new borders with zeros, as seen in Figure \ref{fig:make-border}, by doing so the convolution simply ignore those values and don't account them into the result, a minor downside to this adpproach is the lessen effect of the mask around the edges, this solution was chosen for its simplicity to implement. Additionally the convolution was tested with three smoothing masks, 3x3, 7x7 and 15x15, in comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. As expected the masks smooth the edges around the image and suffers with a darkening close to the borders as seeing in Figure \ref{fig:p1-2-1-0}, with bigger masks the image suffered more distortion to the point of loosing all of its fine details, see Figure \ref{fig:p1-2-1-2}, the loss of such details is accounted by the size of the neighborhood that affect each pixel, thus a larger mask smooths more than a smaller one.\\
 
 \begin{figure}[!h]
 	\centering
-	{%
-		\setlength{\fboxsep}{1pt}%
-		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.7]{output/p1-2-1-0}}%
-	}%
-	\caption{Convolution with 3x3 mask (\textbf{p1-2-1-0})}
-	\label{fig:p1-2-1-0}
-\end{figure}
-
-\begin{figure}[!h]
-	\centering
-	{%
-		\setlength{\fboxsep}{1pt}%
-		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.7]{output/p1-2-1-2}}%
-	}%
-	\caption{Convolution with 15x15 mask (\textbf{p1-2-1-2})}
-	\label{fig:p1-2-1-2}
+	\subfloat[(\textbf{p1-2-1-0})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{output/p1-2-1-0}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-1-1})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{output/p1-2-1-1}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-1-2})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{output/p1-2-1-2}}
+		}
+	}
+	\caption{Images (a), (b) and (c) are the result of the convolution with gaussian masks, respectively 3x3, 7x7 and 15x15}
+	\label{fig:convolution}
 \end{figure}
 
 \begin{table}[!h]
@@ -125,16 +140,149 @@ The Figures in \ref{fig:blending} are used for the blending exercises (\textbf{2
  \label{table:convolution-opencv}
  \end{table}
 
-\textbf{2.2 )} To store the gaussian and laplacian pyramids of this project we chose a list, in which each node of it holds a level of the pyramid. Since the data structure is a list the access method is as in a array, $pyramid[i]$ returns the image in the ith pyramid level, disregarding then, the necessity to implement an access function. The strategy chosen to implement the interpolation was the bilinear interpolation. These decisions were taken regarding the time to implement and simplicity to understand. It is also worth noting that due to some confusion about the meaning of Up and Down, these functions were renamed as follow: Expand referring to the action of expand the image width and height, and Contract analogously. Figure \ref{fig:guassianPyramid} shows the pyramid formed with the implemented function. \\
+\textbf{2.2 )} To store the gaussian and laplacian pyramids of this project we chose a list, in which each node of it holds a level of the pyramid. Since the data structure is a list the access method is as in a array, $pyramid[i]$ returns the image in the ith pyramid level, disregarding then, the necessity to implement an access function. The strategy chosen to implement the interpolation was the bilinear interpolation. These decisions were taken regarding the time to implement and simplicity to understand. It is also worth noting that due to some confusion about the meaning of Up and Down, these functions were renamed as follow: Expand referring to the action of expand the image width and height, and Contract analogously. Figure \ref{fig:gaussianPyramid} shows the pyramid formed with the implemented function. \\
 
-\textbf{2.3 )} The laplacian pyramid demanded more attention to it's details, such as the fact that the last level of the pyramid is a copy of the same level at the gaussian pyramid. This particular level is used to perform the reconstruction of the original image, first the image is extended and interpolated, to match the previous level size, then it is summed with the previous level of the pyramid, the repetition of these steps result in the original image that was compressed in the pyramid, Figure \ref{fig:placePyramid} shows the laplacian pyramid. \\
+\begin{figure}[!h]
+	\centering
+	\subfloat[(\textbf{p1-2-2-0})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.75]{output/p1-2-2-0}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-2-1})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.75]{output/p1-2-2-1}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-2-2})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.75]{output/p1-2-2-2}}
+		}
+	}
+	\caption{Images (a), (b) and (c) composing the Gaussian Pyramid formed from image \textbf{p1-1-0}}
+	\label{fig:gaussianPyramid}
+\end{figure}
 
-\textbf{2.4 )} In this exercise the blending was achieved by the following steps:
+\textbf{2.3 )} The laplacian pyramid demanded more attention to its details, such as the fact that the last level of the pyramid is a copy of the same level at the gaussian pyramid. This particular level is used to perform the reconstruction of the original image, first the image is extended and interpolated, to match the previous level size, then it is summed with the previous level of the pyramid, the repetition of these steps result in the original image that was compressed in the pyramid, Figure \ref{fig:placePyramid} shows the laplacian pyramid. \\
 
-Starting at the top of the laplacian pyramid
-Apply the mask and its negative to each image
-blend the images and reconstruct the previous pyramid level
-repeat
+\begin{figure}[!h]
+	\centering
+	\subfloat[(\textbf{p1-2-3-0})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.75]{output/p1-2-3-0}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-3-1})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.75]{output/p1-2-3-1}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-3-2})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.75]{output/p1-2-3-2}}
+		}
+	}
+	\caption{Images (a), (b) and (c) composing the LaPlacian Pyramid formed from image \textbf{p1-1-0}}
+	\label{fig:placePyramid}
+\end{figure}
+
+
+\textbf{2.4 )} The process of blending two images implement here is referred as "Splining Regions of Arbitrary Shape" in Burt and Adelson's paper, it consists of three gaussian pyramids $GA$, $GB$ and $GM$, and three laplacian pyramids $LA$, $LB$ and $LS$, in which $LS$ is the resulting pyramid and the image at its base is the blended image. The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simultaneously, from their top it multiply each lower resolution image with the equivalent mask (Figure \ref{fig:blendingProcess} (a) and (b)), sum the resulting images with each other (Figure \ref{fig:blendingProcess} (c)) and expand the resulting image, repeat these steps and the resulting image at the base of $LS$ is the blended image. The core point of this process is the gaussian filter applied to the mask that smooth its borders and the expand operation performed in the pyramid. Two tests were performed reproducing the original results, in Figure \ref{fig:blending} (a) and (b) were merged using Figure \ref{fig:blending} (c) as mask and Figure \ref{fig:blendingFurther} (a) and (b) were merged using Figure \ref{fig:blendingFurther} (c) as mask, resulting in Figure \ref{fig:blendingResult} (b).
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[(\textbf{report-p1-2-4-0})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=1]{output/p1-2-4-0}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{report-p1-2-4-1})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=1]{output/p1-2-4-1}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{report-p1-2-4-2})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=1]{output/p1-2-4-1}}
+		}
+	}
+	\caption{Images (a) and (b) are the result of the blending operation.}
+	\label{fig:blendingProcess}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[(\textbf{p1-2-4-3})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-3}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-4-4})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-4}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-4-5})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-5}}
+		}
+	}
+	\caption{Images (a), (b) and (c) used for further testing the blending operations.}
+	\label{fig:blendingFurther}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[(\textbf{p1-2-4-0})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{output/p1-2-4-0}}
+		}
+	}
+	\quad
+	\subfloat[(\textbf{p1-2-4-1})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{output/p1-2-4-1}}
+		}
+	}
+	\caption{Images (a) and (b) are the result of the blending operation.}
+	\label{fig:blendingResult}
+\end{figure}
 
 \newpage
 
@@ -150,7 +298,7 @@ In order to explore the fourier space, we implemented two functions. One to tran
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[Phase Image (\textbf{p1-3-1-0})]{
+	\subfloat[(\textbf{p1-3-1-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -159,7 +307,7 @@ In order to explore the fourier space, we implemented two functions. One to tran
 		\label{fig:phase}
 	}
 	\quad
-	\subfloat[Magnitude Image (\textbf{p1-3-1-1})]{
+	\subfloat[(\textbf{p1-3-1-1})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -167,7 +315,7 @@ In order to explore the fourier space, we implemented two functions. One to tran
 		}
 		\label{fig:magnitude}
 	}
-	\caption{Phase and Magnitude images created on the fourier transform using image \textbf{p0-1-0}.}
+	\caption{(a) Phase and (b) Magnitude images created on the fourier transform using image \textbf{p0-1-0}.}
 	\label{fig:mag-phase}
 \end{figure}
 
