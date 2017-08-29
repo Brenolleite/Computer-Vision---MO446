@@ -102,7 +102,7 @@ for perc in percents:
     cv2.imwrite('output/p1-3-1-{}.png'.format(index), img_frequency)
     index += 1
 
-# Creating changes using incremental and magnitude phase
+# Creating changes using incremental and changing magnitude
 for perc in percents:
     magnitude, phase = ft.transform(cp.copy(input), (perc == 100))
 
@@ -110,7 +110,7 @@ for perc in percents:
     cv2.imwrite('output/p1-3-1-{}.png'.format(index), img_frequency)
     index += 1
 
-# Creating changes using decreasing and changing phase
+# Creating changes using decreasing and changing magnitude
 for perc in percents:
     magnitude, phase = ft.transform(cp.copy(input), (perc == 100))
 
