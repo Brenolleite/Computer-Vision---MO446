@@ -17,8 +17,6 @@ input = cv2.imread('input/p1-1-0.png')
 
 filter = [mask.g_3, mask.g_7, mask.g_15]
 
-time = ut.time()
-
 for i in range(len(filter)):
     time = ut.time()
     output = cv.convolve(cp.copy(input), filter[i])
