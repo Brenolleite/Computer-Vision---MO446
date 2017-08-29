@@ -6,8 +6,11 @@ def clearValues(matrix, perc, order):
     # Create 1D array to find min
     array = np.trim_zeros(matrix.flatten())
 
-    # Find nth value depending on %
-    nth = int((array.shape[0]*perc)/100)
+    if perc != -1:
+        # Find nth value depending on %
+        nth = int((array.shape[0]*perc)/100)
+    else:
+        nth = 1;
 
     # In decresing order change values
     if order == "desc":
