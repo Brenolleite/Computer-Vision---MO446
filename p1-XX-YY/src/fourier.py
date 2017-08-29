@@ -10,7 +10,7 @@ def clearValues(matrix, perc, order):
         # Find nth value depending on %
         nth = int((array.shape[0]*perc)/100)
     else:
-        nth = 1;
+        nth = 1
 
     # In decresing order change values
     if order == "desc":
