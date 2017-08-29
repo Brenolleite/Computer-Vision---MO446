@@ -288,17 +288,17 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 
 \textbf{\LARGE Question 3 - Frequency Blending} \\
 
-In this question, we will present some experiments developed using \emph{numpy} and \emph{OpenCV} function in order to transform the image from the spatial domain to the frequency domain. The process will be divided into two different experiments. \\
+In this question, we will present some experiments developed using \emph{numpy} and \emph{OpenCV} functions in order to transform the image from spatial domain to frequency domain. The process will be divided into two different experiments for better readability. \\
 
-On the first one (\textbf{3.1}), we will use the transformation and make some modifications to the phase and magnitude in order to see the impact on the image recontructed. On the second experiment (\textbf{3.2}), we will be blending the two images used into the question \textbf{4.2} in order to check how it is compared to the spatial blending. \\
+On the first one (\textbf{3.1}), we will be modifying the phase and magnitude in order to see the impact on the image recontructed on the Fourier transform. On the second experiment (\textbf{3.2}), we will be blending the two images used in Question \textbf{4.2} in order to compare frequency and spatial blending. \\
 
 \textbf{3.1 )} Exploring Fourier Space \\
 
-In order to explore the fourier space, we implemented two functions. One to transform an image into magnitude and phase, and the other to reconstruct the image from magnitude and phase. The Figure \ref{fig:mag-phase} shows the magnitude and phase obtained transforming the Figure \ref{fig:p1-1-0} to the frequency domain. \\
+To explore the Fourier space, we implemented two functions different functions. The first one is responsible to transform an image into vectors of magnitude and phase, while the other is responsible to reconstruct the image from the magnitude and phase vectors. The Figure \ref{fig:mag-phase} shows the magnitude and phase obtained transforming the Figure \ref{fig:p1-1-0} to the frequency domain. \\
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[(\textbf{p1-3-1-0})]{
+	\subfloat[Phase Image (\textbf{p1-3-1-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -307,7 +307,7 @@ In order to explore the fourier space, we implemented two functions. One to tran
 		\label{fig:phase}
 	}
 	\quad
-	\subfloat[(\textbf{p1-3-1-1})]{
+	\subfloat[Magnitude Image (\textbf{p1-3-1-1})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -315,19 +315,17 @@ In order to explore the fourier space, we implemented two functions. One to tran
 		}
 		\label{fig:magnitude}
 	}
-	\caption{(a) Phase and (b) Magnitude images created on the fourier transform using image \textbf{p0-1-0}.}
+	\caption{Images representing phase and magnitude on the Fourier transform using image \textbf{p0-1-0}.}
 	\label{fig:mag-phase}
 \end{figure}
 
-In order to create these images, the results of the fourier transform were shifted to the center and then reduced by the functions, $20*log_e(magnitude)$ and $40*log_e(phase)$. These values were used to mantain the values between 0 and 255, which could be showed as an image. These values are translated back when doing the reverse of the fourier transform. \\
+In order to represent these images, the results from the Fourier transform were shifted to the center and also reduced by the functions, $20*log_e(magnitude)$ and $40*log_e(phase)$, in which $magnitude$ and $phase$ are vectors from the transformation. The reduction is necessary to keep the numbers in a range from 0 to 255, which is showed into the image. This normalization does not affect the transformation, the values are converted back on before the reverse Fourier transform. \\
 
-The Figure \ref{fig:phase} shows the phase of the image, it is hard to obtain some information from this image. However, it is respective to the directions of the image. Moreover, the Figure \ref{fig:fig:magnitude} shows the values to the magnitude, the intensity shows the values of the magnitude. In both Figures, light pixels indicates high values.
+The Figure \ref{fig:phase} represents the phase, it is quite hard to obtain any information from this representation. Moreover, the Figure \ref{fig:magnitude} represents the magnitude of the image, brightness on the magnitude image represents high frequencies on the original image. In this way, the magnitude indicates that image \textbf{p1-1-0} has more high than low frequencies, the intuition comes from the high brightness on the magnitude image. \\
 
-We can have a little more information with the magnitude image, it is noticeably that the image is bright which indicates that the image on Figure \ref{fig:p0-1-0} has more high frequency than low frequencies. \\
+In the next experiments, we will be modifying the values of the phase and magnitude before the reverse Fourier transform, this process should reconstruct the original image when using the same phase and image. In order to modify the magnitude, we used a percentage of the pixels from the magnitude or phase, the rest of the pixels were zeroed out. In the experiment this process uses only 1 pixel, 25\%, 50\%, 75\% and 100\% of the pixels. \\
 
-In the next experiments, we will be changing the values of the phase and magnitude images before doing the reverse of Fourier transform. This process should reconstruct the original image, we will be changing the images by percentages. So, in every experiment this process was made using 1 pixel, 25\%, 50\%, 75\% and 100\% of the pixels from the phase or magnitude image.
-
-This pixels might be extract in two different ways, greatest or lowest (e.g. 25\% lowest pixels on phase image). In the image reconstruct using 100\% of the pixels all the images were perfectly reconstruct, a effect which was expected (Figure \ref{fig:inverse}). All the following experiments were made using the Figure \ref{fig:p1-1-0} in grayscale, the grayscale was used for more simplicity and further on one experiment will show the results in a colored image.
+This pixels used might be in two different ways, highest or lowest, e.g. 25\% lowest pixels on phase image would maintain the values and the rest would be zeroed out. As expected, all the images reconstruct using 100\% of the pixels in magnitude and phase were perfectly reconstruct (Figure \ref{fig:inverse}). The following experiments were made using the Figure \ref{fig:p1-1-0} in grayscale, the grayscale was used for more simplicity and further on one experiment will show the same results in a colored image to prove algorithm capacities. \\
 
 
 \begin{figure}[!h]
@@ -337,15 +335,15 @@ This pixels might be extract in two different ways, greatest or lowest (e.g. 25\
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.55]{output/p1-3-1-6}}%
 	}%
-	\caption{Reconstructed image after inverse Fourier transform using 100\% of pixels in magnitude and phase images. (\textbf{p1-3-1-6, p1-3-1-11, p1-3-1-16, and p1-3-1-21})}
+	\caption{Reconstructed image from inverse Fourier transform using 100\% of pixels in magnitude and phase. (\textbf{p1-3-1-6, p1-3-1-11, p1-3-1-16, and p1-3-1-21})}
 	\label{fig:inverse}
 \end{figure}
 
 
-In order to show the differences when changing the phase or magnitude image, we will divide the experiments into two parts:
+In order to show the differences when modifying the phase or magnitude image, we will divide the experiments into two parts, also for better readability. \\
 
 \begin{itemize}
-	\item \textbf{Phase} - First we will be changing the phase image and performing the inverse of Fourier. In this experiment we were expecting to the position of the objects on the image to move. The Figure \ref{fig:phaseINC} show the results when using only the lowest values of the phase image.
+	\item \textbf{Phase} - First we will be modifying the phase image and performing the inverse Fourier transform. In this experiment we were expecting changes on the position of the objects. The Figure \ref{fig:phaseINC} show the results when using the lowest values of the phase image. \\
 
 	\begin{figure}[!h]
 		\centering
@@ -358,7 +356,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phaseinc1}
 		}
 		\quad
-		\subfloat[Lowest 25\% (\textbf{p1-3-1-3})]{
+		\subfloat[Lowest 25\% pixels (\textbf{p1-3-1-3})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -367,7 +365,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phaseinc25}
 		}
 		\quad
-		\subfloat[Lowest 50\% (\textbf{p1-3-1-4})]{
+		\subfloat[Lowest 50\% pixels (\textbf{p1-3-1-4})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -376,7 +374,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phaseinc50}
 		}
 		\quad
-		\subfloat[Lowest 75\% (\textbf{p1-3-1-5})]{
+		\subfloat[Lowest 75\% pixels (\textbf{p1-3-1-5})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -385,13 +383,11 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phaseinc75}
 		}
 		
-		\caption{Results of inverse Fourier transform using the lowest values on the phase image.}
+		\caption{Results obtained by inverse Fourier transform using lowest pixels on phase image.}
 		\label{fig:phaseINC}
 	\end{figure}
 	
-	As we can see, the image shows us information about the orientation of the image. In this way, selecting different values changes the orientation of the image. Another interesting fact is the upside down elements, which occurs because of the range in which the transform is working, from 0 to 380 degrees.
-	
-	In other hand, the Figure \ref{fig:phaseDESC} shows the results when using the highest values to the phase image.
+	As we can see the image shows us information about orientations, in this way, selecting different values changes the orientation of the image. Another interesting fact is the upside down elements on the reconstructed images, our intuition is that it happen because of the range in which the transform is working (0 to 380 degrees). In other hand, the Figure \ref{fig:phaseDESC} shows the results on the reverse transform using the highest pixels on phase image. \\
 	
 	\begin{figure}[!h]
 		\centering
@@ -404,7 +400,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phasedesc1}
 		}
 		\quad
-		\subfloat[Highest 25\% (\textbf{p1-3-1-8})]{
+		\subfloat[Highest 25\% pixels (\textbf{p1-3-1-8})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -413,7 +409,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phasedesc25}
 		}
 		\quad
-		\subfloat[Highest 50\% (\textbf{p1-3-1-9})]{
+		\subfloat[Highest 50\% pixels (\textbf{p1-3-1-9})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -422,7 +418,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phasedesc50}
 		}
 		\quad
-		\subfloat[Highest 75\% (\textbf{p1-3-1-10})]{
+		\subfloat[Highest 75\% pixels (\textbf{p1-3-1-10})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -431,13 +427,13 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:phasedesc75}
 		}
 		
-		\caption{Results of inverse Fourier transform using the greatest values on the phase image.}
+		\caption{Results obtained by inverse Fourier transform using highest pixels on phase image.}
 		\label{fig:phaseDESC}
 	\end{figure}
 	
-	An interesting feature is that the images contain complement information, as example the Figure \ref{fig:phasedesc25} has less information than Figure \ref{fig:phaseinc75}, which completes the information missing on the first image. The same effect might be seen in the other images.
+	An interesting feature is that the images contain complement information, as example the Figure \ref{fig:phasedesc25} has less information than Figure \ref{fig:phaseinc75} about the original image, however their information is complementary. The same effect might be seen in the other images as well. \\
 	
-	\item \textbf{Magnitude} -  In this part, we will be doing similar experiments, but this time, changing the magnitude image. In this part, we expect to see different results on the intensity of the image, which is described by the magnitude on the frequency domain. The Figure \ref{fig:magnitude} shows the different images obtained on the inverse Fourier transform.
+	\item \textbf{Magnitude} -  In this part we will be doing similar experiments, but this time, modifying the magnitude image. In addition, we expect to see different results on the intensity on the reconstructed images, which is described by the magnitude on the frequency domain. The Figure \ref{fig:magnitude} shows the different images obtained on the inverse Fourier transform. \\
 	
 	\begin{figure}[!h]
 		\centering
@@ -450,7 +446,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudeinc1}
 		}
 		\quad
-		\subfloat[Lowest 25\% (\textbf{p1-3-1-13})]{
+		\subfloat[Lowest 25\% pixels (\textbf{p1-3-1-13})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -459,7 +455,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudeinc25}
 		}
 		\quad
-		\subfloat[Lowest 50\% (\textbf{p1-3-1-14})]{
+		\subfloat[Lowest 50\% pixels (\textbf{p1-3-1-14})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -468,7 +464,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudeinc50}
 		}
 		\quad
-		\subfloat[Lowest 75\% (\textbf{p1-3-1-15})]{
+		\subfloat[Lowest 75\% pixels (\textbf{p1-3-1-15})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -477,11 +473,13 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudeinc75}
 		}
 		
-		\caption{Results of inverse Fourier transform using the lowest values on the magnitude image.}
+		\caption{Results obtained by inverse Fourier transform using the lowest pixels on magnitude image.}
 		\label{fig:magnitudeINC}
 	\end{figure}
 		
-	By doing this operation, we are using only the low frequency pixels from the image. The first row on image is almost all black pixels, the reason for that is the high frequency on the image used. However, we can see some of the contours being marked in Figure \ref{fig:magnitudeinc75}. This effect produces a image similar to the convolved image on Figure \ref{fig:conv}, which is a High-Pass-Filter. Moreover, The Figure \ref{fig:magnitudeDESC} show the same process using the high frequency on the magnitude.
+	Extracting the lowest pixels from magnitude is similar to use only low frequencies of the image, because of this the first row of Figure \ref{fig:magnitudeINC} is almost all black pixels. Proving our intuition looking at the magnitude brightness, as the original image has more high frequencies using low pixels does not describe a good portion of the image. \\
+	
+	However, we can see some of the contours being marked in Figure \ref{fig:magnitudeinc75}. This effect produces a image similar to the convolved image on Figure \ref{fig:conv}, which is a High-Pass-Filter. So, this process could be used as a high-pass filtering in the frequency domain. In contrast, The Figure \ref{fig:magnitudeDESC} show the same process using highest pixels on the magnitude image. \\
 	
 	\begin{figure}[!h]
 		\centering
@@ -494,7 +492,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudedesc1}
 		}
 		\quad
-		\subfloat[Highest 25\% (\textbf{p1-3-1-18})]{
+		\subfloat[Highest 25\% pixels (\textbf{p1-3-1-18})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -503,7 +501,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudedesc25}
 		}
 		\quad
-		\subfloat[Highest 50\% (\textbf{p1-3-1-19})]{
+		\subfloat[Highest 50\% pixels (\textbf{p1-3-1-19})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -512,7 +510,7 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudedesc50}
 		}
 		\quad
-		\subfloat[Highest 75\% (\textbf{p1-3-1-20})]{
+		\subfloat[Highest 75\% pixels (\textbf{p1-3-1-20})]{
 			{
 				\setlength{\fboxsep}{1pt}
 				\setlength{\fboxrule}{1pt}
@@ -521,17 +519,17 @@ In order to show the differences when changing the phase or magnitude image, we 
 			\label{fig:magnitudedesc75}
 		}
 		
-		\caption{Results of inverse Fourier transform using the highest values on the magnitude image.}
+		\caption{Results obtained by inverse Fourier transform using the highest pixels on magnitude image.}
 		\label{fig:magnitudeDESC}
 	\end{figure}
 	
-	As we would expect, the high frequencies on the image were maintained. So, even the using only 25\% of the pixels on magnitude image the reconstructed image is really good. We can note that the quality of the reconstructed image is proportional with the percentage used on the magnitude image. The first image (Figure \ref{fig:magnitudedesc1}) does not have enough information to reconstruct the image, but the color information is showing the predominant color intensity (with just the highest pixel).
+	As we would expect, even with less pixels from magnitude (25\%) the image was better represented, which indicates that a small part of the highest pixels on magnitude have most part of the information about the original image.  We can note that the quality of the reconstructed image is proportional with the percentage used on the magnitude image. The first image (Figure \ref{fig:magnitudedesc1}) does not have enough information to reconstruct the image, but the color already informs the predominant color intensity on original image (with just the highest pixel). \\
 	
 \end{itemize}
 
 \newpage
 
-In order to show that our implementation could be used with colored images, we used same experiment as before. The Figure \ref{fig:magnitudeDESCColored} shows the result of using the highest values on the magnitude image on a colored image.\\
+In order to show that our implementation could also deal with colored images, we used the same experiment as before with a colored image. The Figure \ref{fig:magnitudeDESCColored} shows the result of using the highest values on the magnitude image on this colored image. \\
 
 
 \begin{figure}[!h]
@@ -545,7 +543,7 @@ In order to show that our implementation could be used with colored images, we u
 		\label{fig:magnitudedesc1}
 	}
 	\quad
-	\subfloat[Highest 25\% (\textbf{p1-3-1-23})]{
+	\subfloat[Highest 25\% pixels (\textbf{p1-3-1-23})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -554,7 +552,7 @@ In order to show that our implementation could be used with colored images, we u
 		\label{fig:magnitudedesc25}
 	}
 	\quad
-	\subfloat[Highest 50\% (\textbf{p1-3-1-24})]{
+	\subfloat[Highest 50\% pixels (\textbf{p1-3-1-24})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -563,7 +561,7 @@ In order to show that our implementation could be used with colored images, we u
 		\label{fig:magnitudedesc50}
 	}
 	\quad
-	\subfloat[Highest 75\% (\textbf{p1-3-1-25})]{
+	\subfloat[Highest 75\% pixels (\textbf{p1-3-1-25})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -572,7 +570,7 @@ In order to show that our implementation could be used with colored images, we u
 		\label{fig:magnitudedesc75}
 	}
 	\quad
-	\subfloat[Highest 100\% (\textbf{p1-3-1-26})]{
+	\subfloat[Highest 100\% pixels (\textbf{p1-3-1-26})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -581,30 +579,30 @@ In order to show that our implementation could be used with colored images, we u
 		\label{fig:magnitudedesc100}
 	}
 	
-	\caption{Results of inverse Fourier transform using the highest values on the magnitude image using colored images.}
+	\caption{Results obtained by inverse Fourier transform using the highest pixels on magnitude image from the colored image.}
 	\label{fig:magnitudeDESCColored}
 \end{figure}
 
-In order to use a colored image, the Fourier transformation was processed three times, one for each color channel. Note that the Figure \ref{fig:magnitudedesc100} is the reconstruction of the Figure \ref{fig:p1-1-0}, which indicates that the process of the Fourier transform was successfull.
+In order to use a colored image, the Fourier transform was applied in each color channel. Note that the Figure \ref{fig:magnitudedesc100} is the perfect reconstruction of the image \textbf{p1-1-0}, which indicates the process of Fourier transform was successful.
 
 \newpage
 
 \textbf{3.2 )} Blending \\
 
-In order to do the blending on the frequency domain, we first transformed both images from spatial to frequency domain, using Fourier transform. After this, we have two vectors for each image representing the magnitude and phase values. Our first approach was to sum the vectors together, this approach obviously did not work (Figure \ref{fig:fourier1}). The phase vector, responsible to the imaginary part (on polar coordinates), could not be summed in this way, the reason is we would lose information. \\
+In order to obtain the blending on the frequency domain, we first transformed both images from spatial to frequency domain using the Fourier transform, which gives us the vectors magnitude and phase. Our first approach was to sum these vectors together, this approach obviously did not work, and the result can be seen in Figure \ref{fig:fourier1}. \\
 
 \begin{figure}[!h]
 	\centering
 	{%
-		\setlength{\fboxsep}{1pt}%
-		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=0.5]{report/Fourier.png}}%
+		\setlength{\fboxsep}{1pt}
+		\setlength{\fboxrule}{1pt}
+		\fbox{\includegraphics[scale=0.5]{report/Fourier.png}}
 	}%
-	\caption{Blending adding phase and magnitude vectors.}
+	\caption{Blending summing phase and magnitude vectors.}
 	\label{fig:fourier1}
 \end{figure}
 
-After this approach, we have tried to implement the blending using a different values for the images into the magnitude as phase. As example: we would get 50\% of highest values of both images and them sum them up. We were expecting that the sum of the zeros, inserted on the 50\% lowest values, would work using a certain mask. This approach was not a disaster, but it still a bad blending over all (Figure \ref{fig:fourier2}). \\
+After this approach, we have tried to implement the blending using different values for the phase and magnitude images, as example, we would use 50\% of highest values on both images and then perform the sum. At this time, we were expecting that the sum of the zeros (generated by the 50\% lowest values) could work with the summation. This approach did not work out, and the result is shown in Figure \ref{fig:fourier2}. \\
 
 \begin{figure}[!h]
 	\centering
@@ -613,13 +611,13 @@ After this approach, we have tried to implement the blending using a different v
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.5]{report/Fourier50.png}}%
 	}%
-	\caption{Blending adding phase and magnitude vectors using only 50\% highest values.}
+	\caption{Blending summing phase and magnitude vectors using the 50\% highest pixels from magnitude and phase images.}
 	\label{fig:fourier2}
 \end{figure}
 
-Also these tries, we started thinking about our results. Our conclusion was that no merging between the phase and magnitude would work as a blending, moreover, we concluded that our approach was not working as expected. Looking at the images we could see that a great number of information was being lost, even just adding them or trying to use a mixture of pixels from magnitude and phase. \\
+After these tries, we started thinking about our results. Our conclusion was that no merging between the phase and magnitude would work as a blending. Moreover, we concluded that our approach was not working because of the way we were summing the vectors. We were dealing with complex numbers, and complex numbers do not add as normal numbers.  \\
 
-After some thinking, we figure it that the summation should work. However, we were dealing with complex numbers and we were adding the phase as it was a normal number. In order to fix it, we first construct a \emph{numpy} complex function using $magnitude * np.exp(1j*phase)$, in which $magnitude$ and $phase$ are vectors. After creating one function for each image, we were able to sum them up, which the \emph{numpy} would do using the correct complex summation. The Figure \ref{fig:blending} shows the result of this process.
+So in order to fix this issue, we first construct a \emph{numpy} complex function $magnitude * np.exp(1j*phase)$. This way we could create one function to each image, and then sum them. Doing in this order \emph{numpy} knows that it is dealing with complex numbers, and it performs the right operation to sum te complex numbers. Which was what we were looking for, the result of this process is shown in Figure \ref{fig:blending}. \\
 
 \begin{figure}[!h]
 	\centering
@@ -628,12 +626,12 @@ After some thinking, we figure it that the summation should work. However, we we
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.5]{output/p1-3-2-0.png}}%
 	}%
-	\caption{Blended image using the \emph{numpy} summation of complex numbers.}
+	\caption{Blended image using \emph{numpy} complex sum.}
 	\label{fig:fourier2}
 \end{figure}
 
-The generated image is a blend of two images, but if it is compared to the blending generated using pyramids (Figure \ref{fig:aksda}) the contrast of the images are too high. After that some filtering approaches were tried to solve the contrast, but nothing gave a better result. \\
+The generated image is a blend of two images, but when compared to the blending on spatial domain (Figure \ref{fig:aksda}) the results are not good. There is a high contrast between the images, we have tried some filtering approaches in order to solve it. However, none of the filtering ideas worked. \\
 
-We then tried to use the pyramids with the frequency domain, but we had problem with the up sampling and down sampling. Because we could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information from the image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not have enough time to explore more this blending, but our intuition is that it might be possible if some ``tricks'' are applied to the frequency domain in order to blend the images. 
+So, analyzing the result we figured that a pyramid could solve our problem (as it does on spatial domain). However, we had problems with the up-sampling and down-sampling. We could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information on the original image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not have enough time to explore more this blending, but our intuition is that it might be possible to use pyramids with some ``trick'' applied to the frequency domain. 
 
 \end{document}
