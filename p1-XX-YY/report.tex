@@ -67,7 +67,7 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[(\textbf{p1-2-4-0})]{
+	\subfloat[An arbitrary orange (\textbf{p1-2-4-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -75,7 +75,7 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 		}
 	}
 	\quad
-	\subfloat[(\textbf{p1-2-4-1})]{
+	\subfloat[An arbitrary apple (\textbf{p1-2-4-1})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -83,29 +83,29 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 		}
 	}
 	\quad
-	\subfloat[(\textbf{p1-2-4-2})]{
+	\subfloat[Mask for blending (\textbf{p1-2-4-2})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-2}}
 		}
 	}
-	\caption{Images (a), (b) and (c) used for the blending operations.}
+	\caption{Images used on the blending experiments.}
 	\label{fig:blending}
 \end{figure}
 	
 \textbf{\LARGE Question 2 - Spatial blending}\\
 
-\textbf{2.1 )} Convolution can be understood as the action of applying a mask to an image, in this case every pixel in the image is affected by the weighted sum of the filter applied to the pixel neighborhood. This approach requires some special attention when dealing with the edges of the image, since the application of the mask will overshoot the image borders. Our solution to this problem was to extend the original image filling its new borders with zeros. \\
+\textbf{2.1 )} Convolution can be understood as the action of applying a kernel to an image, in this case every pixel in the image is affected by the weighted sum of the filter applied to the pixel neighborhood. This approach requires some special attention when dealing with the edges of the image, since the application of the kernel will overshoot the image borders. Our solution to this problem was to extend the original image filling its new borders with zeros. \\
 
-A minor downside of this approach is the lessen effect of the mask around the edges, this solution was chosen for its simplicity to implement. Additionally, the convolution was tested with three different Gaussians smoothing masks, with sizes 3x3, 7x7 and 15x15. In comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. Our intuition about this is that the OpenCV is running C code, which is highly improved to performance. \\ 
+A minor downside of this approach is the lessen effect of the kernel around the edges, this solution was chosen for its simplicity to implement. Additionally, the convolution was tested with three different Gaussians smoothing kernels, with sizes 3x3, 7x7 and 15x15. In comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. Our intuition about this is that the OpenCV is running C code, which is highly improved to performance. \\ 
 
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 		\hline
 		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
-		\backslashbox{\textbf{Convolution}}{\textbf{Mask Size}}    & \textbf{3x3}         & \textbf{7x7}          & \textbf{15x15}      \\ \hline
+		\backslashbox{\textbf{Convolution}}{\textbf{Kernel Size}}    & \textbf{3x3}         & \textbf{7x7}          & \textbf{15x15}      \\ \hline
 		\textbf{Implemented}  & 4.481      & 4.535      & 5.083     \\ \hline
 		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
 	\end{tabular}
@@ -113,7 +113,7 @@ A minor downside of this approach is the lessen effect of the mask around the ed
 	\label{table:convolution-opencv}
 \end{table}
 
-As expected the masks smooth the edges around the image and suffers with a darkening close to the borders as seeing in Figure \ref{fig:p1-2-1-0}, with bigger masks the image suffered more distortion to the point of loosing all of its fine details (Figure \ref{fig:p1-2-1-2}). The loss of these details is accounted by the size of the neighborhood that affected each pixel, thus a larger mask smooths more than a smaller one. \\
+As expected the kernel smooth the edges around the image and suffers with a darkening close to the borders as seeing in Figure \ref{fig:p1-2-1-0}, with bigger kernel the image suffered more distortion to the point of loosing all of its fine details (Figure \ref{fig:p1-2-1-2}). The loss of these details is accounted by the size of the neighborhood that affected each pixel, thus a larger kernel smooths more than a smaller one. \\
 
 \begin{figure}[!h]
 	\centering
@@ -179,7 +179,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 	\label{fig:gaussianPyramid}
 \end{figure}
 
-\textbf{2.3 )} The laplacian pyramid demanded more attention to its details, such as the fact that the last level of the pyramid is a copy of the same level at the gaussian pyramid. This particular level is used to perform the reconstruction of the original image, first the image is extended and interpolated, to match the previous level size, then it is summed with the previous level of the pyramid, the repetition of these steps result in the original image that was compressed in the pyramid, Figure \ref{fig:placePyramid} shows the laplacian pyramid. \\
+\textbf{2.3 )} The Laplacian pyramid demanded more attention to its details, like the fact that the last level of the pyramid is a copy of the same level at the Gaussian pyramid. This particular level is used to perform the reconstruction of the original image, first the image is extended and interpolated to match the previous level size. And then, it is summed with the previous level of the pyramid. The repetition of these steps result on the original image that was compressed in the pyramid, Figure \ref{fig:placePyramid} shows the Laplacian pyramid. \\
 
 \begin{figure}[!h]
 	\centering
@@ -187,7 +187,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.75]{output/p1-2-3-0}}
+			\fbox{\includegraphics[scale=0.5]{output/p1-2-3-0}}
 		}
 	}
 	\quad
@@ -195,7 +195,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.75]{output/p1-2-3-1}}
+			\fbox{\includegraphics[scale=0.5]{output/p1-2-3-1}}
 		}
 	}
 	\quad
@@ -203,10 +203,10 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.75]{output/p1-2-3-2}}
+			\fbox{\includegraphics[scale=0.5]{output/p1-2-3-2}}
 		}
 	}
-	\caption{Images (a), (b) and (c) composing the LaPlacian Pyramid formed from image \textbf{p1-1-0}}
+	\caption{Images (a), (b) and (c) composing the levels on Laplacian Pyramid formed from image \textbf{p1-1-0}}
 	\label{fig:placePyramid}
 \end{figure}
 
