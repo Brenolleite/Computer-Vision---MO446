@@ -6,3 +6,5 @@ output/*
 src/__pycache__/*
 .vscode/*
 *.#*
+*.fls
+*.fdb_latexmk
