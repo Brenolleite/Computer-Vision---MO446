@@ -67,7 +67,7 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[An arbitrary orange (\textbf{p1-2-4-0})]{
+	\subfloat[Orange to be blended (\textbf{p1-2-4-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -75,7 +75,7 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 		}
 	}
 	\quad
-	\subfloat[An arbitrary apple (\textbf{p1-2-4-1})]{
+	\subfloat[Apple to be blended (\textbf{p1-2-4-1})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -83,7 +83,7 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 		}
 	}
 	\quad
-	\subfloat[Mask for blending (\textbf{p1-2-4-2})]{
+	\subfloat[Mask for fruits blending (\textbf{p1-2-4-2})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -98,7 +98,7 @@ For more testing on the blending exercise \textbf{2.4} the images in Figure \ref
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[A face to be blended (\textbf{p1-2-4-3})]{
+	\subfloat[Face to be blended (\textbf{p1-2-4-3})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -106,7 +106,7 @@ For more testing on the blending exercise \textbf{2.4} the images in Figure \ref
 		}
 	}
 	\quad
-	\subfloat[A hand to be blended (\textbf{p1-2-4-4})]{
+	\subfloat[Hand to be blended (\textbf{p1-2-4-4})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -257,6 +257,7 @@ The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simulta
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.4]{output/p1-2-4-0}}
 		}
+		\label{fig:blend}
 	}
 	\quad
 	\subfloat[Blending using images in Figure \ref{fig:blendingFurther} (\textbf{p1-2-4-1})]{
@@ -270,7 +271,7 @@ The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simulta
 	\label{fig:blendingResult}
 \end{figure}
 
-As seen, the results is are pretty similar with the reported into the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined images. In Question \textbf{3.2} we will see how important this process is to the blending operation.
+As seen, the results is are pretty similar with the reported into the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined images. In Question \textbf{3.2} we will see how important this process is to the blending operation. 
 
 \newpage
 
@@ -290,7 +291,7 @@ To explore the Fourier space, we implemented two functions different functions. 
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-0}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-0}}
 		}
 		\label{fig:phase}
 	}
@@ -299,7 +300,7 @@ To explore the Fourier space, we implemented two functions different functions. 
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-1}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-1}}
 		}
 		\label{fig:magnitude}
 	}
@@ -314,7 +315,6 @@ The Figure \ref{fig:phase} represents the phase, it is quite hard to obtain any 
 In the next experiments, we will be modifying the values of the phase and magnitude before the reverse Fourier transform, this process should reconstruct the original image when using the same phase and image. In order to modify the magnitude, we used a percentage of the pixels from the magnitude or phase, the rest of the pixels were zeroed out. In the experiment this process uses only 1 pixel, 25\%, 50\%, 75\% and 100\% of the pixels. \\
 
 This pixels used might be in two different ways, highest or lowest, e.g. 25\% lowest pixels on phase image would maintain the values and the rest would be zeroed out. As expected, all the images reconstruct using 100\% of the pixels in magnitude and phase were perfectly reconstruct (Figure \ref{fig:inverse}). The following experiments were made using the Figure \ref{fig:p1-1-0} in grayscale, the grayscale was used for more simplicity and further on one experiment will show the same results in a colored image to prove algorithm capacities. \\
-muda
 
 \begin{figure}[!h]
 	\centering
@@ -339,7 +339,7 @@ In order to show the differences when modifying the phase or magnitude image, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-2}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-2}}
 		}
 		\label{fig:phaseinc1}
 	}
@@ -348,16 +348,16 @@ In order to show the differences when modifying the phase or magnitude image, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-3}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-3}}
 		}
 		\label{fig:phaseinc25}
 	}
-	\quad
+	\\
 	\subfloat[Lowest 50\% pixels (\textbf{p1-3-1-4})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-4}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-4}}
 		}
 		\label{fig:phaseinc50}
 	}
@@ -366,14 +366,14 @@ In order to show the differences when modifying the phase or magnitude image, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-5}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-5}}
 		}
 		\label{fig:phaseinc75}
 	}
 	
 	\caption{Results obtained by inverse Fourier transform using lowest pixels on phase image.}
 	\label{fig:phaseINC}
-\end{figure}
+\end{figure} 
 
 As we can see the image shows us information about orientations, in this way, selecting different values changes the orientation of the image. Another interesting fact is the upside down elements on the reconstructed images, our intuition is that it happen because of the range in which the transform is working (0 to 380 degrees). In other hand, the Figure \ref{fig:phaseDESC} shows the results on the reverse transform using the highest pixels on phase image. \\
 
@@ -383,7 +383,7 @@ As we can see the image shows us information about orientations, in this way, se
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-7}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-7}}
 		}
 		\label{fig:phasedesc1}
 	}
@@ -392,16 +392,16 @@ As we can see the image shows us information about orientations, in this way, se
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-8}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-8}}
 		}
 		\label{fig:phasedesc25}
 	}
-	\quad
+	\\
 	\subfloat[Highest 50\% pixels (\textbf{p1-3-1-9})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-9}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-9}}
 		}
 		\label{fig:phasedesc50}
 	}
@@ -410,7 +410,7 @@ As we can see the image shows us information about orientations, in this way, se
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-10}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-10}}
 		}
 		\label{fig:phasedesc75}
 	}
@@ -421,7 +421,7 @@ As we can see the image shows us information about orientations, in this way, se
 
 An interesting feature is that the images contain complement information, as example the Figure \ref{fig:phasedesc25} has less information than Figure \ref{fig:phaseinc75} about the original image, however their information is complementary. The same effect might be seen in the other images as well. \\
 	
-\textbf{ Magnitude} -  In this part we will be doing similar experiments, but this time, modifying the magnitude image. In addition, we expect to see different results on the intensity on the reconstructed images, which is described by the magnitude on the frequency domain. The Figure \ref{fig:magnitude} shows the different images obtained on the inverse Fourier transform. \\
+\textbf{ Magnitude} -  In this part we will be doing similar experiments, but this time, modifying the magnitude image. In addition, we expect to see different results on the intensity on the reconstructed images, which is described by the magnitude on the frequency domain. The Figure \ref{fig:magnitudeINC} shows the different images obtained on the inverse Fourier transform using the lowest pixels from magnitude image. \\
 
 \begin{figure}[!h]
 	\centering
@@ -467,6 +467,8 @@ An interesting feature is that the images contain complement information, as exa
 	
 Extracting the lowest pixels from magnitude is similar to use only low frequencies of the image, because of this the first row of Figure \ref{fig:magnitudeINC} is almost all black pixels. Proving our intuition looking at the magnitude brightness, as the original image has more high frequencies using low pixels does not describe a good portion of the image. \\
 
+\newpage
+
 However, we can see some of the contours being marked in Figure \ref{fig:magnitudeinc75}. This effect produces a image similar to the convolved image on Figure \ref{fig:conv}, which is a High-Pass-Filter. So, this process could be used as a high-pass filtering in the frequency domain. In contrast, The Figure \ref{fig:magnitudeDESC} show the same process using highest pixels on the magnitude image. \\
 
 \begin{figure}[!h]
@@ -475,7 +477,7 @@ However, we can see some of the contours being marked in Figure \ref{fig:magnitu
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-17}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-17}}
 		}
 		\label{fig:magnitudedesc1}
 	}
@@ -484,16 +486,16 @@ However, we can see some of the contours being marked in Figure \ref{fig:magnitu
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-18}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-18}}
 		}
 		\label{fig:magnitudedesc25}
 	}
-	\quad
+	\\
 	\subfloat[Highest 50\% pixels (\textbf{p1-3-1-19})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-19}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-19}}
 		}
 		\label{fig:magnitudedesc50}
 	}
@@ -502,7 +504,7 @@ However, we can see some of the contours being marked in Figure \ref{fig:magnitu
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-20}}
+			\fbox{\includegraphics[scale=0.3]{output/p1-3-1-20}}
 		}
 		\label{fig:magnitudedesc75}
 	}
@@ -513,9 +515,6 @@ However, we can see some of the contours being marked in Figure \ref{fig:magnitu
 
 As we would expect, even with less pixels from magnitude (25\%) the image was better represented, which indicates that a small part of the highest pixels on magnitude have most part of the information about the original image.  We can note that the quality of the reconstructed image is proportional with the percentage used on the magnitude image. The first image (Figure \ref{fig:magnitudedesc1}) does not have enough information to reconstruct the image, but the color already informs the predominant color intensity on original image (with just the highest pixel). \\
 	
-
-\newpage
-
 In order to show that our implementation could also deal with colored images, we used the same experiment as before with a colored image. The Figure \ref{fig:magnitudeDESCColored} shows the result of using the highest values on the magnitude image on this colored image. \\
 
 
@@ -525,7 +524,7 @@ In order to show that our implementation could also deal with colored images, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-22}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-22}}
 		}
 		\label{fig:magnitudedesc1}
 	}
@@ -534,7 +533,7 @@ In order to show that our implementation could also deal with colored images, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-23}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-23}}
 		}
 		\label{fig:magnitudedesc25}
 	}
@@ -543,7 +542,7 @@ In order to show that our implementation could also deal with colored images, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-24}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-24}}
 		}
 		\label{fig:magnitudedesc50}
 	}
@@ -552,7 +551,7 @@ In order to show that our implementation could also deal with colored images, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-25}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-25}}
 		}
 		\label{fig:magnitudedesc75}
 	}
@@ -561,7 +560,7 @@ In order to show that our implementation could also deal with colored images, we
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p1-3-1-26}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-3-1-26}}
 		}
 		\label{fig:magnitudedesc100}
 	}
@@ -604,7 +603,7 @@ After this approach, we have tried to implement the blending using different val
 
 After these tries, we started thinking about our results. Our conclusion was that no merging between the phase and magnitude would work as a blending. Moreover, we concluded that our approach was not working because of the way we were summing the vectors. We were dealing with complex numbers, and complex numbers do not add as normal numbers.  \\
 
-So in order to fix this issue, we first construct a \emph{numpy} complex function $magnitude * np.exp(1j*phase)$. This way we could create one function to each image, and then sum them. Doing in this order \emph{numpy} knows that it is dealing with complex numbers, and it performs the right operation to sum te complex numbers. Which was what we were looking for, the result of this process is shown in Figure \ref{fig:blending}. \\
+So in order to fix this issue, we first construct a \emph{numpy} complex function $magnitude * np.exp(1j*phase)$. This way we could create one function to each image, and then sum them. Doing in this order \emph{numpy} knows that it is dealing with complex numbers, and it performs the right operation to sum te complex numbers. Which was what we were looking for, the result of this process is shown in Figure \ref{fig:p1-3-2-0}. \\
 
 \begin{figure}[!h]
 	\centering
@@ -613,11 +612,11 @@ So in order to fix this issue, we first construct a \emph{numpy} complex functio
 		\setlength{\fboxrule}{1pt}%
 		\fbox{\includegraphics[scale=0.5]{output/p1-3-2-0.png}}%
 	}%
-	\caption{Blended image using \emph{numpy} complex sum.}
-	\label{fig:fourier2}
+	\caption{Blended image using \emph{numpy} complex sum. \textbf{p1-3-2-0}}
+	\label{fig:p1-3-2-0}
 \end{figure}
 
-The generated image is a blend of two images, but when compared to the blending on spatial domain (Figure \ref{fig:aksda}) the results are not good. There is a high contrast between the images, we have tried some filtering approaches in order to solve it. However, none of the filtering ideas worked. \\
+The generated image is a blend of two images, but when compared to the blending on spatial domain (Figure \ref{fig:blend}) the results are not good. There is a high contrast between the images, we have tried some filtering approaches in order to solve it. However, none of the filtering ideas worked. \\
 
 So, analyzing the result we figured that a pyramid could solve our problem (as it does on spatial domain). However, we had problems with the up-sampling and down-sampling. We could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information on the original image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not have enough time to explore more this blending, but our intuition is that it might be possible to use pyramids with some ``trick'' applied to the frequency domain. 
 
