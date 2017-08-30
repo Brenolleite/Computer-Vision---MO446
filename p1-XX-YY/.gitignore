@@ -1,7 +1,6 @@
 *.aux
 *.log
 *.gz
-output/*
 .DS_Store
 src/__pycache__/*
 .vscode/*
@@ -9,4 +8,3 @@ src/__pycache__/*
 *.fls
 *.fdb_latexmk
 *.orig
-*.pdf

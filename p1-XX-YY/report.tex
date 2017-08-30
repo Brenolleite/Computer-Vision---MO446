@@ -131,7 +131,7 @@ For more testing on the blending exercise \textbf{2.4} the images in Figure \ref
 
 \textbf{2.1 )} Convolution can be understood as the action of applying a kernel to an image, in this case every pixel in the image is affected by the weighted sum of the filter applied to the pixel neighborhood. This approach requires some special attention when dealing with the edges of the image, since the application of the kernel will overshoot the image borders. Our solution to this problem was to extend the original image filling its new borders with zeros. \\
 
-A minor downside of this approach is the lessen effect of the kernel around the edges, this solution was chosen for its simplicity to implement. Additionally, the convolution was tested with three different Gaussians smoothing kernels, with sizes 3x3, 7x7 and 15x15. In comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. Our intuition about this is that the OpenCV is running C code, which is highly optimized. \\ 
+A minor downside of this approach is the lessen effect of the kernel around the edges, this solution was chosen for its simplicity to implement. Additionally, the convolution was tested with three different Gaussians smoothing kernels, with sizes 3x3, 7x7 and 15x15. In comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. Our intuition about this is that the OpenCV is running C code, which is highly optimized. \\
 
 \begin{table}[!h]
 	\centering
@@ -271,7 +271,7 @@ The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simulta
 	\label{fig:blendingResult}
 \end{figure}
 
-As seen, the results is are pretty similar with the reported into the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined images. In Question \textbf{3.2} we will see how important this process is to the blending operation. 
+As seen, the results is are pretty similar with the reported into the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined images. In Question \textbf{3.2} we will see how important this process is to the blending operation.
 
 \newpage
 
@@ -371,10 +371,10 @@ In order to show the differences when modifying the phase or magnitude image, we
 		}
 		\label{fig:phaseinc75}
 	}
-	
+
 	\caption{Results obtained by inverse Fourier transform using lowest pixels on phase image.}
 	\label{fig:phaseINC}
-\end{figure} 
+\end{figure}
 
 As we can see the image shows us information about orientations, in this way, selecting different values changes the orientation of the image. Another interesting fact are the upside down elements on the reconstructed images, our intuition is that it happens because of the range in which the transform is working (0 to 380 degrees). In other hand, the Figure \ref{fig:phaseDESC} shows the results on the reverse transform using the highest pixels on phase image. \\
 
@@ -415,13 +415,13 @@ As we can see the image shows us information about orientations, in this way, se
 		}
 		\label{fig:phasedesc75}
 	}
-	
+
 	\caption{Results obtained by inverse Fourier transform using highest pixels on phase image.}
 	\label{fig:phaseDESC}
 \end{figure}
 
 An interesting feature is that the images contain complementary information, as example the Figure \ref{fig:phasedesc25} has less information than Figure \ref{fig:phaseinc75} about the original image, however their information is complementary. The same effect might be seen in the other images as well. \\
-	
+
 \textbf{ Magnitude} -  In this part we will be doing similar experiments, but this time, modifying the magnitude image. In addition, we expect to see different results on the intensity on the reconstructed images, which is described by the magnitude on the frequency domain. The Figure \ref{fig:magnitudeINC} shows the different images obtained on the inverse Fourier transform using the lowest pixels from magnitude image. \\
 
 \begin{figure}[!h]
@@ -461,11 +461,11 @@ An interesting feature is that the images contain complementary information, as 
 		}
 		\label{fig:magnitudeinc75}
 	}
-	
+
 	\caption{Results obtained by inverse Fourier transform using the lowest pixels on magnitude image.}
 	\label{fig:magnitudeINC}
 \end{figure}
-	
+
 Extracting the lowest pixels from magnitude is similar to use only low frequencies of the image, because of this the first row of Figure \ref{fig:magnitudeINC} is almost all black pixels. Proving our intuition looking at the magnitude brightness, as the original image has more high frequencies using low pixels does not describe a good portion of the image. \\
 
 \newpage
@@ -509,13 +509,13 @@ However, we can see some of the contours being marked in Figure \ref{fig:magnitu
 		}
 		\label{fig:magnitudedesc75}
 	}
-	
+
 	\caption{Results obtained by inverse Fourier transform using the highest pixels on magnitude image.}
 	\label{fig:magnitudeDESC}
 \end{figure}
 
 As we would expect, even with less pixels from magnitude (25\%) the image was better represented, which indicates that a small part of the highest pixels on magnitude have most part of the information about the original image.  We can note that the quality of the reconstructed image is proportional with the percentage used on the magnitude image. The first image (Figure \ref{fig:magnitudedesc1}) does not have enough information to reconstruct the image, but the color already informs the predominant color intensity on original image (with just the highest pixel). \\
-	
+
 In order to show that our implementation could also deal with colored images, we used the same experiment as before with a colored image. The Figure \ref{fig:magnitudeDESCColored} shows the result of using the highest values on the magnitude image on this colored image. \\
 
 
@@ -565,7 +565,7 @@ In order to show that our implementation could also deal with colored images, we
 		}
 		\label{fig:magnitudedesc100}
 	}
-	
+
 	\caption{Results obtained by inverse Fourier transform using the highest pixels on magnitude image from the colored image.}
 	\label{fig:magnitudeDESCColored}
 \end{figure}
@@ -619,6 +619,6 @@ So in order to fix this issue, we first construct a \emph{numpy} complex functio
 
 The generated image is a blend of two images, but when compared to the blending on spatial domain (Figure \ref{fig:blend}) the results are not good. There is a high contrast between the images, we have tried some filtering approaches in order to solve it. However, none of the filtering ideas worked. \\
 
-So, analyzing the result we figured that a pyramid could solve our problem (as it does on spatial domain). However, we had problems with the up-sampling and down-sampling. We could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information on the original image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not had enough time to explore more this blending, but our intuition is that it might be possible to use pyramids with some ``trick'' applied to the frequency domain. 
+So, analyzing the result we figured that a pyramid could solve our problem (as it does on spatial domain). However, we had problems with the up-sampling and down-sampling. We could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information on the original image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not had enough time to explore more this blending, but our intuition is that it might be possible to use pyramids with some ``trick'' applied to the frequency domain.
 
 \end{document}
