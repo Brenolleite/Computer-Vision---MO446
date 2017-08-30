@@ -48,7 +48,7 @@
 
 \textbf{\LARGE Input Images}\\
 
-Throughout this project some images were used as input to test the algorithms. Figure \ref{fig:p1-1-0} was used as input for the pyramids exercises \textbf{2.1, 2.2, 2.3} and \textbf{3.1}, its dimensions are 400x300 and it is a colored image. \\
+Throughout this project some images are used as input to test the algorithms. Figure \ref{fig:p1-1-0} was used as input for the pyramids exercises \textbf{2.1, 2.2, 2.3} and \textbf{3.1}, its dimensions are 400x300 and it is a colored image. \\
 
 \begin{figure}[!h]
 	\centering
@@ -90,15 +90,48 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-2}}
 		}
 	}
-	\caption{Images used on the blending experiments.}
+	\caption{Initial images used on the blending experiments.}
 	\label{fig:blending}
 \end{figure}
-	
+
+For more testing on the blending exercise \textbf{2.4} the images in Figure \ref{fig:blendingFurther} were also used. We decided to use them as well because they seemed a little bit harder than the first one.
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[A face to be blended (\textbf{p1-2-4-3})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.35]{input/p1-2-4-3}}
+		}
+	}
+	\quad
+	\subfloat[A hand to be blended (\textbf{p1-2-4-4})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.35]{input/p1-2-4-4}}
+		}
+	}
+	\quad
+	\subfloat[Mask used for eye blending (\textbf{p1-2-4-5})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.35]{input/p1-2-4-5}}
+		}
+	}
+	\caption{Complementary images used for further testing the blending operations.}
+	\label{fig:blendingFurther}
+\end{figure}
+
+\newpage
+
 \textbf{\LARGE Question 2 - Spatial blending}\\
 
 \textbf{2.1 )} Convolution can be understood as the action of applying a kernel to an image, in this case every pixel in the image is affected by the weighted sum of the filter applied to the pixel neighborhood. This approach requires some special attention when dealing with the edges of the image, since the application of the kernel will overshoot the image borders. Our solution to this problem was to extend the original image filling its new borders with zeros. \\
 
-A minor downside of this approach is the lessen effect of the kernel around the edges, this solution was chosen for its simplicity to implement. Additionally, the convolution was tested with three different Gaussians smoothing kernels, with sizes 3x3, 7x7 and 15x15. In comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. Our intuition about this is that the OpenCV is running C code, which is highly improved to performance. \\ 
+A minor downside of this approach is the lessen effect of the kernel around the edges, this solution was chosen for its simplicity to implement. Additionally, the convolution was tested with three different Gaussians smoothing kernels, with sizes 3x3, 7x7 and 15x15. In comparison to the embedded solution by OpenCV our convolution was noticeably slower as seen in Table \ref{table:convolution-opencv}. Our intuition about this is that the OpenCV is running C code, which is highly optimized. \\ 
 
 \begin{table}[!h]
 	\centering
@@ -189,6 +222,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{output/p1-2-3-0}}
 		}
+		\label{fig:conv}
 	}
 	\quad
 	\subfloat[(\textbf{p1-2-3-1})]{
@@ -211,86 +245,32 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 \end{figure}
 
 
-\textbf{2.4 )} The process of blending two images implement here is referred as "Splining Regions of Arbitrary Shape" in Burt and Adelson's paper, it consists of three gaussian pyramids $GA$, $GB$ and $GM$, and three laplacian pyramids $LA$, $LB$ and $LS$, in which $LS$ is the resulting pyramid and the image at its base is the blended image. The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simultaneously, from their top it multiply each lower resolution image with the equivalent mask (Figure \ref{fig:blendingProcess} (a) and (b)), sum the resulting images with each other (Figure \ref{fig:blendingProcess} (c)) and expand the resulting image, repeat these steps and the resulting image at the base of $LS$ is the blended image. The core point of this process is the gaussian filter applied to the mask that smooth its borders and the expand operation performed in the pyramid. Two tests were performed reproducing the original results, in Figure \ref{fig:blending} (a) and (b) were merged using Figure \ref{fig:blending} (c) as mask and Figure \ref{fig:blendingFurther} (a) and (b) were merged using Figure \ref{fig:blendingFurther} (c) as mask, resulting in Figure \ref{fig:blendingResult} (b).
+\textbf{2.4 )} The process of blending two images implemented here is referred as ``Splining Regions of Arbitrary Shape'' in Burt and Adelson's paper, it consists of three Gaussian pyramids $GA$, $GB$ and $GM$, and three Laplacian pyramids $LA$, $LB$ and $LS$, in which $LS$ is the resulting pyramid and the image at its base is the blended image.  \\
+
+The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simultaneously, from the top of the pyramid it multiplies each lower resolution image with the equivalent mask. Then, sum the resulting images and expand, repeat these steps and the resulting image at the base of $LS$ will be the blended image. The core point of this process is the Gaussian filter applied to the mask that smooths the borders, another key point is the expand operation performed in the pyramid. Two tests were performed reproducing the original results in the paper, the results are shown in  Figure \ref{fig:blendingResult}. \\
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[(\textbf{report-p1-2-4-0})]{
+	\subfloat[Blending using images in Figure \ref{fig:blending} (\textbf{p1-2-4-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=1]{output/p1-2-4-0}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-2-4-0}}
 		}
 	}
 	\quad
-	\subfloat[(\textbf{report-p1-2-4-1})]{
+	\subfloat[Blending using images in Figure \ref{fig:blendingFurther} (\textbf{p1-2-4-1})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=1]{output/p1-2-4-1}}
+			\fbox{\includegraphics[scale=0.4]{output/p1-2-4-1}}
 		}
 	}
-	\quad
-	\subfloat[(\textbf{report-p1-2-4-2})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=1]{output/p1-2-4-1}}
-		}
-	}
-	\caption{Images (a) and (b) are the result of the blending operation.}
-	\label{fig:blendingProcess}
-\end{figure}
-
-\begin{figure}[!h]
-	\centering
-	\subfloat[(\textbf{p1-2-4-3})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-3}}
-		}
-	}
-	\quad
-	\subfloat[(\textbf{p1-2-4-4})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-4}}
-		}
-	}
-	\quad
-	\subfloat[(\textbf{p1-2-4-5})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-5}}
-		}
-	}
-	\caption{Images (a), (b) and (c) used for further testing the blending operations.}
-	\label{fig:blendingFurther}
-\end{figure}
-
-\begin{figure}[!h]
-	\centering
-	\subfloat[(\textbf{p1-2-4-0})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{output/p1-2-4-0}}
-		}
-	}
-	\quad
-	\subfloat[(\textbf{p1-2-4-1})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{output/p1-2-4-1}}
-		}
-	}
-	\caption{Images (a) and (b) are the result of the blending operation.}
+	\caption{Images after the process of blending using the Burt and Adelson method.}
 	\label{fig:blendingResult}
 \end{figure}
+
+As seen, the results is are pretty similar with the reported into the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined images. In Question \textbf{3.2} we will see how important this process is to the blending operation.
 
 \newpage
 
