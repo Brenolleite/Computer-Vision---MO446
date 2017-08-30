@@ -94,7 +94,7 @@ Images in Figure \ref{fig:blending} are used for the blending exercises (\textbf
 	\label{fig:blending}
 \end{figure}
 
-For more testing on the blending exercise \textbf{2.4} the images in Figure \ref{fig:blendingFurther} were also used. We decided to use them as well because they seemed a little bit harder than the first one.
+For more testing on the blending exercise \textbf{2.4} the images in Figure \ref{fig:blendingFurther} were also used. We decided to use them as well because they seemed complexer than the first one.
 
 \begin{figure}[!h]
 	\centering
@@ -181,11 +181,11 @@ As expected the kernel smooth the edges around the image and suffers with a dark
 
 \textbf{2.2 )} To store the Gaussian and Laplacian pyramids on this project we used a linked list, in which each node holds a level of the pyramid. Since the data structure is a list the access method is as in a array, e.g. $pyramid[i]$ returns the image in the ith pyramid level, disregarding the necessity to implement an access function. \\
 
-The strategy chosen to implement the interpolation was the bilinear interpolation. These decisions were taken regarding the time to implement and simplicity to understand. It is also worth noting that due to some confusion about the meaning of Up and Down, these functions were renamed as follow: Expand referring to the action of expand the image width and height, and Contract analogously. Figure \ref{fig:gaussianPyramid} shows the pyramid formed with the implemented function. \\
+The strategy chosen to implement the interpolation was the bilinear interpolation. These decisions were taken regarding the time to implement and simplicity to understand. It is also worth noting that due to some confusion about the meaning of Up and Down, these functions were renamed as follow: Expand referring to the action of expanding the image width and height, and Contract analogously. Figure \ref{fig:gaussianPyramid} shows the pyramid formed with the implemented function. \\
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[3rd level (\textbf{p1-2-2-0})]{
+	\subfloat[1rd level (\textbf{p1-2-2-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -201,7 +201,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 		}
 	}
 	\quad
-	\subfloat[1st level (\textbf{p1-2-2-2})]{
+	\subfloat[3st level (\textbf{p1-2-2-2})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -212,11 +212,11 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 	\label{fig:gaussianPyramid}
 \end{figure}
 
-\textbf{2.3 )} The Laplacian pyramid demanded more attention to its details, like the fact that the last level of the pyramid is a copy of the same level at the Gaussian pyramid. This particular level is used to perform the reconstruction of the original image, first the image is extended and interpolated to match the previous level size. And then, it is summed with the previous level of the pyramid. The repetition of these steps result on the original image that was compressed in the pyramid, Figure \ref{fig:placePyramid} shows the Laplacian pyramid. \\
+\textbf{2.3 )} The Laplacian pyramid demanded more attention to its details, like the fact that the last level of the pyramid is a copy of the same level at the Gaussian pyramid. This particular level is used to perform the reconstruction of the original image, first the image is extended and interpolated to match the previous level size. And then, it is summed with the previous level of the pyramid. The repetition of these steps results on the original image that was compressed in the pyramid, Figure \ref{fig:placePyramid} shows the Laplacian pyramid. \\
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[(\textbf{p1-2-3-0})]{
+	\subfloat[1st level (\textbf{p1-2-3-0})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -225,7 +225,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 		\label{fig:conv}
 	}
 	\quad
-	\subfloat[(\textbf{p1-2-3-1})]{
+	\subfloat[2st level (\textbf{p1-2-3-1})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -233,7 +233,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 		}
 	}
 	\quad
-	\subfloat[(\textbf{p1-2-3-2})]{
+	\subfloat[3st level (\textbf{p1-2-3-2})]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -247,7 +247,7 @@ The strategy chosen to implement the interpolation was the bilinear interpolatio
 
 \textbf{2.4 )} The process of blending two images implemented here is referred as ``Splining Regions of Arbitrary Shape'' in Burt and Adelson's paper, it consists of three Gaussian pyramids $GA$, $GB$ and $GM$, and three Laplacian pyramids $LA$, $LB$ and $LS$, in which $LS$ is the resulting pyramid and the image at its base is the blended image.  \\
 
-The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simultaneously, from the top of the pyramid it multiplies each lower resolution image with the equivalent mask. Then, sum the resulting images and expand, repeat these steps and the resulting image at the base of $LS$ will be the blended image. The core point of this process is the Gaussian filter applied to the mask that smooths the borders, another key point is the expand operation performed in the pyramid. Two tests were performed reproducing the original results in the paper, the results are shown in  Figure \ref{fig:blendingResult}. \\
+The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simultaneously, from the top of the pyramid it multiplies each level image with the equivalent level mask. Then, sum the resulting images with each other and expand the resulting one, repeat these steps and the resulting image at the base of $LS$ will be the blended image. The core point of this process is the Gaussian filter applied to the mask that smooths the borders, another key point is the expand operation performed in the pyramid. Two tests were performed reproducing the original results in the paper, the results are shown in  Figure \ref{fig:blendingResult}. \\
 
 \begin{figure}[!h]
 	\centering
@@ -271,7 +271,11 @@ The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simulta
 	\label{fig:blendingResult}
 \end{figure}
 
+<<<<<<< HEAD
 As seen, the results is are pretty similar with the reported into the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined images. In Question \textbf{3.2} we will see how important this process is to the blending operation. 
+=======
+As seen, the results are pretty similar with the reported in the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined image. In Question \textbf{3.2} we will see how important this process is to the blending operation.
+>>>>>>> e24b0c7a7fe06a809960350bcc5eacbc057f8db4
 
 \newpage
 
@@ -279,11 +283,11 @@ As seen, the results is are pretty similar with the reported into the paper. We 
 
 In this question, we will present some experiments developed using \emph{numpy} and \emph{OpenCV} functions in order to transform the image from spatial domain to frequency domain. The process will be divided into two different experiments for better readability. \\
 
-On the first one (\textbf{3.1}), we will be modifying the phase and magnitude in order to see the impact on the image recontructed on the Fourier transform. On the second experiment (\textbf{3.2}), we will be blending the two images used in Question \textbf{4.2} in order to compare frequency and spatial blending. \\
+On the first one (\textbf{3.1}), we will be modifying the phase and magnitude in order to see the impact on the image reconstructed on the Fourier transform. On the second experiment (\textbf{3.2}), we will be blending the two images used in Question \textbf{4.2} in order to compare frequency and spatial blending. \\
 
 \textbf{3.1 )} Exploring Fourier Space \\
 
-To explore the Fourier space, we implemented two functions different functions. The first one is responsible to transform an image into vectors of magnitude and phase, while the other is responsible to reconstruct the image from the magnitude and phase vectors. The Figure \ref{fig:mag-phase} shows the magnitude and phase obtained transforming the Figure \ref{fig:p1-1-0} to the frequency domain. \\
+To explore the Fourier space, we implemented two different functions. The first one is responsible to transform an image into vectors of magnitude and phase, while the other is responsible to reconstruct the image from the magnitude and phase vectors. The Figure \ref{fig:mag-phase} shows the magnitude and phase obtained transforming the Figure \ref{fig:p1-1-0} to the frequency domain. \\
 
 \begin{figure}[!h]
 	\centering
@@ -308,13 +312,14 @@ To explore the Fourier space, we implemented two functions different functions. 
 	\label{fig:mag-phase}
 \end{figure}
 
-In order to represent these images, the results from the Fourier transform were shifted to the center and also reduced by the functions, $20*log_e(magnitude)$ and $40*log_e(phase)$, in which $magnitude$ and $phase$ are vectors from the transformation. The reduction is necessary to keep the numbers in a range from 0 to 255, which is showed into the image. This normalization does not affect the transformation, the values are converted back on before the reverse Fourier transform. \\
+In order to represent these images, the results from the Fourier transform were shifted to the center and also reduced by the functions, $20*log_e(magnitude)$ and $40*log_e(phase)$, in which $magnitude$ and $phase$ are vectors from the transformation. The reduction is necessary to keep the numbers in a range from 0 to 255. This normalization does not affect the transformation, the values are converted back before the reverse Fourier transform. \\
 
 The Figure \ref{fig:phase} represents the phase, it is quite hard to obtain any information from this representation. Moreover, the Figure \ref{fig:magnitude} represents the magnitude of the image, brightness on the magnitude image represents high frequencies on the original image. In this way, the magnitude indicates that image \textbf{p1-1-0} has more high than low frequencies, the intuition comes from the high brightness on the magnitude image. \\
 
-In the next experiments, we will be modifying the values of the phase and magnitude before the reverse Fourier transform, this process should reconstruct the original image when using the same phase and image. In order to modify the magnitude, we used a percentage of the pixels from the magnitude or phase, the rest of the pixels were zeroed out. In the experiment this process uses only 1 pixel, 25\%, 50\%, 75\% and 100\% of the pixels. \\
+In the next experiments, we will be modifying the values of the phase and magnitude before the reverse Fourier transform, this process should reconstruct the original image when using the same phase and image. In order to modify them, we used a percentage of the pixels from the magnitude or phase images, the rest of the pixels were zeroed out. In the experiments this process uses just 1 pixel or a percentage of pixels of 25\%, 50\%, 75\% and 100\%. \\
 
 This pixels used might be in two different ways, highest or lowest, e.g. 25\% lowest pixels on phase image would maintain the values and the rest would be zeroed out. As expected, all the images reconstruct using 100\% of the pixels in magnitude and phase were perfectly reconstruct (Figure \ref{fig:inverse}). The following experiments were made using the Figure \ref{fig:p1-1-0} in grayscale, the grayscale was used for more simplicity and further on one experiment will show the same results in a colored image to prove algorithm capacities. \\
+
 
 \begin{figure}[!h]
 	\centering
@@ -375,7 +380,7 @@ In order to show the differences when modifying the phase or magnitude image, we
 	\label{fig:phaseINC}
 \end{figure} 
 
-As we can see the image shows us information about orientations, in this way, selecting different values changes the orientation of the image. Another interesting fact is the upside down elements on the reconstructed images, our intuition is that it happen because of the range in which the transform is working (0 to 380 degrees). In other hand, the Figure \ref{fig:phaseDESC} shows the results on the reverse transform using the highest pixels on phase image. \\
+As we can see the image shows us information about orientations, in this way, selecting different values changes the orientation of the image. Another interesting fact are the upside down elements on the reconstructed images, our intuition is that it happens because of the range in which the transform is working (0 to 380 degrees). In other hand, the Figure \ref{fig:phaseDESC} shows the results on the reverse transform using the highest pixels on phase image. \\
 
 \begin{figure}[!h]
 	\centering
@@ -419,7 +424,7 @@ As we can see the image shows us information about orientations, in this way, se
 	\label{fig:phaseDESC}
 \end{figure}
 
-An interesting feature is that the images contain complement information, as example the Figure \ref{fig:phasedesc25} has less information than Figure \ref{fig:phaseinc75} about the original image, however their information is complementary. The same effect might be seen in the other images as well. \\
+An interesting feature is that the images contain complementary information, as example the Figure \ref{fig:phasedesc25} has less information than Figure \ref{fig:phaseinc75} about the original image, however their information is complementary. The same effect might be seen in the other images as well. \\
 	
 \textbf{ Magnitude} -  In this part we will be doing similar experiments, but this time, modifying the magnitude image. In addition, we expect to see different results on the intensity on the reconstructed images, which is described by the magnitude on the frequency domain. The Figure \ref{fig:magnitudeINC} shows the different images obtained on the inverse Fourier transform using the lowest pixels from magnitude image. \\
 
@@ -618,6 +623,6 @@ So in order to fix this issue, we first construct a \emph{numpy} complex functio
 
 The generated image is a blend of two images, but when compared to the blending on spatial domain (Figure \ref{fig:blend}) the results are not good. There is a high contrast between the images, we have tried some filtering approaches in order to solve it. However, none of the filtering ideas worked. \\
 
-So, analyzing the result we figured that a pyramid could solve our problem (as it does on spatial domain). However, we had problems with the up-sampling and down-sampling. We could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information on the original image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not have enough time to explore more this blending, but our intuition is that it might be possible to use pyramids with some ``trick'' applied to the frequency domain. 
+So, analyzing the result we figured that a pyramid could solve our problem (as it does on spatial domain). However, we had problems with the up-sampling and down-sampling. We could not change pixels arbitrary, mainly because one pixel on frequency domain represents more information on the original image, as seen in exercise \emph{\textbf{3.1} Exploring Fourier Space}. We did not had enough time to explore more this blending, but our intuition is that it might be possible to use pyramids with some ``trick'' applied to the frequency domain. 
 
 \end{document}
