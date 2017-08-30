@@ -271,11 +271,7 @@ The algorithm to blend the images uses both $LA$, $LB$ and $GM$ pyramids simulta
 	\label{fig:blendingResult}
 \end{figure}
 
-<<<<<<< HEAD
 As seen, the results is are pretty similar with the reported into the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined images. In Question \textbf{3.2} we will see how important this process is to the blending operation. 
-=======
-As seen, the results are pretty similar with the reported in the paper. We can see how the process of smoothing performed by the pyramids gave a better looking to the edges of the combined image. In Question \textbf{3.2} we will see how important this process is to the blending operation.
->>>>>>> e24b0c7a7fe06a809960350bcc5eacbc057f8db4
 
 \newpage
 
@@ -316,7 +312,7 @@ In order to represent these images, the results from the Fourier transform were 
 
 The Figure \ref{fig:phase} represents the phase, it is quite hard to obtain any information from this representation. Moreover, the Figure \ref{fig:magnitude} represents the magnitude of the image, brightness on the magnitude image represents high frequencies on the original image. In this way, the magnitude indicates that image \textbf{p1-1-0} has more high than low frequencies, the intuition comes from the high brightness on the magnitude image. \\
 
-In the next experiments, we will be modifying the values of the phase and magnitude before the reverse Fourier transform, this process should reconstruct the original image when using the same phase and image. In order to modify them, we used a percentage of the pixels from the magnitude or phase images, the rest of the pixels were zeroed out. In the experiments this process uses just 1 pixel or a percentage of pixels of 25\%, 50\%, 75\% and 100\%. \\
+In the next experiments, we will be modifying the values of the phase and magnitude before the reverse Fourier transform, this process should reconstruct the original image when using the same phase and image. In order to modify them, we used a percentage of the pixels from the magnitude or phase images, the rest of the pixels were zeroed out. In the experiments this process uses just 1 pixel or a percentage of pixels of 25\%, 50\%, 75\% and 100\%to be blended. \\
 
 This pixels used might be in two different ways, highest or lowest, e.g. 25\% lowest pixels on phase image would maintain the values and the rest would be zeroed out. As expected, all the images reconstruct using 100\% of the pixels in magnitude and phase were perfectly reconstruct (Figure \ref{fig:inverse}). The following experiments were made using the Figure \ref{fig:p1-1-0} in grayscale, the grayscale was used for more simplicity and further on one experiment will show the same results in a colored image to prove algorithm capacities. \\
 
