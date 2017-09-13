@@ -13,13 +13,13 @@ def sift(img):
 
     # Debug
     # Draw the keypoints in the original image
-    cv2.drawKeypoints(gray, keyPoints, img, flags = cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    cv2.drawKeypoints(gray, keyPoints, img)
     cv2.imwrite('debug/KeyPoints.png', img)
 
     # Return the descriptors
-    return descriptors
+    return (keyPoints, descriptors)
 
 # Debug
-input = cv2.imread('input/teste.png')
+input = cv2.imread('input/img2.png')
 
 sift(input)
