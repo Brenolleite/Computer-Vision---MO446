@@ -1,19 +1,25 @@
 import numpy as np
 import random
+
+
 import sift as s
+import match as m
 import cv2
 
 def create_matrixes(x_data, y_data, sampled):
-    A = np.array([])
-    row = 0
+    X_matrix = np.array([])
+    Y_matrix = np.array([])
+
     for i in sampled:
         x, y  = x_data[i].pt
-        A[row] = [x, y, 1, 0, 0, 0]
-        row += 1
-        A[row] = [0, 0, 0, x, y, 1]
-        row += 1
+        X_matrix.append([x, y, 1, 0, 0, 0], axis=0)
+        X_matrix.append([0, 0, 0, x, y, 1], axis=0)
 
-    return A
+        x, y  = y_data[i].pt
+        Y_matrix.append([x], axis=0)
+        Y_matrix.append([y], axis=0)
+
+    return X_matrix, Y_matrix
 
 def fit_model(X, Y):
     xt = np.traspose(X)
@@ -23,9 +29,12 @@ def fit_model(X, Y):
     return np.dot(p1, p2)
 
 def model_error(X, Y):
+
+
+
     return ""
 
-def ransac(x_data, y_data, n_data ,n_iterations, treshold, ratio):
+def ransac(matches, x_data, y_data, n_data ,n_iterations, treshold, ratio):
     for i in range(n_iterations):
         # Sample n_data points
         sampled = random.sample(range(len(x_data[0])), 6)
@@ -42,10 +51,14 @@ def ransac(x_data, y_data, n_data ,n_iterations, treshold, ratio):
 
 
 # Debug
-input = cv2.imread('../input/img2.png')
-input2 = cv2.imread('../input/img11.png')
+img2 = cv2.imread('../input/img2.png')
+img1 = cv2.imread('../input/img1.png')
 
-desc = s.sift(input)
-desc2 = s.sift(input2)
+kp1, desc1 = s.sift(img1)
+kp2, desc2 = s.sift(img2)
 
-print(ransac(desc, desc2, 3, 1, 1, 1))
+#matches = m.match(desc1, desc2)
+
+matches_tree = m.match_tree(desc1, kp1, desc2, kp2, 150)
+
+#print(ransac(matches, desc, desc2, 3, 1, 1, 1))

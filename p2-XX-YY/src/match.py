@@ -1,10 +1,14 @@
 import numpy as np
 import cv2
 import copy as cp
+import scipy.spatial
 
 import sift as SIFT
 
 lowe_ratio = 0.75
+
+def transform_index(indexes, kp1, kp2):
+
 
 # Returns a list with the matches between descriptor 1 and descriptor 2
 def match(desc1, desc2):
@@ -37,6 +41,36 @@ def match(desc1, desc2):
             good.append(x)
 
     return good
+
+def match_tree(desc1, kp1, desc2, kp2, treshold):
+    # Choose better image to be on search tree
+    if(len(desc1) > len(desc2)):
+        desc_l = desc1
+        kp_l = kp1
+        desc_s = desc2
+        kpt_s = kp2
+    else:
+        desc_l = desc2
+        kp_l = kp2
+        desc_s = desc1
+        kp_s = kp1
+
+    # Create search tree
+    kdtree = scipy.spatial.KDTree(desc_l)
+
+    # Search on tree using euclidian distance
+    d, i = kdtree.query(desc_s, 1, distance_upper_bound=treshold)
+
+    # Create tuples with values
+    array = np.array((np.arange(len(d)), i, d)).T
+
+    # Clear all the matches over the treshold
+    array = array[array[:,2] < treshold]
+
+    transform_index()
+
+    return i
+
 
 # Debug
 img1 = cv2.imread('input/img1.png')
