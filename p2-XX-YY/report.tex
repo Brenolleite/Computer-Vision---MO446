@@ -149,6 +149,20 @@ The SIFT descriptor has mainly two independent operations: detection of interest
 \end{figure}
 
 	Figure \ref{fig:matchRatio} shows the difference between thresholds. Figure \ref{fig:ratio90} shows that at ratio 0.9 the filter still allows some false positives to go through, and Figure \ref{fig:ratio75} at ratio 0.75 was the best result we had before the filter started cutting out correct matches, according to Lowe a ratio of 0.8 should eliminate 90\% of false matches and discard only 5\% of the correct ones. We also performed a sandbox experiment, Figure \ref{fig:noRatio} ignoring ratios completely, as expected there are many false positives matches because of these points neighbourhoods. We believe that our results difference from Lowe's are caused by distinct cameras and scenes, the keyboard has too many repeating structures that confuses the algorithm.
+	We also computed the runtime difference between two implementations of our algorithm, one using a list as data structure to keep all the key points and thus running over the entire list at every check, and the second one using a tree structure performing a searching in a tree structure on every check. The results can be seem in Table \ref{table:match}, HERE
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
+		\backslashbox{\textbf{Convolution}}{\textbf{Kernel Size}}    & \textbf{3x3}         & \textbf{7x7}          & \textbf{15x15}      \\ \hline
+		\textbf{Implemented}  & 4.481      & 4.535      & 5.083     \\ \hline
+		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
+	\end{tabular}
+	\caption{Comparison between our implementation and OpenCV convolution time.}
+	\label{table:match}
+\end{table}
 
 \textbf{3.3 )}
 \\
