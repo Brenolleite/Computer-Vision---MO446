@@ -1,7 +1,6 @@
 import numpy as np
 import random
 
-
 import sift as s
 import match as m
 import transform as t
@@ -19,7 +18,7 @@ def transform_dmatch(dmatches, kp1, kp2):
         # Get index of Y (train) array
         i2 = dmatch[0].trainIdx
         # Get positions on keypoints
-        data.append([kp1[i1].pt, kp2[i2].pt])
+        data.append([kp2[i2].pt, kp1[i1].pt])
 
     return np.array(data)
 
@@ -61,7 +60,7 @@ def model_error(X, Y):
     errors = []
 
     for i in range(len(X)):
-        error = (((X[i][0] - Y[i][0]) ** 2) + ((X[i][1] - Y[i][1]) ** 2)) ** 0.5
+        error = (((Y[i][0] - X[i][0]) ** 2) + ((Y[i][1] - X[i][1]) ** 2)) ** 0.5
 
         errors.append((i, error))
 
@@ -77,7 +76,7 @@ def ransac(dmatches, kp1, kp2, n_data ,n_iterations, treshold, ratio):
     for i in range(n_iterations):
         # Sample n_data points
         sampled = random.sample(range(len(points)), n_data)
-
+        
         # Crate matrixes used for the model
         X, Y = create_matrixes(points, sampled)
 
@@ -132,7 +131,7 @@ def ransac(dmatches, kp1, kp2, n_data ,n_iterations, treshold, ratio):
 
 
 # Debug
-video = cv2.VideoCapture('../input/video3.mp4')
+video = cv2.VideoCapture('../input/video4.mp4')
 
 i = 1
 
@@ -143,19 +142,15 @@ ret, frame1 = video.read()
 kp1, desc1 = s.sift(cp.copy(frame))
 kp2, desc2 = s.sift(cp.copy(frame1))
 
-dmatches_tree = m.match(desc1, desc2)
+dmatches_tree = m.match_tree(desc1, desc2, 50)
 
 img3 = np.zeros(frame1.shape)
 img3 = cv2.drawMatchesKnn(frame, kp1, frame1, kp2, dmatches_tree, img3, flags=2)
 cv2.imwrite('../debug/matches_VIDEO.png', img3)
 
-tranformation = ransac(dmatches_tree, kp1, kp2, 3, 5000, 5, 2)
+tranformation = ransac(dmatches_tree, kp1, kp2, 3, 1, 100, 3)
 
 frame = t.transform(frame1, tranformation)
 
-<<<<<<< HEAD
-print(ransac(desc, desc2, 3, 1, 1, 1))
-=======
 cv2.imwrite('../output/teste' + str(i) + '.png', frame)
 i += 1
->>>>>>> 907e7b0d6673819739083d4f07ae83605e724dfe

@@ -3,8 +3,6 @@ import cv2
 import copy as cp
 import scipy.spatial
 
-import sift as SIFT
-
 lowe_ratio = 0.75
 
 # Returns a list with the matches between descriptor 1 and descriptor 2
