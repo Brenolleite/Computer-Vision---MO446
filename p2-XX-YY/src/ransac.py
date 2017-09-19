@@ -1,13 +1,6 @@
 import numpy as np
 import random
 
-import sift as s
-import match as m
-import transform as t
-import utils as u
-import cv2
-import copy as cp
-
 # Transform DMatch to points Fomat: [(x, y), (x', y')]
 def transform_dmatch(dmatches, kp1, kp2):
     data = []
@@ -46,7 +39,15 @@ def fit_model(X, Y):
         p1 = np.dot(xt, X)
         p1 = np.linalg.inv(p1)
         p2 = np.dot(xt, Y)
-        return np.dot(p1, p2).reshape(3,2)
+        # create matrix A 1x6
+        A = np.dot(p1, p2)
+
+        #                     [a d]
+        # create matrix A 3x2 [b e]
+        #                     [c f]
+        A = np.swapaxes(A.reshape(2,3), 0, 1)
+
+        return A
     except np.linalg.linalg.LinAlgError as err:
         return None
 
@@ -74,9 +75,13 @@ def ransac(dmatches, kp1, kp2, n_data ,n_iterations, treshold, ratio):
     points = transform_dmatch(dmatches, kp1, kp2)
 
     for i in range(n_iterations):
+        # If not enough matches
+        if len(points) <= n_data:
+            continue
+
         # Sample n_data points
         sampled = random.sample(range(len(points)), n_data)
-        
+
         # Crate matrixes used for the model
         X, Y = create_matrixes(points, sampled)
 
@@ -125,32 +130,4 @@ def ransac(dmatches, kp1, kp2, n_data ,n_iterations, treshold, ratio):
                 A_final = A
                 error_min = total
 
-    print(A_final)
-    print(error_min)
     return A_final
-
-
-# Debug
-video = cv2.VideoCapture('../input/video4.mp4')
-
-i = 1
-
-#while(video.isOpened()):
-ret, frame = video.read()
-ret, frame1 = video.read()
-
-kp1, desc1 = s.sift(cp.copy(frame))
-kp2, desc2 = s.sift(cp.copy(frame1))
-
-dmatches_tree = m.match_tree(desc1, desc2, 50)
-
-img3 = np.zeros(frame1.shape)
-img3 = cv2.drawMatchesKnn(frame, kp1, frame1, kp2, dmatches_tree, img3, flags=2)
-cv2.imwrite('../debug/matches_VIDEO.png', img3)
-
-tranformation = ransac(dmatches_tree, kp1, kp2, 3, 1, 100, 3)
-
-frame = t.transform(frame1, tranformation)
-
-cv2.imwrite('../output/teste' + str(i) + '.png', frame)
-i += 1

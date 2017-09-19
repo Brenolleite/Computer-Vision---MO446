@@ -1,7 +1,6 @@
 import numpy as np
-import cv2
-import copy as cp
 import scipy.spatial
+import cv2
 
 lowe_ratio = 0.75
 

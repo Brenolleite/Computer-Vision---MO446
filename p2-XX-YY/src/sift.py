@@ -11,10 +11,5 @@ def sift(img):
     sift = cv2.xfeatures2d.SIFT_create()
     keyPoints, descriptors = sift.detectAndCompute(gray, None)
 
-    # Debug
-    # Draw the keypoints in the original image
-    cv2.drawKeypoints(gray, keyPoints, img)
-    cv2.imwrite('debug/KeyPoints.png', img)
-
     # Return the descriptors
     return (keyPoints, descriptors)
