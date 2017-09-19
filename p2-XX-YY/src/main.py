@@ -53,3 +53,18 @@ while(i < length):
 
 video.release()
 output_video.release()
+
+# Generating metrics for algorithm
+def metrics():
+    print("Metrics")
+    img1 = cv2.imread('input/img1.png')
+    img2 = cv2.imread('input/img2.png')
+
+    kp1, desc1 = s.sift(cp.copy(img1))
+    kp2, desc2 = s.sift(cp.copy(img2))
+
+    gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite('output/p2-3-1-0.png', cv2.drawKeypoints(img1, kp1, desc1))
+
+    gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite('output/p2-3-1-1.png', cv2.drawKeypoints(img2, kp2, desc2))
