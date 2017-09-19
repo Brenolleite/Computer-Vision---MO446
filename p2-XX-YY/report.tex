@@ -149,24 +149,24 @@ The SIFT descriptor has mainly two independent operations: detection of interest
 \end{figure}
 
 	Figure \ref{fig:matchRatio} shows the difference between thresholds. Figure \ref{fig:ratio90} shows that at ratio 0.9 the filter still allows some false positives to go through, and Figure \ref{fig:ratio75} at ratio 0.75 was the best result we had before the filter started cutting out correct matches, according to Lowe a ratio of 0.8 should eliminate 90\% of false matches and discard only 5\% of the correct ones. We also performed a sandbox experiment, Figure \ref{fig:noRatio} ignoring ratios completely, as expected there are many false positives matches because of these points neighbourhoods. We believe that our results difference from Lowe's are caused by distinct cameras and scenes, the keyboard has too many repeating structures that confuses the algorithm.
-	We also computed the runtime difference between two implementations of our algorithm, one using a list as data structure to keep all the key points and thus running over the entire list at every check, and the second one using a tree structure performing a searching in a tree structure on every check. The results can be seem in Table \ref{table:match}, HERE
+\par
+	We also computed the runtime difference between two implementations of our algorithm, one using a list as data structure to keep all the key points and thus running over the entire list at every check, and the second one using a tree structure performing a searching in a tree structure on every check. The results can be seem in Table \ref{table:match}, it is noticeable how faster the tree structure is specially when dealing with big images, that is because it doesn't need to check every node in the tree to find the best match.
 
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 		\hline
 		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
-		\backslashbox{\textbf{Convolution}}{\textbf{Kernel Size}}    & \textbf{3x3}         & \textbf{7x7}          & \textbf{15x15}      \\ \hline
-		\textbf{Implemented}  & 4.481      & 4.535      & 5.083     \\ \hline
-		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
+		\backslashbox{\textbf{Images Size}}{\textbf{Data Structure}}    & \textbf{List}         & \textbf{Tree}          & \textbf{-1}      \\ \hline
+		\textbf{160x295 | 1836x3264}  & 67.4      & 13.95      & -1     \\ \hline
+		\textbf{50x50 | 500x501} & 0.1485      & 0.0589       & -1     \\ \hline
 	\end{tabular}
-	\caption{Comparison between our implementation and OpenCV convolution time.}
+	\caption{Comparison between our implementation of the matching with a list and a tree structure.}
 	\label{table:match}
 \end{table}
 
-\textbf{3.3 )}
-\\
-\textbf{3.4 )}
-\\
+\textbf{3.3 )} To define the number of iterations before the RANSAC returns the trained parameters we tested with different parameters and used the ones with best results, in this situation 100 iterations showed the best fitting. In out implementation the training is done using three random points due to their results, increasing the sample points CAUSED SOMETHING the algorithm and decreasing it CAUSED ANOTHER SOMETHING. The matrix $A$ is obtained from these samples and is used on all the remaining points, the error from these new tests are accumulated and later used to choose the best fitting model, this values are called affine parameters.
+\par
+\textbf{3.4 )} Once the affine parameters were defined they are used in our project to transform the video frame $i + 1$ in relation to the frame $i$, the transformation on these frames can cause them to extrapolate the borders of the video window, when this is the case the frame is cut and the empty space left by it is left with black pixels, solutions as zoom in the video so there would be no empty space or zoom out so the frame wasn't occluded and were left aside to facilitate de implementation.
 
 \end{document}
