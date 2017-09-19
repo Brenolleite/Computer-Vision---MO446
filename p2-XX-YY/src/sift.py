@@ -18,8 +18,3 @@ def sift(img):
 
     # Return the descriptors
     return (keyPoints, descriptors)
-
-# Debug
-input = cv2.imread('input/img2.png')
-
-sift(input)
