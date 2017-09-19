@@ -42,13 +42,13 @@ def match(desc1, desc2):
 # Faster implementation of matching process
 def match_tree(desc1, desc2, treshold):
     # Create search tree
-    kdtree = scipy.spatial.KDTree(desc2)
+    kdtree = scipy.spatial.KDTree(desc1)
 
     # Search on tree using euclidian distance
-    d, i = kdtree.query(desc1, 1, distance_upper_bound=treshold)
+    d, i = kdtree.query(desc2, 1, distance_upper_bound=treshold)
 
     # Create tuples with values
-    array = np.array((np.arange(len(d)), i, d)).T
+    array = np.array((i, np.arange(len(d)), d)).T
 
     # Clear all the matches over the treshold
     array = array[array[:,2] < treshold]

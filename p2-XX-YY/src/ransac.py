@@ -4,6 +4,7 @@ import random
 
 import sift as s
 import match as m
+import transform as t
 import utils as u
 import cv2
 import copy as cp
@@ -64,10 +65,10 @@ def model_error(X, Y):
 
         errors.append((i, error))
 
-    return np.array(errors), (np.sum(errors) ** 0.5)
+    return np.array(errors), np.mean(np.array(errors)[:,1])
 
 def ransac(dmatches, kp1, kp2, n_data ,n_iterations, treshold, ratio):
-    min = 100000
+    error_min = 100000
     A_final = None
 
     # Transform OpenCV DMatches into array
@@ -75,7 +76,7 @@ def ransac(dmatches, kp1, kp2, n_data ,n_iterations, treshold, ratio):
 
     for i in range(n_iterations):
         # Sample n_data points
-        sampled = random.sample(range(len(points)), 3)
+        sampled = random.sample(range(len(points)), n_data)
 
         # Crate matrixes used for the model
         X, Y = create_matrixes(points, sampled)
@@ -115,32 +116,42 @@ def ransac(dmatches, kp1, kp2, n_data ,n_iterations, treshold, ratio):
                 continue
 
             # Perform transformation on inliers + sampled
-            predict = transform(A, non_sampled[:, 0])
+            predict = transform(A, points[indexes, 0])
 
             # Compute error
-            errors, total = model_error(predict, non_sampled[:, 1])
+            errors, total = model_error(predict, points[indexes, 1])
 
             # Store model
-            if min > total:
+            if error_min > total:
                 A_final = A
-                min = total
+                error_min = total
 
-    print(min)
     print(A_final)
+    print(error_min)
     return A_final
 
 
 # Debug
-video = cv2.VideoCapture('../input/video1.mp4')
+video = cv2.VideoCapture('../input/video3.mp4')
+
+i = 1
 
 #while(video.isOpened()):
-
 ret, frame = video.read()
 ret, frame1 = video.read()
 
 kp1, desc1 = s.sift(cp.copy(frame))
 kp2, desc2 = s.sift(cp.copy(frame1))
 
-dmatches_tree = m.match_tree(desc1, desc2, 10)
+dmatches_tree = m.match(desc1, desc2)
 
-tranformation = ransac(dmatches_tree, kp1, kp2, 3, 100, 100, 5)
+img3 = np.zeros(frame1.shape)
+img3 = cv2.drawMatchesKnn(frame, kp1, frame1, kp2, dmatches_tree, img3, flags=2)
+cv2.imwrite('../debug/matches_VIDEO.png', img3)
+
+tranformation = ransac(dmatches_tree, kp1, kp2, 3, 5000, 5, 2)
+
+frame = t.transform(frame1, tranformation)
+
+cv2.imwrite('../output/teste' + str(i) + '.png', frame)
+i += 1
