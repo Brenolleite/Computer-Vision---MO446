@@ -70,5 +70,93 @@ def buildScaleSpace(image, o_num, i_num):
 
     return (oc_list, sigma_m)
 
+def detectingExtrema(oc_list):
+    print("Detecting Extrema")
+
+    key_num = 0
+    key_rejected = 0
+
+    for i in range(octave_number):
+        scale = math.pow(2.0, i)
+
+        for k in range(1, interval_number + 1):
+            m_extrema = []
+            e_list = []
+            m_extrema[i].append(e_list)
+
+            mid = oc_list[i][k]
+            above = oc_list[i][k + 1]
+            below = oc_list[i][k - 1]
+
+            for l in range(1, oc_list[i][k].shape[0] - 1):
+                for m in range(1, oc_list[i][k].shape[1] - 1):
+                    justSet = False
+
+                    c_pixel = cv.GetReal2D(mid, m, l)
+
+                    if((c_pixel > cv.GetReal2D(mid, m - 1, l)) and
+                        (c_pixel > cv.GetReal2D(mid, m + 1, l)) and
+                        (c_pixel > cv.GetReal2D(min, m, l - 1)) and
+                        (c_pixel > cv.GetReal2D(min, m, l + 1)) and
+                        (c_pixel > cv.GetReal2D(min, m - 1, l - 1)) and
+                        (c_pixel > cv.GetReal2D(min, m - 1, l + 1)) and
+                        (c_pixel > cv.GetReal2D(min, m + 1, l + 1)) and
+                        (c_pixel > cv.GetReal2D(min, m + 1, l - 1)) and
+                        (c_pixel > cv.GetReal2D(above, m, l)) and
+                        (c_pixel > cv.GetReal2D(above, m - 1, l)) and
+                        (c_pixel > cv.GetReal2D(above, m + 1, l)) and
+                        (c_pixel > cv.GetReal2D(above, m, l - 1)) and
+                        (c_pixel > cv.GetReal2D(above, m, l + 1)) and
+                        (c_pixel > cv.GetReal2D(above, m - 1, l - 1)) and
+                        (c_pixel > cv.GetReal2D(above, m - 1, l + 1)) and
+                        (c_pixel > cv.GetReal2D(above, m + 1, l + 1)) and
+                        (c_pixel > cv.GetReal2D(above, m + 1, l - 1)) and
+                        (c_pixel > cv.GetReal2D(below, m, l)) and
+                        (c_pixel > cv.GetReal2D(below, m - 1, l)) and
+                        (c_pixel > cv.GetReal2D(below, m + 1, l)) and
+                        (c_pixel > cv.GetReal2D(below, m, l - 1)) and
+                        (c_pixel > cv.GetReal2D(below, m, l + 1)) and
+                        (c_pixel > cv.GetReal2D(below, m - 1, l - 1)) and
+                        (c_pixel > cv.GetReal2D(below, m - 1, l + 1)) and
+                        (c_pixel > cv.GetReal2D(below, m + 1, l + 1)) and
+                        (c_pixel > cv.GetReal2D(below, m + 1, l - 1))):
+                            cv.SetReal2D(m_extrema[i][k - 1], l, m, 255)
+                            key_num += 1
+                            justSet = True
+                    elif((c_pixel < cv.GetReal2D(mid, m - 1, l)) and
+                        (c_pixel < cv.GetReal2D(mid, m + 1, l)) and
+                        (c_pixel < cv.GetReal2D(min, m, l - 1)) and
+                        (c_pixel < cv.GetReal2D(min, m, l + 1)) and
+                        (c_pixel < cv.GetReal2D(min, m - 1, l - 1)) and
+                        (c_pixel < cv.GetReal2D(min, m - 1, l + 1)) and
+                        (c_pixel < cv.GetReal2D(min, m + 1, l + 1)) and
+                        (c_pixel < cv.GetReal2D(min, m + 1, l - 1)) and
+                        (c_pixel < cv.GetReal2D(above, m, l)) and
+                        (c_pixel < cv.GetReal2D(above, m - 1, l)) and
+                        (c_pixel < cv.GetReal2D(above, m + 1, l)) and
+                        (c_pixel < cv.GetReal2D(above, m, l - 1)) and
+                        (c_pixel < cv.GetReal2D(above, m, l + 1)) and
+                        (c_pixel < cv.GetReal2D(above, m - 1, l - 1)) and
+                        (c_pixel < cv.GetReal2D(above, m - 1, l + 1)) and
+                        (c_pixel < cv.GetReal2D(above, m + 1, l + 1)) and
+                        (c_pixel < cv.GetReal2D(above, m + 1, l - 1)) and
+                        (c_pixel < cv.GetReal2D(below, m, l)) and
+                        (c_pixel < cv.GetReal2D(below, m - 1, l)) and
+                        (c_pixel < cv.GetReal2D(below, m + 1, l)) and
+                        (c_pixel < cv.GetReal2D(below, m, l - 1)) and
+                        (c_pixel < cv.GetReal2D(below, m, l + 1)) and
+                        (c_pixel < cv.GetReal2D(below, m - 1, l - 1)) and
+                        (c_pixel < cv.GetReal2D(below, m - 1, l + 1)) and
+                        (c_pixel < cv.GetReal2D(below, m + 1, l + 1)) and
+                        (c_pixel < cv.GetReal2D(below, m + 1, l - 1))):
+                            cv.SetReal2D(m_extrema[i][k - 1], m, l, 255)
+                            key_num += 1
+                            justSet = True
+                    if(justSet and abs(cv.getReal2D(mid, m, l)) < contrast_threshold):
+                        cv.setReal2D(m_extrema[i][k - 1], m, l, 0)
+                        key_num -= 1
+                        key_rejected += 1
+                        justSet = False
+
 input = cv2.imread('input/img2.png')
 sift(input)
