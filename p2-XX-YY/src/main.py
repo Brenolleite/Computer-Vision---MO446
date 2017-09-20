@@ -7,36 +7,6 @@ import cv2
 import copy as cp
 import ransac as model
 
-# Generating metrics for algorithm
-def metrics():
-    print("Generating metrics")
-
-    img1 = cv2.imread('input/img1.png')
-    img2 = cv2.imread('input/img2.png')
-
-    print("img1 shape: ", img1.shape)
-    print("img2 shape: ", img2.shape)
-
-    kp1, desc1 = s.sift(cp.copy(img1))
-    kp2, desc2 = s.sift(cp.copy(img2))
-
-    gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite('output/p2-3-1-0.png', cv2.drawKeypoints(img1, kp1, desc1))
-
-    gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite('output/p2-3-1-1.png', cv2.drawKeypoints(img2, kp2, desc2))
-
-    #print("Matching Metrics")
-    #time = u.time()
-    #m.match(desc1, desc2)
-    #print("list time: ", time.elapsed())
-
-    time = u.time()
-    matches = m.match_tree(desc1, desc2, 50)
-    print("tree time: ", time.elapsed())
-
-# metrics()
-
 # Creating video
 video = cv2.VideoCapture('input/video.mp4')
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
