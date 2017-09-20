@@ -8,7 +8,7 @@ import copy as cp
 import ransac as model
 
 # Creating video
-video = cv2.VideoCapture('input/video.mp4')
+video = cv2.VideoCapture('input/p2-3-4.mp4')
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 
 # Video params
@@ -45,8 +45,6 @@ while(i < length):
 
     # Create frame to video
     frame_video = np.concatenate((original, frame), axis=1)
-
-    cv2.imwrite('output/frame' + str(i) + '.png', frame_video)
 
     output_video.write(frame_video)
     i += 1
