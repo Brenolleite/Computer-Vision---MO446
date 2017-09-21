@@ -1,0 +1,13 @@
+*.aux
+*.log
+*.gz
+.DS_Store
+src/__pycache__/*
+.vscode/*
+*.#*
+*.fls
+*.fdb_latexmk
+*.orig
+output/*
+*.pdf
+report/*
