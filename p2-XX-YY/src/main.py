@@ -31,6 +31,17 @@ while(i < length):
     kp1, desc1 = s.sift(cp.copy(frame))
     kp2, desc2 = s.sift(cp.copy(frame1))
 
+    print("Teste")
+    print(frame.shape)
+    print(type(kp1))
+    print(len(kp1))
+    print(type(kp1[0]))
+    print(kp1[0].pt)
+    print(kp1[0].size)
+    print(kp1[0].angle)
+    print(kp1[0].response)
+    print("Testo")
+
     print("Matches")
     dmatches_tree = m.match_tree(desc1, desc2, 50)
 
