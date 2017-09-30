@@ -3,8 +3,11 @@ import cv2
 
 # Return a list of tuples [(x, y)] of each keypoint
 def kp(img):
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    gray = np.float32(gray)
+    print("Selecting Keypoints")
+
+    gray = img
+    #  gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    #  gray = np.float32(gray)
     dst = cv2.cornerHarris(gray, 2, 3, 0.04)
 
     kp = []
@@ -17,7 +20,7 @@ def kp(img):
     return kp
 
 # DEBUG
-video = cv2.VideoCapture('../input/input.mp4')
-fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-ret, frame = video.read()
-kp(frame)
+#  video = cv2.VideoCapture('../input/input.mp4')
+#  fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+#  ret, frame = video.read()
+#  kp(frame)
