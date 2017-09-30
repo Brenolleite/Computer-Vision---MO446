@@ -9,15 +9,15 @@ import math
 # Solves the AD = B equation
 def solver(kp, frame1, frame2, nb):
 
+    A_sub = []
+    b_sub = []
     # Solve u, v for each keypoint
     for i in range(len(kp)):
-        print(kp[i][0], kp[i][1])
         x = kp[i][0]
         y = kp[i][1]
 
         nbOffset = math.floor(nb / 2)
         
-        print("Center: ", x, y)
         # Montando frame1 e frame2 para frames.append(1) frames.append(2)        
         # For each pixel in the neighbourhood
 
@@ -28,11 +28,11 @@ def solver(kp, frame1, frame2, nb):
         row2 = []
 
         # For each pixel in the neighbourhood
-        for k in range(x - nbOffset, x + nbOffset, 1):
+        for k in range(x - nbOffset, x + nbOffset + 1, 1):
             subRow1 = []
             subRow2 = []
 
-            for m in range(y - nbOffset, y + nbOffset, 1):
+            for m in range(y - nbOffset, y + nbOffset + 1, 1):
                 #  print("Area: ", k, m)
 
                 subRow1.append(frame1[k][m])
@@ -51,9 +51,15 @@ def solver(kp, frame1, frame2, nb):
         Iy = np.diff(frames, 1, axis=1)
         Ix = np.diff(frames, 1, axis=2)
 
-        print(type(Ix))
-        print(Ix.shape)
-        print(Ix)
+        A_sub.append(Ix)
+        A_sub.append(Iy)
+        b_sub.append(It)
+
+    u = None
+    v = None
+    A = np.array(A_sub)
+    d = np.array([[u],[v]])
+    b = np.array(b_sub)
     
     # Concatenate frames
     #  frames = []
