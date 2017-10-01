@@ -6,8 +6,42 @@ import cv2
 import math
 
 # KeyPoins, Last Frame, new Frame
-# Solves the AD = B equation
 def solver(kp, frame1, frame2, nb):
+    # Concatenate frames
+    frames = []
+    frames.append(frame1)
+    frames.append(frame2)
+
+    # Find derivatives of frames
+    It = np.diff(frames, 1, axis=0)
+    Iy = np.diff(frames, 1, axis=1)
+    Ix = np.diff(frames, 1, axis=2)
+
+    # Solve u, v for each keypoint len(kp)
+    for i in range(1):
+        # Create matrixes and get kp position
+        x = kp[i][0]
+        y = kp[i][1]
+        A = []
+        d = []
+        b = []
+
+        # Getting neighbourhood
+        for k in range(x - nbOffset, x + nbOffset + 1, 1):
+            for m in range(y - nbOffset, y + nbOffset + 1, 1):
+                # Creating matrix A
+                A.append([Ix[k,m], Iy[k,m]])
+
+                # Creating matrix b
+                b.append([It[k,m])
+
+        print(A)
+        # print(It[0].shape , frame1.shape)
+
+
+# KeyPoins, Last Frame, new Frame
+# Solves the AD = B equation
+def solver_back(kp, frame1, frame2, nb):
 
     A_sub = []
     b_sub = []
@@ -17,8 +51,8 @@ def solver(kp, frame1, frame2, nb):
         y = kp[i][1]
 
         nbOffset = math.floor(nb / 2)
-        
-        # Montando frame1 e frame2 para frames.append(1) frames.append(2)        
+
+        # Montando frame1 e frame2 para frames.append(1) frames.append(2)
         # For each pixel in the neighbourhood
 
         #  neigh1 = np.array()
@@ -46,7 +80,7 @@ def solver(kp, frame1, frame2, nb):
         frames = []
         frames.append(neigh1)
         frames.append(neigh2)
-        
+
         It = np.diff(frames, 1, axis=0)
         Iy = np.diff(frames, 1, axis=1)
         Ix = np.diff(frames, 1, axis=2)
@@ -60,7 +94,7 @@ def solver(kp, frame1, frame2, nb):
     A = np.array(A_sub)
     d = np.array([[u],[v]])
     b = np.array(b_sub)
-    
+
     # Concatenate frames
     #  frames = []
     #  frames.append(frame1)
@@ -125,7 +159,7 @@ def KLT(video):
         kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
 
         kp = solver(kp, frame1, frame2, solverNeighbourhood)
-        
+
         # Call interpolation function on the keypoints
         # kp = newkypointsInterpolated(kp, [u,v])
 
