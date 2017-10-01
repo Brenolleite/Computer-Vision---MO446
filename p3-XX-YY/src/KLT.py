@@ -2,11 +2,18 @@ import keypoint
 
 import copy as cp
 import numpy as np
+from numpy.linalg import inv
+
 import cv2
 import math
 
 # KeyPoins, Last Frame, new Frame
 def solver(kp, frame1, frame2, nb):
+    print("KeyPoint Flows")
+
+    # Create list of flows
+    flows = []
+
     # Concatenate frames
     frames = []
     frames.append(frame1)
@@ -17,11 +24,12 @@ def solver(kp, frame1, frame2, nb):
     Iy = np.diff(frames, 1, axis=1)
     Ix = np.diff(frames, 1, axis=2)
 
-    # Solve u, v for each keypoint len(kp)
-    for i in range(1):
+    # Solve u, v for each keypoint
+    for i in range(len(kp)):
         # Create matrixes and get kp position
         x = kp[i][0]
         y = kp[i][1]
+        nbOffset = math.floor(nb / 2)
         A = []
         d = []
         b = []
@@ -30,84 +38,26 @@ def solver(kp, frame1, frame2, nb):
         for k in range(x - nbOffset, x + nbOffset + 1, 1):
             for m in range(y - nbOffset, y + nbOffset + 1, 1):
                 # Creating matrix A
-                A.append([Ix[k,m], Iy[k,m]])
+                A.append([Ix[0,k,m], Iy[0,k,m]])
 
                 # Creating matrix b
-                b.append([It[k,m])
+                b.append([It[0,k,m]])
 
-        print(A)
-        # print(It[0].shape , frame1.shape)
+        # Execute solver's algebra
+        A = np.array(A)
+        b = np.array(b)
+        At = np.transpose(A)
 
+        i = inv(np.dot(At, A))
 
-# KeyPoins, Last Frame, new Frame
-# Solves the AD = B equation
-def solver_back(kp, frame1, frame2, nb):
+        d = -1 * np.dot(At,b)
+        d = np.dot(i, d)
 
-    A_sub = []
-    b_sub = []
-    # Solve u, v for each keypoint
-    for i in range(len(kp)):
-        x = kp[i][0]
-        y = kp[i][1]
+        # Adding u,v to kp
+        flows.append((d[0,0], d[1,0]))
 
-        nbOffset = math.floor(nb / 2)
-
-        # Montando frame1 e frame2 para frames.append(1) frames.append(2)
-        # For each pixel in the neighbourhood
-
-        #  neigh1 = np.array()
-        #  neigh2 = np.array()
-
-        row1 = []
-        row2 = []
-
-        # For each pixel in the neighbourhood
-        for k in range(x - nbOffset, x + nbOffset + 1, 1):
-            subRow1 = []
-            subRow2 = []
-
-            for m in range(y - nbOffset, y + nbOffset + 1, 1):
-                #  print("Area: ", k, m)
-
-                subRow1.append(frame1[k][m])
-                subRow2.append(frame2[k][m])
-
-            row1.append(subRow1)
-            row2.append(subRow2)
-        neigh1 = np.array(row1)
-        neigh2 = np.array(row2)
-
-        frames = []
-        frames.append(neigh1)
-        frames.append(neigh2)
-
-        It = np.diff(frames, 1, axis=0)
-        Iy = np.diff(frames, 1, axis=1)
-        Ix = np.diff(frames, 1, axis=2)
-
-        A_sub.append(Ix)
-        A_sub.append(Iy)
-        b_sub.append(It)
-
-    u = None
-    v = None
-    A = np.array(A_sub)
-    d = np.array([[u],[v]])
-    b = np.array(b_sub)
-
-    # Concatenate frames
-    #  frames = []
-    #  frames.append(frame1)
-    #  frames.append(frame2)
-
-    #  # Find derivatives of frames
-    #  It = np.diff(frames, 1, axis=0)
-    #  Iy = np.diff(frames, 1, axis=1)
-    #  Ix = np.diff(frames, 1, axis=2)
-
-    #  print(It[0].shape , frame1.shape)
-
-    return []
+    # Returning (u,v) vector
+    return np.array(flows)
 
 # Eliminate keypoints too close to the border
 def filterBorderKeypoints(kp, borderSize, imgSize):
@@ -122,16 +72,11 @@ def filterBorderKeypoints(kp, borderSize, imgSize):
 
     return kp
 
-# START HERE
-# Wrapper function
 def KLT(video):
     print("Executing KLT")
 
     # Video length, frame count
     length = int(video.get(7))
-
-    # DEBUG
-    length = 2
 
     # Size of the outlier border for keypoints
     filterBorder = 30
@@ -141,27 +86,30 @@ def KLT(video):
 
     # For every video frame
     for i in range(0, length, 2):
-        print("\nProgress: ", i, length)
+        print("\nFrames: ", i, i+1)
 
+        # Get frames
         ret, frame1 = video.read()
         ret, frame2 = video.read()
 
+        # Transform frame to grayscale
         frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
         frame1 = np.float32(frame1)
 
+        # Transform frame to grayscale
         frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
         frame2 = np.float32(frame2)
 
-        # Get and filter keypoints
-        # This is calculating keypoints in every frame
-        # We also want to test without this extensive calculation
+        # Get keypoints
         kp = keypoint.kp(cp.copy(frame1))
+
+        # Filter keypoints
         kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
 
-        kp = solver(kp, frame1, frame2, solverNeighbourhood)
+        # Find optical flow
+        flows = solver(kp, frame1, frame2, solverNeighbourhood)
 
-        # Call interpolation function on the keypoints
-        # kp = newkypointsInterpolated(kp, [u,v])
+        return kp, flows
 
 # DEBUG
 video = cv2.VideoCapture('../input/input.mp4')
