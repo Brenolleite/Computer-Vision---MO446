@@ -1,4 +1,5 @@
 import keypoint
+import utils as ut
 
 import copy as cp
 import numpy as np
@@ -84,35 +85,59 @@ def KLT(video):
     # Size of the neighbourhood to be accounted in KLT
     solverNeighbourhood = 15
 
+    # Get frames
+    ret, colorFrame1 = video.read()
+
+    # Transform frame to grayscale
+    frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
+    
+    # HARRIS NEEDS THIS, SIFT WON'T WORK WITH THIS
+    #  frame1 = np.float32(frame1)
+
+    # Get keypoints
+    kp = keypoint.kp(cp.copy(frame1))
+
+    # Filter keypoints
+    kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
+
+    # REPORT
+    m = 0
+    img = ut.drawKeypoints(colorFrame1, kp)
+    cv2.imwrite('../report/keypoints-{}.png'.format(m), img)
+
     # For every video frame
     for i in range(0, length, 2):
-        print("\nFrames: ", i, i+1)
-
         # Get frames
-        ret, frame1 = video.read()
-        ret, frame2 = video.read()
+        ret, colorFrame1 = video.read()
+        ret, colorFrame2 = video.read()
 
         # Transform frame to grayscale
-        frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
-        frame1 = np.float32(frame1)
+        frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
+
+        # SIFT won't work with this
+        #  frame1 = np.float32(frame1)
 
         # Transform frame to grayscale
-        frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
-        frame2 = np.float32(frame2)
+        frame2 = cv2.cvtColor(colorFrame2, cv2.COLOR_BGR2GRAY)
 
-        # Get keypoints
-        kp = keypoint.kp(cp.copy(frame1))
-
-        # Filter keypoints
-        kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
+        # SIFT won't work with this
+        #  frame2 = np.float32(frame2)
 
         # Find optical flow
         flows = solver(kp, frame1, frame2, solverNeighbourhood)
 
-        return kp, flows
+        # Filter keypoints
+        kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
+
+        # REPORT
+        m += 1
+        img = ut.drawKeypoints(colorFrame1, kp)
+        cv2.imwrite('../report/keypoints-{}.png'.format(m), img)
+
+    return kp, flows
 
 # DEBUG
-video = cv2.VideoCapture('../input/input.mp4')
+video = cv2.VideoCapture('../input/input2.mp4')
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 
 KLT(video)
