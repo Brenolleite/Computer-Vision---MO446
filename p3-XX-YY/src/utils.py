@@ -14,7 +14,6 @@ class time:
 
 def drawKeypoints(frame, kp):
 
-
     for i in range(0, len(kp), 1):
         x = math.floor(kp[i][0])
         y = math.floor(kp[i][1])

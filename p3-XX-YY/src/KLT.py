@@ -60,9 +60,6 @@ def solver(kp, frame1, frame2, nb):
         d = -1 * np.dot(At,b)
         d = np.dot(inverted, d)
 
-        print(d)
-        print("------------------------")
-
         # Adding u,v to kp
         flows.append((d[0,0], d[1,0]))
 
@@ -111,10 +108,8 @@ def KLT(video, fourcc):
     height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps    = video.get(cv2.CAP_PROP_FPS)
     
-    kp_video = cv2.VideoWriter('../report/KPs.avi', fourcc, fps, (width, height))
-    
-    # Video length, frame count
-    #  length = int(video.get(7))
+    # Stores the flow for the ith frame in the ith index
+    output = []
 
     # Size of the outlier border for keypoints
     filterBorder = 30
@@ -137,18 +132,13 @@ def KLT(video, fourcc):
     # Filter keypoints
     kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
 
-    # REPORT
-    img = ut.drawKeypoints(colorFrame1, kp)
-    kp_video.write(img)
+    output.append(kp)
 
     # For every video frame
     for i in range(0, length - 1, 1):
         # Get frames
-        #  ret, colorFrame1 = video.read()
         ret, colorFrame2 = video.read()
 
-        # Transform frame to grayscale
-        #  frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
 
         # SIFT won't work with this
         #  frame1 = np.float32(frame1)
@@ -168,17 +158,15 @@ def KLT(video, fourcc):
         # Filter keypoints
         kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
 
-        # REPORT
-        img = ut.drawKeypoints(colorFrame2, kp)
-        kp_video.write(img)
+        output.append(kp)
 
         frame1 = frame2
         colorFrame1 = colorFrame2
 
-    return kp, flows
+    return np.array(output)
 
 # DEBUG
-video = cv2.VideoCapture('../input/input5.mp4')
-fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+#  video = cv2.VideoCapture('../input/input5.mp4')
+#  fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 
-KLT(video, fourcc)
+#  KLT(video, fourcc)
