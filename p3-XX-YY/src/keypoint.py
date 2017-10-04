@@ -22,7 +22,7 @@ def sift(img):
         y = math.floor(kst[i].pt[1])
         kp.append((x, y))
 
-    return kp
+    return np.array(kp)
 
 def harris(img):
     dst = cv2.cornerHarris(img, 2, 3, 0.04)
@@ -35,7 +35,7 @@ def harris(img):
             if dst[j][i] > threshold:
                 kp.append((j, i))
 
-    return kp
+    return np.array(kp)
 
 
 # DEBUG

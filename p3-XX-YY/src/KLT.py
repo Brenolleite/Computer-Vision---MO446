@@ -26,7 +26,8 @@ def solver(kp, frame1, frame2, nb):
     Ix = np.diff(frames, 1, axis=2)
 
     # Solve u, v for each keypoint
-    for i in range(len(kp)):
+    size = len(kp)
+    for i in range(size - 1, -1, -1):
         # Create matrixes and get kp position
         x = kp[i][0]
         y = kp[i][1]
@@ -49,35 +50,71 @@ def solver(kp, frame1, frame2, nb):
         b = np.array(b)
         At = np.transpose(A)
 
-        i = inv(np.dot(At, A))
+        inverted = None
+        try:
+            inverted = inv(np.dot(At, A))
+        except np.linalg.linalg.LinAlgError as err:
+            kp = np.delete(kp, i, 0)
+            continue
 
         d = -1 * np.dot(At,b)
-        d = np.dot(i, d)
+        d = np.dot(inverted, d)
+
+        print(d)
+        print("------------------------")
 
         # Adding u,v to kp
         flows.append((d[0,0], d[1,0]))
 
     # Returning (u,v) vector
-    return np.array(flows)
+    return (np.array(kp), np.array(flows))
 
 # Eliminate keypoints too close to the border
 def filterBorderKeypoints(kp, borderSize, imgSize):
     print("Filtering keypoints")
 
-    for i in range(len(kp) - 1, -1, -1):
+    size = len(kp)
+    for i in range(size - 1, -1, -1):
         x, y = kp[i]
         if kp[i][0] > imgSize[0] - borderSize or kp[i][0] < borderSize:
-            kp.pop(i)
+            kp = np.delete(kp, i, 0)
         elif kp[i][1] > imgSize[1] - borderSize or kp[i][1] < borderSize:
-            kp.pop(i)
+            kp = np.delete(kp, i, 0)
 
-    return kp
+    return np.array(kp)
 
-def KLT(video):
+# Transform the keypoints into the new coordinates using the (u, v) solutions
+# and interpolate the keypoints into valid coordinates
+def interpolate(kp, solution):
+
+    interpolated = []
+    # Run over all the keypoints
+    for i in range(len(kp)):
+        x = kp[i][0]
+        y = kp[i][1]
+
+        u = solution[i][0]
+        v = solution[i][1]
+
+        x = math.floor(x + u)
+        y = math.floor(y + v)
+
+        interpolated.append((x, y))
+
+    return np.array(interpolated)
+
+def KLT(video, fourcc):
     print("Executing KLT")
 
+    length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+    width  = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps    = video.get(cv2.CAP_PROP_FPS)
+    
+    kp_video = cv2.VideoWriter('../report/KPs.avi', fourcc, fps, (width, height))
+    
     # Video length, frame count
-    length = int(video.get(7))
+    #  length = int(video.get(7))
 
     # Size of the outlier border for keypoints
     filterBorder = 30
@@ -101,18 +138,17 @@ def KLT(video):
     kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
 
     # REPORT
-    m = 0
     img = ut.drawKeypoints(colorFrame1, kp)
-    cv2.imwrite('../report/keypoints-{}.png'.format(m), img)
+    kp_video.write(img)
 
     # For every video frame
-    for i in range(0, length, 2):
+    for i in range(0, length - 1, 1):
         # Get frames
-        ret, colorFrame1 = video.read()
+        #  ret, colorFrame1 = video.read()
         ret, colorFrame2 = video.read()
 
         # Transform frame to grayscale
-        frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
+        #  frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
 
         # SIFT won't work with this
         #  frame1 = np.float32(frame1)
@@ -124,20 +160,25 @@ def KLT(video):
         #  frame2 = np.float32(frame2)
 
         # Find optical flow
-        flows = solver(kp, frame1, frame2, solverNeighbourhood)
+        kp, flows = solver(kp, frame1, frame2, solverNeighbourhood)
+
+        # Interpolate
+        kp = interpolate(kp, flows)
 
         # Filter keypoints
         kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
 
         # REPORT
-        m += 1
-        img = ut.drawKeypoints(colorFrame1, kp)
-        cv2.imwrite('../report/keypoints-{}.png'.format(m), img)
+        img = ut.drawKeypoints(colorFrame2, kp)
+        kp_video.write(img)
+
+        frame1 = frame2
+        colorFrame1 = colorFrame2
 
     return kp, flows
 
 # DEBUG
-video = cv2.VideoCapture('../input/input2.mp4')
+video = cv2.VideoCapture('../input/input5.mp4')
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 
-KLT(video)
+KLT(video, fourcc)
