@@ -1,9 +1,6 @@
 import numpy as np
 import cv2
 
-import keypoint
-import utils
-
 def KLT(video_path):
     # Get video length
     video = cv2.VideoCapture(video_path)
@@ -30,6 +27,7 @@ def KLT(video_path):
     kps = []
     kp = cv2.goodFeaturesToTrack(frame1, mask = None, **feature_params)
 
+    # Remove single dimention to add on table
     kps.append(kp.squeeze())
 
     for i in range(0, length - 1):
@@ -60,9 +58,3 @@ def KLT(video_path):
     video.release()
 
     return kps
-
-
-
-kps = KLT('../input/input2.mp4')
-utils.videoFlow(kps, '../input/input2.mp4', '../output/opencv_flow.avi', (13, 94, 1))
-
