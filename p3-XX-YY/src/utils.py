@@ -22,6 +22,12 @@ def drawKeypoints(frame, kps, BGR):
 
     return frame
 
+#
+# kps      -> Matrix with Frames x Keypoints
+# path     -> Input video path
+# out_path -> Output video path
+# BGR      -> (B, G, R) colors
+#
 def videoFlow(kps, path, out_path, BGR):
     # Transform into numpy array
     kps = np.array(kps)
