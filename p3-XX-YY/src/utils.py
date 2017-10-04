@@ -23,6 +23,7 @@ def drawKeypoints(frame, kps, BGR):
     return frame
 
 def videoFlow(kps, path, out_path, BGR):
+    # Transform into numpy array
     kps = np.array(kps)
 
     # Open video and get settings
