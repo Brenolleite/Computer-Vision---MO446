@@ -63,6 +63,6 @@ def KLT(video_path):
 
 
 
-kps = KLT('../input/input2.mp4')
-utils.videoFlow(kps, '../input/input2.mp4', '../output/opencv_flow.avi', (13, 94, 1))
+kps = KLT('../input/input.mp4')
+utils.videoFlow(kps, '../input/input.mp4', '../output/opencv_flow.avi', (13, 94, 1))
 

@@ -1,5 +1,5 @@
 import keypoint
-import utils as ut
+import utils
 
 import copy as cp
 import numpy as np
@@ -73,9 +73,7 @@ def filterBorderKeypoints(kp, borderSize, imgSize):
     size = len(kp)
     for i in range(size - 1, -1, -1):
         x, y = kp[i]
-        if kp[i][0] > imgSize[0] - borderSize or kp[i][0] < borderSize:
-            kp = np.delete(kp, i, 0)
-        elif kp[i][1] > imgSize[1] - borderSize or kp[i][1] < borderSize:
+        if kp[i][0] > imgSize[0] - borderSize or kp[i][0] < borderSize or kp[i][1] > imgSize[1] - borderSize or kp[i][1] < borderSize:
             kp = np.delete(kp, i, 0)
 
     return np.array(kp)
@@ -87,11 +85,8 @@ def interpolate(kp, solution):
     interpolated = []
     # Run over all the keypoints
     for i in range(len(kp)):
-        x = kp[i][0]
-        y = kp[i][1]
-
-        u = solution[i][0]
-        v = solution[i][1]
+        x, y = kp[i]
+        u, v = solution[i]
 
         x = math.floor(x + u)
         y = math.floor(y + v)
@@ -112,7 +107,7 @@ def KLT(video, fourcc):
     output = []
 
     # Size of the outlier border for keypoints
-    filterBorder = 30
+    filterBorder = 10
 
     # Size of the neighbourhood to be accounted in KLT
     solverNeighbourhood = 15
@@ -156,7 +151,7 @@ def KLT(video, fourcc):
         kp = interpolate(kp, flows)
 
         # Filter keypoints
-        kp = filterBorderKeypoints(kp, filterBorder, frame1.shape)
+        kp = filterBorderKeypoints(kp, filterBorder, frame2.shape)
 
         output.append(kp)
 
@@ -166,7 +161,9 @@ def KLT(video, fourcc):
     return np.array(output)
 
 # DEBUG
-#  video = cv2.VideoCapture('../input/input5.mp4')
-#  fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+video = cv2.VideoCapture('../input/input.mp4')
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 
-#  KLT(video, fourcc)
+kps = KLT(video, fourcc)
+print(kps.shape)
+utils.videoFlow(kps, '../input/input.mp4', '../output/opencv_flow.avi', (13, 94, 1))
