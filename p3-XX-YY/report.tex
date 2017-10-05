@@ -50,47 +50,6 @@
 
 Throughout this project some images are used as input to test the algorithms. Figure \ref{fig:p1-1-0} was used as input for the pyramids exercises \textbf{2.1, 2.2, 2.3} and \textbf{3.1}, its dimensions are 400x300 and it is a colored image. \\
 
-\begin{figure}[!h]
-	\centering
-	{%
-		\setlength{\fboxsep}{1pt}%
-		\setlength{\fboxrule}{1pt}%
-		\fbox{\includegraphics[scale=1]{input/p1-1-0}}%
-	}%
-	\caption{Input image for pyramids and Fourier transform exercises. (\textbf{p1-1-0})}
-	\label{fig:p1-1-0}
-\end{figure}
-
-\begin{figure}[!h]
-	\centering
-	\subfloat[Orange to be blended (\textbf{p1-2-4-0})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{input/p1-2-4-0}}
-		}
-                \label{fig:orangeBlend}
-	}
-	\quad
-	\subfloat[Apple to be blended (\textbf{p1-2-4-1})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{input/p1-2-4-1}}
-		}
-	}
-	\quad
-	\subfloat[Mask for fruits blending (\textbf{p1-2-4-2})]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{input/p1-2-4-2}}
-		}
-	}
-	\caption{Initial images used on the blending experiments.}
-	\label{fig:blending}
-\end{figure}
-
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|c|}
@@ -104,11 +63,45 @@ Throughout this project some images are used as input to test the algorithms. Fi
 	\label{table:convolution-opencv}
 \end{table}
 
-\textbf{\LARGE Question 3 - Frequency Blending} \\
+\textbf{\LARGE Question 3 - Keypoint Selection} \\
 
-In this question, we will present some experiments developed using \emph{numpy} and \emph{OpenCV} functions in order to transform the image from spatial domain to frequency domain. The process will be divided into two different experiments for better readability. \\
+The keypoint selection method chosen initially was the OpenCV implementation of the Harris selector, simply because it is a simpler and faster method to retrieve such points, but due to the fact that the threshold must be applied after retrieving all the points instead of cutting out the points on the fly, the execution of harris became slower than a SIFT run.
 
-On the first one (\textbf{3.1}), we will be modifying the phase and magnitude in order to see the impact on the image reconstructed on the Fourier transform. On the second experiment (\textbf{3.2}), we will be blending the two images used in Question \textbf{4.2} in order to compare frequency and spatial blending. \\
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
+		\backslashbox{\textbf{Number of executions}}{\textbf{Selection algorithm}}    & \textbf{Harris}         & \textbf{SIFT}          & \textbf{15x15}      \\ \hline
+		\textbf{5 runs}  & 0.2714      & 0.0280      & 5.083     \\ \hline
+		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
+	\end{tabular}
+	\caption{Comparison between our implementation and OpenCV convolution time.}
+	\label{table:convolution-opencv}
+\end{table}
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[Using Harris. (\textbf{p3-3-1})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{output/p3-3-0}}
+		}
+		\label{fig:keypointSelectionHarris}
+	}
+	\quad
+	\subfloat[Using SIFT. (\textbf{p3-3-0})]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.25]{output/p3-3-1}}
+		}
+		\label{fig:keypointSelectionSift}
+	}
+	\caption{Difference between the keypoint selection methods.}
+	\label{fig:keypointSelection}
+\end{figure}
 
 \textbf{3.1 )} Exploring Fourier Space \\
 

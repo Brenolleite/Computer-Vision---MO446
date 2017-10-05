@@ -14,14 +14,25 @@ video_path = 'input/p3-1-0.mp4'
 video = cv2.VideoCapture(video_path)
 ret, colorFrame = video.read()
 
-frame = np.float32(cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY))
+frame = cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY)
 
-#  kp = keypoint.harris(cp.copy(frame))
-#  img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
-#  cv2.imwrite('output/p3-3-0.png', img)
+harrisSum = 0.0
+siftSum = 0.0
+average = 5
+for i in range(average):
+    t = ut.Time()
+    kp = keypoint.harris(cp.copy(frame))
+    harrisSum += t.elapsed()
+    img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
+    cv2.imwrite('output/p3-3-0.png', img)
 
-kp = keypoint.sift(cp.copy(frame))
-img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
-cv2.imwrite('output/p3-3-1.png', img)
+    t = ut.Time()
+    kp = keypoint.sift(cp.copy(frame))
+    siftSum += t.elapsed()
+    img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
+    cv2.imwrite('output/p3-3-1.png', img)
+
+print("Harris selector average time: ", harrisSum/average)
+print("SIFT selector average time: ", siftSum/average)
 
 video.release()
