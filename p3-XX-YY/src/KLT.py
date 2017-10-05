@@ -102,10 +102,10 @@ def KLT(video_path):
     ret, colorFrame1 = video.read()
 
     # Transform frame to grayscale
-    frame1 = np.float32(cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY))
+    frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
 
     # Get keypoints
-    kp = keypoint.harris(cp.copy(frame1))
+    kp = keypoint.sift(cp.copy(frame1))
 
     # Add KP to frames matrix
     output.append(kp)
@@ -139,10 +139,3 @@ def KLT(video_path):
         frame1 = frame2
 
     return np.array(output)
-
-video_path = '../input/p3-1-0.mp4'
-kps = KLT(video_path)
-utils.videoFlow(kps, video_path, '../output/flow.avi', (102, 255, 102))
-frame = utils.drawKeypoints(frame, np.array([kps[i]]), (102, 255, 102), 4)
-
-
