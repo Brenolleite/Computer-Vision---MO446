@@ -58,8 +58,8 @@ def KLT(video_path):
 
     video.release()
 
-    return kps
+    return np.array(kps)
 
-video_path = '../input/teste.mp4'
+video_path = '../input/teste2.mp4'
 kps = KLT(video_path)
 utils.videoFlow(kps, video_path, '../output/opencv_flow.avi', (13, 94, 1))
