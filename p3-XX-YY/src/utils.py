@@ -49,7 +49,7 @@ def videoFlow(kps, path, out_path, BGR):
         ret, frame = video.read()
 
         # Draw keypoints
-        frame = drawKeypoints(frame, kps[0:i,:,:], BGR)
+        frame = drawKeypoints(frame, kps[0:i,:,:], BGR, 1)
 
         # Write new image to video
         output_video.write(frame)

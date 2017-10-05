@@ -4,6 +4,7 @@ from numpy.linalg import lstsq
 from numpy.linalg import inv
 from numpy.linalg import cholesky
 import meshlab as ml
+import KLT as motion
 
 def create_rowG(a, b):
     # Creating system for matrix G
@@ -102,7 +103,7 @@ def sfm(kps):
 
     return points,  np.array(colors), cam_points,  np.array(cam_colors)
 
-video_path = '../input/p3-1-2.mp4'
+video_path = '../input/p3-1-1.mp4'
 kps = opencv.KLT(video_path)
 points, colors, cam_points, cam_colors = sfm(kps)
 

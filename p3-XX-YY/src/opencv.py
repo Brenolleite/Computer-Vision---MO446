@@ -21,7 +21,7 @@ def KLT(video_path):
 
     # Get keypoints
     kps = []
-    kp = np.float32(keypoint.sift(frame1))
+    kp = np.float32(keypoint.harris(frame1))
 
     kps.append(kp)
 
@@ -56,4 +56,4 @@ def KLT(video_path):
 
 video_path = '../input/p3-1-0.mp4'
 kps = KLT(video_path)
-utils.videoFlow(kps, video_path, '../output/opencv_flow.avi', (13, 94, 1))
+utils.videoFlow(kps, video_path, '../output/opencv_flow.avi', (255, 0, 255))
