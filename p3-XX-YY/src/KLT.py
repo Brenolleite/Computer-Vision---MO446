@@ -75,8 +75,10 @@ def update_kp(kp, flows):
         x, y = kp[i]
         u, v = flows[i]
 
-        x = math.floor(x + u)
-        y = math.floor(y + v)
+        tresh = 0.1
+        if abs(u) > tresh and abs(v) > tresh:
+            x = math.floor(x + u)
+            y = math.floor(y + v)
 
         new_kp.append((x, y))
 
@@ -138,17 +140,9 @@ def KLT(video_path):
 
     return np.array(output)
 
-#  video_path = '../input/p3-1-0.mp4'
-#  kps = KLT(video_path)
-#  utils.videoFlow(kps, video_path, '../output/flow.avi', (255, 0, 255))
-
-#  # Open video and get settings
-#  video = cv2.VideoCapture(video_path)
+video_path = '../input/p3-1-0.mp4'
+kps = KLT(video_path)
+utils.videoFlow(kps, video_path, '../output/flow.avi', (102, 255, 102))
+frame = utils.drawKeypoints(frame, np.array([kps[i]]), (102, 255, 102), 4)
 
 
-#  for i in range(5):
-#      ret, frame = video.read()
-
-#      frame = utils.drawKeypoints(frame, np.array([kps[i]]), (255, 0, 255), 4)
-
-#      cv2.imwrite('../output/frame{0}.png'.format(i), frame)
