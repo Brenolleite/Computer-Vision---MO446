@@ -52,7 +52,7 @@
 
 \textbf{\LARGE Question 3 - Keypoint Selection} \\
 
-	The keypoint selectors explored in this project were Harris and SIFT selector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, and at first glance could be thought as the best choice, more keypoints means a better flow generation, right? \\
+	The keypoint selectors explored in this project were Harris and SIFT selector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, Figure \ref{fig:keypointSelection} shows the extraction of both selectors. To extract the keypoints in Figure \ref{fig:keypointSelectionHarris} using Harris the algorithm took 0.0067 seconds, on the other hand of the spectrum, to extract the keypoints in Figure \ref{fig:keypointSelectionSift} using SIFT the algorithm took 0.0736 seconds presenting a tradeoff between the amount of keypoints and the time to calculate them.\\
 
 \begin{figure}[!h]
 	\centering
@@ -77,7 +77,7 @@
 	\label{fig:keypointSelection}
 \end{figure}
 
-	Not quite, as the goal is to extract keypoints only from the object and SIFT extracts extra points, seen circled in Figure \ref{fig:keypointSelectionSiftPoints}, like shadows, the line pulling the cube and small light changes, the selector falls behind when compared with the Harris which is a way faster algorithm as shown in Table \ref{table:timeHarrisSift}, and is able to extract only the keypoints regarding the object accomplishing our goal at this stage, as seen in Figure \ref{fig:keypointSelectionHarris}. \\
+	Considering that the keypoints will be used later on to track the object flow it is vital to obtain points regarding only the magic cube in this step. Using Harris selector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected, the same is not true for the SIFT selector, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected. Figure \ref{fig:keypointSelectionSiftPoints} highlights in yellow rectangles the "outliers" keypoints detected by SIFT, some cause by shadows in the image and others by sharp gradients beyond the magic cube.\\
 
 \begin{figure}[!h]
 	\centering
