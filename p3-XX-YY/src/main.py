@@ -56,7 +56,7 @@ print("Our Optical Flow Time (Harris): ", t.elapsed())
 
 t = ut.Time()
 kpsh_opencv = opencv.KLT(video_path, 'harris')
-print("Opencv Optical Flow Time (Harris): ", t.elapsed())
+print("OpenCV Optical Flow Time (Harris): ", t.elapsed())
 
 ut.videoFlow2(kpsh, kpsh_opencv,  video_path, 'output/p3-4-0.avi', (102, 255, 102), (144, 16, 242))
 
@@ -68,7 +68,7 @@ print("Our Optical Flow Time (SIFT): ", t.elapsed())
 
 t = ut.Time()
 kpss_opencv = opencv.KLT(video_path, 'sift')
-print("Opencv Optical Flow Time (SIFT): ", t.elapsed())
+print("OpenCV Optical Flow Time (SIFT): ", t.elapsed())
 
 ut.videoFlow2(kpss, kpss_opencv,  video_path, 'output/p3-4-1.avi', (102, 255, 102), (144, 16, 242))
 

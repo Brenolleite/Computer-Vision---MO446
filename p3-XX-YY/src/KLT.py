@@ -36,8 +36,6 @@ def solver(kp, frame1, frame2, nb):
                 b.append([It[k,m]])
 
 
-        #b = -np.array(b)
-
         # Execute least square
         d = np.array(lstsq(A, b))[0]
 
@@ -90,11 +88,11 @@ def KLT(video_path, type):
     # Stores the flow for the ith frame in the ith index
     output = []
 
-    # Size of the outlier border for keypoints
-    filterBorder = 30
-
     # Size of the neighbourhood to be accounted in KLT
     solverNeighbourhood = 15
+
+        # Size of the outlier border for keypoints
+    filterBorder = solverNeighbourhood * 2
 
     # Get frames
     ret, colorFrame1 = video.read()
