@@ -60,6 +60,6 @@ def KLT(video_path):
 
     return kps
 
-video_path = '../input/input2.mp4'
+video_path = '../input/teste.mp4'
 kps = KLT(video_path)
 utils.videoFlow(kps, video_path, '../output/opencv_flow.avi', (13, 94, 1))
