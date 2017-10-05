@@ -46,35 +46,13 @@
 
 %% ---------------- Starts here --------------------------------
 
-\textbf{\LARGE Input Images}\\
+\textbf{\LARGE Question 2 - Data} \\
 
-Throughout this project some images are used as input to test the algorithms. Figure \ref{fig:p1-1-0} was used as input for the pyramids exercises \textbf{2.1, 2.2, 2.3} and \textbf{3.1}, its dimensions are 400x300 and it is a colored image. \\
-
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{|c|c|c|c|}
-		\hline
-		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
-		\backslashbox{\textbf{Convolution}}{\textbf{Kernel Size}}    & \textbf{3x3}         & \textbf{7x7}          & \textbf{15x15}      \\ \hline
-		\textbf{Implemented}  & 4.481      & 4.535      & 5.083     \\ \hline
-		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
-	\end{tabular}
-	\caption{Comparison between our implementation and OpenCV convolution time.}
-	\label{table:convolution-opencv}
-\end{table}
+	The data used in this project was obtained with a cellphone camera recording ordinary objects. Two videos were used, (\textbf{p3-1-0}) shows a translation movement  (affine transformation) of a magic cube in a "blank" background and was used in the experiments of Question 4 - Feature Tracking, (\textbf{p3-1-1}) shows a rotation movement of the same magic cube and was used in Question 5 - Structure from Motion.\\
 
 \textbf{\LARGE Question 3 - Keypoint Selection} \\
 
-%The keypoint selection method chosen initially was the OpenCV implementation of the Harris selector, simply because it is a simpler and faster method to retrieve such points, but due to the fact that the threshold must be applied after retrieving all the points instead of cutting out the points on the fly, the execution of harris became slower than a SIFT run.
-%sift vs harris
-%qual é melhor? sift
-%porque mais pontos
-
-%faz tabela
-%qual é melhor agora?
-%depende, tradeoff de pontos(pontos desnecessários) de e tempo
-
-The keypoint selectors explored in this project were Harris and SIFT selector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, as seen in Figure \ref{fig:keypointSelection}.
+	The keypoint selectors explored in this project were Harris and SIFT selector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, and at first glance could be thought as the best choice, more keypoints means a better flow generation, right?
 
 \begin{figure}[!h]
 	\centering
@@ -82,7 +60,7 @@ The keypoint selectors explored in this project were Harris and SIFT selector, t
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{output/p3-3-0}}
+			\fbox{\includegraphics[scale=0.35]{output/p3-3-0}}
 		}
 		\label{fig:keypointSelectionHarris}
 	}
@@ -91,7 +69,7 @@ The keypoint selectors explored in this project were Harris and SIFT selector, t
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.25]{output/p3-3-1}}
+			\fbox{\includegraphics[scale=0.35]{output/p3-3-1}}
 		}
 		\label{fig:keypointSelectionSift}
 	}
@@ -99,21 +77,34 @@ The keypoint selectors explored in this project were Harris and SIFT selector, t
 	\label{fig:keypointSelection}
 \end{figure}
 
+	Not quite, as the goal is to extract keypoints only from the object and SIFT extracts extra points, seen circled in Figure \ref{fig:keypointSelectionSiftPoints}, like shadows, the line pulling the cube and small light changes, the selector falls behind when compared with the Harris which is a way faster algorithm as shown in Table \ref{table:timeHarrisSift}, and is able to extract only the keypoints regarding the object accomplishing our goal at this stage, as seen in Figure \ref{fig:keypointSelectionHarris}.
+
+\begin{figure}[!h]
+	\centering
+	{
+		\setlength{\fboxsep}{1pt}
+		\setlength{\fboxrule}{1pt}
+		\fbox{\includegraphics[scale=0.4]{report/out_points}}
+	}
+	\caption{SIFT extra keypoints.}
+	\label{fig:keypointSelectionSiftPoints}
+\end{figure}
+
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 		\hline
 		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
-		\backslashbox{\textbf{Number of executions}}{\textbf{Selection algorithm}}    & \textbf{Harris}         & \textbf{SIFT}          & \textbf{15x15}      \\ \hline
-		\textbf{5 runs}  & 0.2714      & 0.0280      & 5.083     \\ \hline
-		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
+		\backslashbox{\textbf{Average of}}{\textbf{Selector}}    & \textbf{Harris}         & \textbf{SIFT}          & \textbf{-1}      \\ \hline
+		\textbf{5 runs}  & 0.0067      & 0.0736      & -1     \\ \hline
+		\textbf{-1} & -1      & -1       & -1     \\ \hline
 	\end{tabular}
 	\caption{Comparison between our implementation and OpenCV convolution time.}
-	\label{table:convolution-opencv}
+	\label{table:timeHarrisSift}
 \end{table}
 
-\textbf{3.1 )} Exploring Fourier Space \\
+\textbf{\LARGE Question 4 - Feature Tracking} \\
 
-To explore the Fourier space, we implemented two different functions. The first one is responsible to transform an image into vectors of magnitude and phase, while the other is responsible to reconstruct the image from the magnitude and phase vectors. The Figure \ref{fig:mag-phase} shows the magnitude and phase obtained transforming the Figure \ref{fig:p1-1-0} to the frequency domain. \\
+\textbf{\LARGE Question 5 - Structure from Motion} \\
 
 \end{document}
