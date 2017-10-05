@@ -1,10 +1,8 @@
 import keypoint
-import utils
 from numpy.linalg import lstsq
 import copy as cp
 import numpy as np
 from numpy.linalg import inv
-
 import cv2
 import math
 
@@ -84,7 +82,7 @@ def update_kp(kp, flows):
 
     return np.array(new_kp)
 
-def KLT(video_path):
+def KLT(video_path, type):
     # Open video and get number of frames
     video = cv2.VideoCapture(video_path)
     length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -105,7 +103,10 @@ def KLT(video_path):
     frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
 
     # Get keypoints
-    kp = keypoint.sift(cp.copy(frame1))
+    if type == "sift":
+        kp = np.float32(keypoint.sift(frame1))
+    else:
+        kp = np.float32(keypoint.harris(frame1))
 
     # Add KP to frames matrix
     output.append(kp)
