@@ -13,19 +13,13 @@ def solver(kp, frame1, frame2, nb):
     # Create list of flows
     flows = []
 
-    # Concatenate frames
-    frames = []
-    frames.append(frame1)
-    frames.append(frame2)
-
     # Find derivatives of frames
     It = frame2 - frame1
-    Iy = np.diff(frame1, 1, axis=0)
-    Ix = np.diff(frame1, 1, axis=1)
+    Iy = np.diff(frame1, 1, axis=1)
+    Ix = np.diff(frame1, 1, axis=0)
 
     # Solve u, v for each keypoint
-    size = len(kp)
-    for i in range(size - 1, -1, -1):
+    for i in range(len(kp)):
         # Create matrixes and get kp position
         x = int(kp[i][0])
         y = int(kp[i][1])
@@ -35,17 +29,21 @@ def solver(kp, frame1, frame2, nb):
         b = []
 
         # Getting neighbourhood
-        for k in range(y - nbOffset, y + nbOffset + 1, 1):
-            for m in range(x - nbOffset, x + nbOffset + 1, 1):
+        for k in range(y - nbOffset, y + nbOffset + 1):
+            for m in range(x - nbOffset, x + nbOffset + 1):
                 # Creating matrix A
                 A.append([Ix[k,m], Iy[k,m]])
 
                 # Creating matrix b
                 b.append([It[k,m]])
 
+
+        #b = -np.array(b)
+
         # Execute least square
-        d = np.array(lstsq(A, b))
-        flows.append((d[0][0,0], d[0][1,0]))
+        d = np.array(lstsq(A, b))[0]
+
+        flows.append((d[0,0], d[1,0]))
 
     # Returning (u,v) vector
     return (np.array(kp), np.array(flows))
@@ -135,11 +133,22 @@ def KLT(video_path):
             # Add updated KP to frames matrix
             output = np.append(output, [kp], axis=0)
 
+        # Update frame1
         frame1 = frame2
-        colorFrame1 = colorFrame2
 
     return np.array(output)
 
-video_path = '../input/teste.mp4'
+video_path = '../input/p3-1-0.mp4'
 kps = KLT(video_path)
-utils.videoFlow(kps, video_path, '../output/flow.avi', (13, 94, 1))
+utils.videoFlow(kps, video_path, '../output/flow.avi', (255, 0, 255))
+
+# Open video and get settings
+video = cv2.VideoCapture(video_path)
+
+
+for i in range(5):
+    ret, frame = video.read()
+
+    frame = utils.drawKeypoints(frame, np.array([kps[i]]), (255, 0, 255), 4)
+
+    cv2.imwrite('../output/frame{0}.png'.format(i), frame)
