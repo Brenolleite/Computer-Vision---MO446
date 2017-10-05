@@ -140,9 +140,9 @@ def KLT(video_path):
 
     return np.array(output)
 
-video_path = '../input/p3-1-0.mp4'
-kps = KLT(video_path)
-utils.videoFlow(kps, video_path, '../output/flow.avi', (102, 255, 102))
-frame = utils.drawKeypoints(frame, np.array([kps[i]]), (102, 255, 102), 4)
+#  video_path = '../input/p3-1-0.mp4'
+#  kps = KLT(video_path)
+#  utils.videoFlow(kps, video_path, '../output/flow.avi', (102, 255, 102))
+#  frame = utils.drawKeypoints(frame, np.array([kps[i]]), (102, 255, 102), 4)
 
 

@@ -65,20 +65,16 @@ Throughout this project some images are used as input to test the algorithms. Fi
 
 \textbf{\LARGE Question 3 - Keypoint Selection} \\
 
-The keypoint selection method chosen initially was the OpenCV implementation of the Harris selector, simply because it is a simpler and faster method to retrieve such points, but due to the fact that the threshold must be applied after retrieving all the points instead of cutting out the points on the fly, the execution of harris became slower than a SIFT run.
+%The keypoint selection method chosen initially was the OpenCV implementation of the Harris selector, simply because it is a simpler and faster method to retrieve such points, but due to the fact that the threshold must be applied after retrieving all the points instead of cutting out the points on the fly, the execution of harris became slower than a SIFT run.
+%sift vs harris
+%qual é melhor? sift
+%porque mais pontos
 
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{|c|c|c|c|}
-		\hline
-		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
-		\backslashbox{\textbf{Number of executions}}{\textbf{Selection algorithm}}    & \textbf{Harris}         & \textbf{SIFT}          & \textbf{15x15}      \\ \hline
-		\textbf{5 runs}  & 0.2714      & 0.0280      & 5.083     \\ \hline
-		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
-	\end{tabular}
-	\caption{Comparison between our implementation and OpenCV convolution time.}
-	\label{table:convolution-opencv}
-\end{table}
+%faz tabela
+%qual é melhor agora?
+%depende, tradeoff de pontos(pontos desnecessários) de e tempo
+
+The keypoint selectors explored in this project were Harris and SIFT selector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, as seen in Figure \ref{fig:keypointSelection}.
 
 \begin{figure}[!h]
 	\centering
@@ -102,6 +98,19 @@ The keypoint selection method chosen initially was the OpenCV implementation of 
 	\caption{Difference between the keypoint selection methods.}
 	\label{fig:keypointSelection}
 \end{figure}
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
+		\backslashbox{\textbf{Number of executions}}{\textbf{Selection algorithm}}    & \textbf{Harris}         & \textbf{SIFT}          & \textbf{15x15}      \\ \hline
+		\textbf{5 runs}  & 0.2714      & 0.0280      & 5.083     \\ \hline
+		\textbf{OpenCV} & 0.001      & 0.004       & 0.010     \\ \hline
+	\end{tabular}
+	\caption{Comparison between our implementation and OpenCV convolution time.}
+	\label{table:convolution-opencv}
+\end{table}
 
 \textbf{3.1 )} Exploring Fourier Space \\
 
