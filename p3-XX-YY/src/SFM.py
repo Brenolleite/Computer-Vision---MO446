@@ -3,6 +3,7 @@ import opencv
 from numpy.linalg import lstsq
 from numpy.linalg import inv
 from numpy.linalg import cholesky
+import meshlab as ml
 
 def create_rowG(a, b):
     i1 = a[0]*b[0]
@@ -43,7 +44,7 @@ def sfm(kps):
 
         X.append([rowx])
         Y.append([rowy])
-    print(kps.shape)
+
     W = np.concatenate((np.array(X), np.array(Y)), axis=0).squeeze()
 
     U, S, V = np.linalg.svd(W, full_matrices=True)
@@ -67,9 +68,13 @@ def sfm(kps):
     M = np.dot(M, A)
     S = np.dot(inv(A), S)
 
-    print(M.shape)
-    print(S.shape)
+    St = np.transpose(S)
 
+    colors = []
+    for i in range(len(St)):
+        colors.append([13, 94, 1])
+
+    ml.write_ply('../output/teste.ply', St, np.array(colors))
 
 video_path = '../input/teste2.mp4'
 kps = opencv.KLT(video_path)
