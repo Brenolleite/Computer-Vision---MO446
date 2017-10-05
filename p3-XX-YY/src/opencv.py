@@ -1,17 +1,12 @@
 import numpy as np
 import cv2
+import keypoint
 import utils
 
 def KLT(video_path):
     # Get video length
     video = cv2.VideoCapture(video_path)
     length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-
-    # params for ShiTomasi corner detection
-    feature_params = dict(maxCorners = 100,
-                          qualityLevel = 0.3,
-                          minDistance = 7,
-                          blockSize = 7 )
 
     # Parameters for lucas kanade optical flow
     lk_params = dict(winSize  = (15,15),
@@ -26,12 +21,11 @@ def KLT(video_path):
 
     # Get keypoints
     kps = []
-    kp = cv2.goodFeaturesToTrack(frame1, mask = None, **feature_params)
+    kp = np.float32(keypoint.harris(frame1))
 
-    # Remove single dimention to add on table
-    kps.append(kp.squeeze())
+    kps.append(kp)
 
-    for i in range(0, length - 1):
+    for i in range(1, length - 1):
         # Get frames
         ret, frame2 = video.read()
 

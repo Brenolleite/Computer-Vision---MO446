@@ -15,18 +15,14 @@ def sift(img):
     return np.array(kp)
 
 def harris(img):
-    dst = cv2.cornerHarris(img, 2, 3, 0.04)
+    # params for ShiTomasi corner detection
+    feature_params = dict(maxCorners = 100,
+                          qualityLevel = 0.3,
+                          minDistance = 7,
+                          blockSize = 7)
 
-    kp = []
-    threshold = 0.01 * dst.max()
-    threshold = -255
-    for i in range(dst.shape[1]):
-        for j in range(dst.shape[0]):
-            if dst[j][i] > threshold:
-                kp.append((i, j))
-
-    return np.array(kp)
-
+    # Remove single dimention to add on table
+    return cv2.goodFeaturesToTrack(img, mask = None, **feature_params).squeeze()
 
 # DEBUG
 #  video = cv2.VideoCapture('../input/input.mp4')

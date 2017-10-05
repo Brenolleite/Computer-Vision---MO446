@@ -27,8 +27,8 @@ def solver(kp, frame1, frame2, nb):
     size = len(kp)
     for i in range(size - 1, -1, -1):
         # Create matrixes and get kp position
-        x = kp[i][0]
-        y = kp[i][1]
+        x = int(kp[i][0])
+        y = int(kp[i][1])
         nbOffset = math.floor(nb / 2)
         A = []
         d = []
@@ -102,10 +102,10 @@ def KLT(video_path):
     ret, colorFrame1 = video.read()
 
     # Transform frame to grayscale
-    frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
+    frame1 = np.float32(cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY))
 
     # Get keypoints
-    kp = keypoint.sift(cp.copy(frame1))
+    kp = keypoint.harris(cp.copy(frame1))
 
     # Add KP to frames matrix
     output.append(kp)
@@ -119,7 +119,7 @@ def KLT(video_path):
         ret, colorFrame2 = video.read()
 
         # Transform frame to grayscale
-        frame2 = cv2.cvtColor(colorFrame2, cv2.COLOR_BGR2GRAY)
+        frame2 = np.float32(cv2.cvtColor(colorFrame2, cv2.COLOR_BGR2GRAY))
 
         # Find optical flow
         kp, flows = solver(kp, frame1, frame2, solverNeighbourhood)
