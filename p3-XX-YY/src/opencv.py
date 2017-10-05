@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import utils
 
 def KLT(video_path):
     # Get video length
@@ -7,10 +8,10 @@ def KLT(video_path):
     length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
 
     # params for ShiTomasi corner detection
-    feature_params = dict( maxCorners = 100,
-                        qualityLevel = 0.3,
-                        minDistance = 7,
-                        blockSize = 7 )
+    feature_params = dict(maxCorners = 100,
+                          qualityLevel = 0.3,
+                          minDistance = 7,
+                          blockSize = 7 )
 
     # Parameters for lucas kanade optical flow
     lk_params = dict(winSize  = (15,15),
@@ -58,3 +59,7 @@ def KLT(video_path):
     video.release()
 
     return kps
+
+video_path = '../input/input2.mp4'
+kps = KLT(video_path)
+utils.videoFlow(kps, video_path, '../output/opencv_flow.avi', (13, 94, 1))

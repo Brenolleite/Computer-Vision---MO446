@@ -2,16 +2,6 @@ import numpy as np
 import cv2
 import math
 
-# Return a list of tuples [(x, y)] of each keypoint
-def kp(gray):
-    print("Selecting Keypoints")
-
-    # If changing this, also change line:
-    # frame1 = np.float32(frame1)
-    # in KLT.py, current line 95, 118 and 126
-    return sift(gray)
-    #  return harris(gray)
-
 def sift(img):
     sift = cv2.xfeatures2d.SIFT_create()
     kst = sift.detect(img, None)
@@ -33,7 +23,7 @@ def harris(img):
     for i in range(dst.shape[1]):
         for j in range(dst.shape[0]):
             if dst[j][i] > threshold:
-                kp.append((j, i))
+                kp.append((i, j))
 
     return np.array(kp)
 
