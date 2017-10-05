@@ -4,7 +4,7 @@ import copy as cp
 import numpy as np
 import math
 
-import keypoint as kp
+import keypoint as keypoint
 import KLT as motion
 
 
@@ -12,14 +12,16 @@ video_path = 'input/p3-1-0.mp4'
 
 # 3 Keypoint Selection
 video = cv2.VideoCapture(video_path)
-ret, frame = video.read()
+ret, colorFrame = video.read()
 
-kp = kp.harris(frame)
-img = ut.drawKeypoints(frame, kp, (255, 0 ,255), 3)
-cv2.imwrite('output/p3-3-0.png', img)
+frame = np.float32(cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY))
 
-kp = kp.sift(frame)
-img = ut.drawKeypoints(frame, kp, (255, 0 ,255), 3)
+#  kp = keypoint.harris(cp.copy(frame))
+#  img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
+#  cv2.imwrite('output/p3-3-0.png', img)
+
+kp = keypoint.sift(cp.copy(frame))
+img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
 cv2.imwrite('output/p3-3-1.png', img)
 
 video.release()

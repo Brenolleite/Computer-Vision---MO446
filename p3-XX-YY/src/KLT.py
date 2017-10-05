@@ -138,17 +138,17 @@ def KLT(video_path):
 
     return np.array(output)
 
-video_path = '../input/p3-1-0.mp4'
-kps = KLT(video_path)
-utils.videoFlow(kps, video_path, '../output/flow.avi', (255, 0, 255))
+#  video_path = '../input/p3-1-0.mp4'
+#  kps = KLT(video_path)
+#  utils.videoFlow(kps, video_path, '../output/flow.avi', (255, 0, 255))
 
-# Open video and get settings
-video = cv2.VideoCapture(video_path)
+#  # Open video and get settings
+#  video = cv2.VideoCapture(video_path)
 
 
-for i in range(5):
-    ret, frame = video.read()
+#  for i in range(5):
+#      ret, frame = video.read()
 
-    frame = utils.drawKeypoints(frame, np.array([kps[i]]), (255, 0, 255), 4)
+#      frame = utils.drawKeypoints(frame, np.array([kps[i]]), (255, 0, 255), 4)
 
-    cv2.imwrite('../output/frame{0}.png'.format(i), frame)
+#      cv2.imwrite('../output/frame{0}.png'.format(i), frame)
