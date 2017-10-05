@@ -1,9 +1,8 @@
 import numpy as np
 import cv2
 import keypoint
-import utils
 
-def KLT(video_path):
+def KLT(video_path, type):
     # Get video length
     video = cv2.VideoCapture(video_path)
     length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -21,7 +20,10 @@ def KLT(video_path):
 
     # Get keypoints
     kps = []
-    kp = np.float32(keypoint.harris(frame1))
+    if type == "sift":
+        kp = np.float32(keypoint.sift(frame1))
+    else:
+        kp = np.float32(keypoint.harris(frame1))
 
     kps.append(kp)
 
@@ -53,7 +55,3 @@ def KLT(video_path):
     video.release()
 
     return np.array(kps)
-
-video_path = '../input/p3-1-0.mp4'
-kps = KLT(video_path)
-utils.videoFlow(kps, video_path, '../output/opencv_flow.avi', (102, 255, 102))

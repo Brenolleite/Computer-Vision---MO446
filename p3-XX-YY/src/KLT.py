@@ -1,10 +1,8 @@
 import keypoint
-import utils
 from numpy.linalg import lstsq
 import copy as cp
 import numpy as np
 from numpy.linalg import inv
-
 import cv2
 import math
 
@@ -37,8 +35,6 @@ def solver(kp, frame1, frame2, nb):
                 # Creating matrix b
                 b.append([It[k,m]])
 
-
-        #b = -np.array(b)
 
         # Execute least square
         d = np.array(lstsq(A, b))[0]
@@ -84,7 +80,7 @@ def update_kp(kp, flows):
 
     return np.array(new_kp)
 
-def KLT(video_path):
+def KLT(video_path, type):
     # Open video and get number of frames
     video = cv2.VideoCapture(video_path)
     length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -92,20 +88,23 @@ def KLT(video_path):
     # Stores the flow for the ith frame in the ith index
     output = []
 
-    # Size of the outlier border for keypoints
-    filterBorder = 30
-
     # Size of the neighbourhood to be accounted in KLT
     solverNeighbourhood = 15
+
+        # Size of the outlier border for keypoints
+    filterBorder = solverNeighbourhood * 2
 
     # Get frames
     ret, colorFrame1 = video.read()
 
     # Transform frame to grayscale
-    frame1 = np.float32(cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY))
+    frame1 = cv2.cvtColor(colorFrame1, cv2.COLOR_BGR2GRAY)
 
     # Get keypoints
-    kp = keypoint.harris(cp.copy(frame1))
+    if type == "sift":
+        kp = np.float32(keypoint.sift(frame1))
+    else:
+        kp = np.float32(keypoint.harris(frame1))
 
     # Add KP to frames matrix
     output.append(kp)
@@ -139,10 +138,3 @@ def KLT(video_path):
         frame1 = frame2
 
     return np.array(output)
-
-#  video_path = '../input/p3-1-0.mp4'
-#  kps = KLT(video_path)
-#  utils.videoFlow(kps, video_path, '../output/flow.avi', (102, 255, 102))
-#  frame = utils.drawKeypoints(frame, np.array([kps[i]]), (102, 255, 102), 4)
-
-

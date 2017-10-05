@@ -3,7 +3,6 @@ import opencv
 from numpy.linalg import lstsq
 from numpy.linalg import inv
 from numpy.linalg import cholesky
-import meshlab as ml
 import KLT as motion
 
 def create_rowG(a, b):
@@ -102,15 +101,3 @@ def sfm(kps):
         cam_colors.append([0, 0, 0])
 
     return points,  np.array(colors), cam_points,  np.array(cam_colors)
-
-video_path = '../input/p3-1-1.mp4'
-kps = opencv.KLT(video_path)
-points, colors, cam_points, cam_colors = sfm(kps)
-
-# Filter points (outliers) for better visualization
-points = points[np.where(points[:,0] < - 50)]
-colors = colors[np.where(points[:,0] < - 50)]
-
-# Writing meshlab file
-ml.write_ply('../output/p3-5-1.ply', points, colors)
-ml.write_ply('../output/p3-5-2.ply', cam_points, cam_colors)
