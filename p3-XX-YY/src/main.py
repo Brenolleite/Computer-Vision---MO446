@@ -12,23 +12,30 @@ import opencv
 video = cv2.VideoCapture('input/p3-1-0.mp4')
 ret, colorFrame = video.read()
 
+# Transform the frame in grayscale
 frame = cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY)
 
+# Metrics for the avarage time
 harrisSum = 0.0
 siftSum = 0.0
-average = 5
+average = 1
+
 for i in range(average):
     t = ut.Time()
-    kp = keypoint.harris(cp.copy(frame))
+    kp1 = keypoint.harris(cp.copy(frame))
     harrisSum += t.elapsed()
-    img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
-    cv2.imwrite('output/p3-3-0.png', img)
 
     t = ut.Time()
-    kp = keypoint.sift(cp.copy(frame))
+    kp2 = keypoint.sift(cp.copy(frame))
     siftSum += t.elapsed()
-    img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
-    cv2.imwrite('output/p3-3-1.png', img)
+
+# Creating image from keypoints using Harris
+img1 = ut.drawKeypoints(colorFrame, np.array([kp1]), (255, 0 ,255), 3)
+cv2.imwrite('output/p3-3-0.png', img1)
+
+# Creating image from keypoints using SIFT
+img2 = ut.drawKeypoints(colorFrame, np.array([kp2]), (255, 0 ,255), 3)
+cv2.imwrite('output/p3-3-1.png', img2)
 
 print("Harris selector average time: ", harrisSum/average)
 print("SIFT selector average time: ", siftSum/average)
