@@ -6,6 +6,7 @@ from numpy.linalg import cholesky
 import meshlab as ml
 
 def create_rowG(a, b):
+    # Creating system for matrix G
     i1 = a[0]*b[0]
     i2 = a[0]*b[1] + a[1]*b[0]
     i3 = a[0]*b[2] + a[2]*b[0]
@@ -19,11 +20,12 @@ def create_GC(M):
     G = []
     C = []
 
+    # Creating 2f matrix G and C
     for i in range(len(M)):
         G.append(create_rowG(M[i], M[i]))
         C.append([1])
 
-
+    # Creating f matrix G and C
     f = int(len(M)/2)
     for i in range(f):
         G.append(create_rowG(M[i], M[i+f]))
@@ -31,10 +33,12 @@ def create_GC(M):
 
     return np.array(G), np.array(C)
 
-def sfm(kps):
+def sfm(kps, filename):
     W = []
     X = []
     Y = []
+
+    # Creating matrix X and Y to create W
     for i in range(len(kps)):
         rowx = []
         rowy = []
@@ -45,43 +49,58 @@ def sfm(kps):
         X.append([rowx])
         Y.append([rowy])
 
+    # Building matrix W
     W = np.concatenate((np.array(X), np.array(Y)), axis=0).squeeze()
 
+    # SVD factorization
     U, S, V = np.linalg.svd(W, full_matrices=True)
 
+    # Transform to ndarray
     U = np.array(U)
     S = np.array(S)
     V = np.array(V)
 
+    # Getting 3 points from SVD
     M = U[:, 0:3]
     S = np.dot(np.diag(S[0:3]), V[0:3,:])
 
+    # Creating Gl = C
     G, C = create_GC(M)
 
+    # Solving Gl = C, to get l
     Gt = np.transpose(G)
     l = np.dot(np.dot(inv(np.dot(Gt, G)), Gt), C)
 
+    # Creating L from l
     L = [[l[0,0], l[1,0], l[2,0]], [l[1,0], l[3,0], l[4,0]], [l[2,0], l[4,0], l[5,0]]]
 
+    # Finding A using cholesky
     A = cholesky(L)
 
+    # Getting real matrixes M and S
     M = np.dot(M, A)
     S = np.dot(inv(A), S)
 
+    # Creating points to meshlab
     points = np.transpose(S)
 
+    # Creating colors to points to object
     colors = []
     for i in range(len(points)):
         colors.append([13, 94, 1])
 
+    # Creating color to the camera position
     f = int(len(M)/2)
     for i in range(f):
+        # Crossing X and Y to get perpendicular vector (camera positions)
         points = np.append(points, np.cross(M[i], M[i+f]))
+
+        # Chosing black color to camera position
         colors.append([0, 0, 0])
 
-
-    ml.write_ply('../output/teste.ply', points, np.array(colors))
+    # Writing meshlab file
+    ml.write_ply('../output/' + filename + '.ply', points, np.array(colors))
 
 video_path = '../input/teste2.mp4'
 kps = opencv.KLT(video_path)
-sfm(kps)
+sfm(kps, 'teste')

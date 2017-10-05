@@ -1,5 +1,4 @@
 import numpy as np
-import cv2
 
 ply_header = '''ply
 format ascii 1.0
@@ -14,7 +13,6 @@ end_header
 '''
 
 def write_ply(fn, verts, colors):
-    print(np.array(verts).shape, np.array(colors).shape)
     verts = verts.reshape(-1, 3)
     colors = colors.reshape(-1, 3)
     verts = np.hstack([verts, colors])
