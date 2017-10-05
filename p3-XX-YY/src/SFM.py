@@ -101,6 +101,6 @@ def sfm(kps, filename):
     # Writing meshlab file
     ml.write_ply('../output/' + filename + '.ply', points, np.array(colors))
 
-video_path = '../input/teste2.mp4'
+video_path = '../input/teste3.mp4'
 kps = opencv.KLT(video_path)
 sfm(kps, 'teste')
