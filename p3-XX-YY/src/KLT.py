@@ -19,9 +19,9 @@ def solver(kp, frame1, frame2, nb):
     frames.append(frame2)
 
     # Find derivatives of frames
-    It = np.diff(frames, 1, axis=0)
-    Iy = np.diff(frames, 1, axis=1)
-    Ix = np.diff(frames, 1, axis=2)
+    It = frame2 - frame1
+    Iy = np.diff(frame1, 1, axis=0)
+    Ix = np.diff(frame1, 1, axis=1)
 
     # Solve u, v for each keypoint
     size = len(kp)
@@ -38,10 +38,10 @@ def solver(kp, frame1, frame2, nb):
         for k in range(y - nbOffset, y + nbOffset + 1, 1):
             for m in range(x - nbOffset, x + nbOffset + 1, 1):
                 # Creating matrix A
-                A.append([Ix[0,k,m], Iy[0,k,m]])
+                A.append([Ix[k,m], Iy[k,m]])
 
                 # Creating matrix b
-                b.append([It[0,k,m]])
+                b.append([It[k,m]])
 
         # Execute least square
         d = np.array(lstsq(A, b))
@@ -142,5 +142,4 @@ def KLT(video_path):
 
 video_path = '../input/teste.mp4'
 kps = KLT(video_path)
-print(kps.shape)
 utils.videoFlow(kps, video_path, '../output/flow.avi', (13, 94, 1))
