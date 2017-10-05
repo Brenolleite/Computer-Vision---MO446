@@ -44,7 +44,7 @@ def solver(kp, frame1, frame2, nb):
                 b.append([It[k,m]])
 
         # Execute least square
-        d = np.array(lstsq(A, b))
+        d = np.array(lstsq(A, -np.array(b)))
         flows.append((d[0][0,0], d[0][1,0]))
 
     # Returning (u,v) vector

@@ -33,7 +33,7 @@ def create_GC(M):
 
     return np.array(G), np.array(C)
 
-def sfm(kps, filename):
+def sfm(kps):
     W = []
     X = []
     Y = []
@@ -86,21 +86,30 @@ def sfm(kps, filename):
 
     # Creating colors to points to object
     colors = []
+    cam_colors = []
+    cam_points = []
     for i in range(len(points)):
-        colors.append([13, 94, 1])
+        colors.append([102, 255, 102])
 
     # Creating color to the camera position
     f = int(len(M)/2)
     for i in range(f):
         # Crossing X and Y to get perpendicular vector (camera positions)
-        points = np.append(points, np.cross(M[i], M[i+f]))
+        cam_points = np.append(cam_points, (np.cross(M[i], M[i+f])))
 
         # Chosing black color to camera position
-        colors.append([0, 0, 0])
+        cam_colors.append([0, 0, 0])
 
-    # Writing meshlab file
-    ml.write_ply('../output/' + filename + '.ply', points, np.array(colors))
+    return points,  np.array(colors), cam_points,  np.array(cam_colors)
 
-video_path = '../input/teste3.mp4'
+video_path = '../input/p3-1-2.mp4'
 kps = opencv.KLT(video_path)
-sfm(kps, 'teste')
+points, colors, cam_points, cam_colors = sfm(kps)
+
+# Filter points (outliers) for better visualization
+points = points[np.where(points[:,0] < - 50)]
+colors = colors[np.where(points[:,0] < - 50)]
+
+# Writing meshlab file
+ml.write_ply('../output/p3-5-1.ply', points, colors)
+ml.write_ply('../output/p3-5-2.ply', cam_points, cam_colors)
