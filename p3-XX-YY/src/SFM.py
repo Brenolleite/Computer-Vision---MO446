@@ -68,13 +68,19 @@ def sfm(kps):
     M = np.dot(M, A)
     S = np.dot(inv(A), S)
 
-    St = np.transpose(S)
+    points = np.transpose(S)
 
     colors = []
-    for i in range(len(St)):
+    for i in range(len(points)):
         colors.append([13, 94, 1])
 
-    ml.write_ply('../output/teste.ply', St, np.array(colors))
+    f = int(len(M)/2)
+    for i in range(f):
+        points = np.append(points, np.cross(M[i], M[i+f]))
+        colors.append([0, 0, 0])
+
+
+    ml.write_ply('../output/teste.ply', points, np.array(colors))
 
 video_path = '../input/teste2.mp4'
 kps = opencv.KLT(video_path)
