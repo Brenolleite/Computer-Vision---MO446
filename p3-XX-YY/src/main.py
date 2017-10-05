@@ -1,36 +1,27 @@
 import cv2
 import utils as ut
 import copy as cp
+import numpy as np
+import math
 
-import keypoint as kp
-import KLT as klt
+import keypoint as keypoint
+import KLT as motion
 
-#  def test():
-#      img = cv2.imread('input/input.png')
 
-#      time = ut.time()
-#      kp.sift(img)
-#      print("Delta t: ", time.elapsed())
+video_path = 'input/p3-1-0.mp4'
 
-def flowVideo(video, flow, fourcc):
+# 3 Keypoint Selection
+video = cv2.VideoCapture(video_path)
+ret, colorFrame = video.read()
 
-    length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-    width  = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps    = video.get(cv2.CAP_PROP_FPS)
+frame = np.float32(cv2.cvtColor(colorFrame, cv2.COLOR_BGR2GRAY))
 
-    flow_video = cv2.VideoWriter('../output/Flow.avi', fourcc, fps, (width, height))
-    kp_video = cv2.VideoWriter('../output/Keypoint.avi', fourcc, fps, (width, height))
+#  kp = keypoint.harris(cp.copy(frame))
+#  img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
+#  cv2.imwrite('output/p3-3-0.png', img)
 
-    for i in range(length):
-        ret, frame = video.read()
+kp = keypoint.sift(cp.copy(frame))
+img = ut.drawKeypoints(colorFrame, np.array([kp]), (255, 0 ,255), 3)
+cv2.imwrite('output/p3-3-1.png', img)
 
-        kp_img = ut.drawKeypoints(frame, flow[i])
-        kp_video.write(kp_img)
-
-video = cv2.VideoCapture('../input/input.mp4')
-fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-
-flow = klt.KLT(video, fourcc)
-
-flowVideo(video, flow, fourcc)
+video.release()
