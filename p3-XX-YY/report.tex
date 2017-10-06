@@ -67,7 +67,7 @@ The Harris and SIFT keypoint detector were explored in this project. The most no
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[Using Harris detector (\textbf{p3-3-1}).]{
+	\subfloat[Using Harris detector (\textbf{p3-3-0}).]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -76,7 +76,7 @@ The Harris and SIFT keypoint detector were explored in this project. The most no
 		\label{fig:keypointSelectionHarris}
 	}
 	\quad
-	\subfloat[Using SIFT detector (\textbf{p3-3-0}).]{
+	\subfloat[Using SIFT detector (\textbf{p3-3-1}).]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -88,7 +88,7 @@ The Harris and SIFT keypoint detector were explored in this project. The most no
 	\label{fig:keypointSelection}
 \end{figure}
 
-Considering that the keypoints will be used later to the object flow, it is vital to obtain points regarding only the magic cube in this step. Using Harris detector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected. The same does not hold for SIFT, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected. Figure \ref{fig:keypointSelectionSiftPoints} highlights in yellow  these selected  keypoints, the main reasons for that are the shadows in the image and other objects that appears in the scene like the thread.\\
+Considering that the keypoints will be used later on the object flow, it is vital to obtain points regarding only the magic cube in this step. Using Harris detector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected. The same does not hold for SIFT, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected. Figure \ref{fig:keypointSelectionSiftPoints} highlights in yellow  these selected  keypoints, the main reasons for that are the shadows in the image and other objects that appears in the scene like the thread.\\
 	
 \begin{figure}[!h]
 	\centering
@@ -97,7 +97,7 @@ Considering that the keypoints will be used later to the object flow, it is vita
 		\setlength{\fboxrule}{1pt}
 		\fbox{\includegraphics[scale=0.6]{report/out_points}}
 	}
-	\caption{SIFT extra keypoints.}
+	\caption{SIFT highlighted keypoints.}
 	\label{fig:keypointSelectionSiftPoints}
 \end{figure}
 
@@ -311,7 +311,7 @@ As seen in the cloud of points, both sides of the cubic was reconstructed into t
 	\label{fig:3dcamera}
 \end{figure}
 
-This positions were computed using the cross product on the transformation matrix ($M$), where the cross were taken using $M_1 \ cross \ M_{f+1}, M_2 \ cross \ M_{f+2}, \dotso, M_{f-1} \ cross \ M_{2f}$, in which $M_x$ is the $xth$ row of $M$ matrix. The cross product was used to find a perpendicular vector from de $X$ and $Y$ coordinates from the transformation matrix $M$. In this way the camera's trajectory was reconstructed, and as seen the camera movement follows the rotation of the object. This happens because there is no enough information to check if the camera or the object is moving. \\
+This positions were computed using the cross product on the transformation matrix ($M$), where the cross were taken using $M_1 \ cross \ M_{f+1}, M_2 \ cross \ M_{f+2}, \dotso, M_{f-1} \ cross \ M_{2f}$, in which $M_x$ is the $xth$ row of the $M$ matrix. The cross product was used to find a perpendicular vector from the $X$ and $Y$ coordinates from the transformation matrix $M$. In this way the camera's trajectory was reconstructed, and as seen the camera movement follows the rotation of the object. This happens because there is not enough information to check if the camera or the object is moving. \\
 
 
 
