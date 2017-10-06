@@ -247,11 +247,11 @@ The Figure \ref{fig:videoFlowOur} shows the optical flow of the object, however,
 
 \textbf{\LARGE Question 5 - Structure from Motion} \\
 
-In this section we have used the OpenCV implementation of motion, the reason is that it is more consistent which enables better reconstruction performance. We have tried our implementation, however, the falling behind keypoints on the video used (\textbf{p3-1-1}) did not gave good results. Moreover, all the SIFT keypoint detector has been used throughout the experiments. As shown before, it detects more keypoints which gives a better reconstruction of the 3D world. \\
+In this section we used the OpenCV implementation of optical flow, the reason is that it is more consistent which enables better reconstruction performance. We tested our implementation, however, the falling behind keypoints on the video used in (\textbf{p3-1-1}) did not perform well. Therefore, the SIFT keypoint detector was used throughout the experiments. As shown before, it detects more keypoints which gives a better reconstruction of the 3D world. \\
 
-We checked the number of points necessary to the reconstruction by a process of trial and error, the number of keypoints given by Harris keypoint detector was not sufficient to make a good 3D reconstruction. We have also satisfied the equation proposed by Morita et. al. and  $2F > P$, in which $F$ is number of frames from the video, and $P$ is the number of ``good keypoints'' \blfootnote{http://cs.brown.edu/courses/cs143/2011/proj5/Morita\_Kanade\_PAMI\_1997.pdf}. ``Good keypoints'' are those which never goes out of the point of view. \\
+We checked the number of points necessary to the reconstruction by a process of trial and error, the number of keypoints given by Harris keypoint detector was not sufficient to make a good 3D reconstruction. We have also satisfied the equation proposed by Morita et. al. and  $2F > P$, in which $F$ is the number of frames from the video, and $P$ is the number of ``good keypoints'' \blfootnote{http://cs.brown.edu/courses/cs143/2011/proj5/Morita\_Kanade\_PAMI\_1997.pdf}. ``Good keypoints'' are those which never goes out of the camera's view. \\
 
-The Figure \ref{fig:3dframe} shows the first frame from the image, which is where the SIFT keypoint detector is passed. The motion on this points will be responsible for the 3D structure reconstructed. 
+The Figure \ref{fig:3dframe} shows the first frame of the image, which is where the SIFT keypoint detector is used. The motion from this points will be responsible for the 3D structure reconstructed.
 
 \begin{figure}[!h]
 	\centering
@@ -260,7 +260,7 @@ The Figure \ref{fig:3dframe} shows the first frame from the image, which is wher
 		\setlength{\fboxrule}{1pt}
 		\fbox{\includegraphics[scale=0.4]{report/3dframe}}
 	}
-	\caption{First frame from video.}
+	\caption{First frame of the video.}
 	\label{fig:3dframe}
 \end{figure}
 
@@ -268,7 +268,7 @@ Using the keypoints selected the structure from motion model create the cloud of
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[Our implementation.]{
+	{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -277,7 +277,7 @@ Using the keypoints selected the structure from motion model create the cloud of
 		\label{fig:3dpoints1}
 	}
 	\enskip
-	\subfloat[OpenCV implementation.]{
+	{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -286,7 +286,7 @@ Using the keypoints selected the structure from motion model create the cloud of
 		\label{fig:3dpoints2}
 	}
 	\enskip
-	\subfloat[OpenCV implementation.]{
+	{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -307,11 +307,11 @@ As seen in the cloud of points, both sides of the cubic was reconstructed into t
 		\setlength{\fboxrule}{1pt}
 		\fbox{\includegraphics[scale=0.4]{report/3dcamera}}
 	}
-	\caption{Camera trajectory reconstructed from the motion.}
+	\caption{Camera's trajectory reconstructed from the motion.}
 	\label{fig:3dcamera}
 \end{figure}
 
-This positions were computed using the cross product on the transformation matrix ($M$), where the cross were taken using $M_1 \ cross \ M_f, M_2 \ cross \ M_{f+1}, \dotso, M_{f-1} \ cross \ M_{2f}$, in which $M_x$ is the $xth$ row of matrix $M$. The cross product was used to find a perpendicular vector from de $X$ and $Y$ coordinates from the transformation matrix $M$. In this way the camera's trajectory was reconstructed, and as seen the camera movement follows the rotation of the object. This happen because there is no enough information to check if the camera or the object is moving. \\
+This positions were computed using the cross product on the transformation matrix ($M$), where the cross were taken using $M_1 \ cross \ M_{f+1}, M_2 \ cross \ M_{f+2}, \dotso, M_{f-1} \ cross \ M_{2f}$, in which $M_x$ is the $xth$ row of $M$ matrix. The cross product was used to find a perpendicular vector from de $X$ and $Y$ coordinates from the transformation matrix $M$. In this way the camera's trajectory was reconstructed, and as seen the camera movement follows the rotation of the object. This happens because there is no enough information to check if the camera or the object is moving. \\
 
 
 
