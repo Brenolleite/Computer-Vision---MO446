@@ -264,7 +264,7 @@ The Figure \ref{fig:3dframe} shows the first frame from the image, which is wher
 	\label{fig:3dframe}
 \end{figure}
 
-Using the keypoints selected the structure from motion model create the cloud of points represented in in the Figure \ref{fig:3dpoints}.
+Using the keypoints selected the structure from motion model create the cloud of points represented in  the Figure \ref{fig:3dpoints}.
 
 \begin{figure}[!h]
 	\centering
@@ -272,22 +272,48 @@ Using the keypoints selected the structure from motion model create the cloud of
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/videoFlow}}
+			\fbox{\includegraphics[scale=0.3]{report/3d_points1}}
 		}
-		\label{fig:videoFlowOur}
+		\label{fig:3dpoints1}
 	}
 	\enskip
 	\subfloat[OpenCV implementation.]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/videoFlow_OpenCV}}
+			\fbox{\includegraphics[scale=0.3]{report/3d_points2}}
 		}
-		\label{fig:videoFlowCV}
+		\label{fig:3dpoints2}
 	}
-	\caption{Last frame from video showing results on optical flows using Harris Keypoint Detector (\textbf{p3-4-0}).}
-	\label{fig:flowVideo}
+	\enskip
+	\subfloat[OpenCV implementation.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/3d_points3}}
+		}
+		\label{fig:3dpoints3}
+	}
+	\caption{Different angles from cloud of points taken from \textbf{p3-5-0}.}
+	\label{fig:3dpoints}
 \end{figure}
 
+As seen in the cloud of points, both sides of the cubic was reconstructed into the 3D world. Some adjustments were made in the code for better visualization, like removing some outliers points which were too distant from the object reconstructed. The camera's position/trajectory was also reconstructed from motion, the Figure \ref{fig:3dcamera} shows the cloud of points representing the camera's trajectory.
 
+\begin{figure}[!h]
+	\centering
+	{
+		\setlength{\fboxsep}{1pt}
+		\setlength{\fboxrule}{1pt}
+		\fbox{\includegraphics[scale=0.4]{report/3dcamera}}
+	}
+	\caption{Camera trajectory reconstructed from the motion.}
+	\label{fig:3dcamera}
+\end{figure}
+
+This positions were computed using the cross product on the transformation matrix ($M$), where the cross were taken using $M_1 \ cross \ M_f, M_2 \ cross \ M_{f+1}, \dotso, M_{f-1} \ cross \ M_{2f}$, in which $M_x$ is the $xth$ row of matrix $M$. The cross product was used to find a perpendicular vector from de $X$ and $Y$ coordinates from the transformation matrix $M$. In this way the camera's trajectory was reconstructed, and as seen the camera movement follows the rotation of the object. This happen because there is no enough information to check if the camera or the object is moving. \\
+
+
+
+ 
 \end{document}
