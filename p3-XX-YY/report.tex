@@ -247,4 +247,10 @@ The Figure \ref{fig:videoFlowOur} shows the optical flow of the object, however,
 
 \textbf{\LARGE Question 5 - Structure from Motion} \\
 
+In this section we have used the OpenCV implementation of motion, the reason is that it is more consistent which enables better reconstruction performance. We have tried our implementation, however, the falling behind keypoints on the video used (\textbf{p3-1-1}) did not gave good results. Moreover, all the SIFT keypoint detector has been used throughout the experiments. As shown before, it detects more keypoints which gives a better reconstruction of the 3D world. \\
+
+We checked the number of points necessary to the reconstruction by a process of trial and error, the number of keypoints given by Harris keypoint detector was not sufficient to make a good 3D reconstruction. We have also satisfied the equation proposed by Morita et. al. and  $2F > P$, in which $F$ is number of frames from the video, and $P$ is the number of good keypoints \blfootnote{http://cs.brown.edu/courses/cs143/2011/proj5/Morita\_Kanade\_PAMI\_1997.pdf}. Good keypoints are those which never goes out of the point of view. \\
+
+The Figure \ref{fig:3dReconstruction}
+
 \end{document}
