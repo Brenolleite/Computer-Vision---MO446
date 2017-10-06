@@ -63,7 +63,7 @@ The input data used in this project was obtained with a cellphone camera,  recor
 
 \textbf{\LARGE Question 3 - Keypoint Selection} \\
 
-The Harris and SIFT keypoint detector were explored in this project. The most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts more keypoints than Harris, see Figure \ref{fig:keypointSelection}. However the SIFT is more time expensive, in this experiment it took 0.0736 seconds to extract the keypoints, while the Harris took just 0.0067 seconds. \\
+The Harris and SIFT keypoint detector (KP detector) were explored in this project. The most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts more keypoints than Harris, see Figure \ref{fig:keypointSelection}. However the SIFT is more time expensive, in this experiment it took 0.0736 seconds to extract the keypoints, while the Harris took just 0.0067 seconds. \\
 
 \begin{figure}[!h]
 	\centering
@@ -109,9 +109,9 @@ Considering that the keypoints will be used later to the object flow, it is vita
 
 \textbf{\LARGE Question 4 - Feature Tracking} \\
 
-In this section the results obtained in the optical flow will be shown. The video \textbf{p3-1-0} was used, which contains basically a translation movement. Two different videos were created in this section \textbf{p3-4-0} and \textbf{p3-4-1}, the first will be showing the results using the Harris as keypoint detector, and the second uses SIFT. Both videos are showing the results of our implementation (Left image, green color) and the OpenCV implementation (Righ image, pink color). \\
+In this section the results obtained in the optical flow will be shown. The video \textbf{p3-1-0} was used, which contains basically a translation movement. Two different videos were created in this section (\textbf{p3-4-0} and \textbf{p3-4-1}), the first video shows the results using  Harris keypoint detector. In other hand, the second video shows results of optical flow using SIFT detector. Both videos are showing the results of our implementation (Left image, green color) and the OpenCV implementation (Righ image, pink color). \\
 
-In \textbf{Question 3} it was shown that the SIFT usually finds more keypoints than the Harris corner detection, however, it is more expensive. A time comparison is shown in Table \ref{table:flowTime}\\
+In \textbf{Question 3} it was shown that SIFT usually finds more keypoints than  Harris corner detection, however, it is more expensive. A time comparison for the optical flow is shown in Table \ref{table:flowTime}. \\
 
 
 \begin{table}[!h]
@@ -127,9 +127,9 @@ In \textbf{Question 3} it was shown that the SIFT usually finds more keypoints t
 	\label{table:flowTime}
 \end{table}
 
-As seen the SIFT is really more expensive, the reason for that is not only SIFT is, by its own, less time efficient than Harris but the large number of keypoints increases the cost of finding the optical flow for every keypoint. Because of the better performance, and also for easiness on the visualization of the results the Harris implementation was used in some of the experiments in this section. \\
+As seen the SIFT is really more expensive, the reason for that is not only SIFT is, by its own, less time efficient than Harris but the large number of keypoints found by SIFT increases the cost of computing the optical flow. Because of the better performance, and also for easiness on the results visualization the Harris implementation was used in some of the experiments in this section. \\
 
-Picking a good neighbourhood size is essential for the optical flow algorithm, the Figure \ref{fig:keypointSelection} shows some comparisons between different sizes of neighbourhoods. The images were taken from the first, middle, and last frame from the video (left to right). \\
+Picking a good neighbourhood size is essential for the optical flow algorithm, the Figure \ref{fig:keypointSelection} shows some comparisons between different sizes of neighbourhoods. The images were taken from the first, middle, and last frame in the video (left to right). \\
 
 \begin{figure}[!h]
 	\centering
@@ -207,13 +207,15 @@ Picking a good neighbourhood size is essential for the optical flow algorithm, t
 		}	
 	}
 	
-	\caption{Three different frames from the video using $7x7$, $15x15$, and $30x30$ neighbourhood, respectively in each row.}
+	\caption{Three different frames from the video using $7x7$, $15x15$, and $30x30$ neighborhood, respectively in each row.}
 	\label{fig:keypointSelection}
 \end{figure}
 
-The image shows how the keypoints normally falls behind from the actual movement of the object, the first row (representing the $7x7$ neighbourhood) is the most affected by this problem. On the other hand, the last row (representing $30x30$) is the most accurate on the points. However, the number of keypoints is really smaller than the others. The reason for this is the border filtering, as the neighbourhood increases more keypoints needs to be removed from the border in order to maintain the algorithm boundaries. This filtering process removes some keypoints, as seen in the last image from the first column (which represents the first frame of the video), note that for the $7x7$ and $15x15$ neighbourhood the image is identical. \\
+The results shows that the keypoints normally falls behind from the actual movement of the object, the first row (representing the $7x7$ neighborhood) is the most affected by this problem. On the other hand, the last row (representing $30x30$) is the most accurate on the points. However, the number of keypoints is really smaller than the others. \\
 
-The $15x15$ neighbourhood has shown the best results, it does not lack the number of keypoints as the $30x30$ neighbourhood and it also does not suffer as much as the $7x7$ neighbourhood from falling behind the object. Because of this the $15x15$ neighbourhood has been selected to generate de video. The Figure \ref{fig:flowVideo} shows the motion flow on the last frame from the video using Harris keypoint detector. \\
+The reason for this is the border filtering, as the neighborhood increases more keypoints needs to be removed from the border in order to maintain the algorithm boundaries. This filtering process removes some keypoints, as seen in the last image from the first column (which represents the first frame of the video). Note that for the $7x7$ and $15x15$ neighborhood the image is identical. \\
+
+The $15x15$ neighborhood has shown the best results, it does not lack the number of keypoints as the $30x30$ neighborhood and it also does not suffer as much as the $7x7$ neighborhood from falling behind the object. Because of this the $15x15$ neighborhood has been selected to generate the video. The Figure \ref{fig:flowVideo} shows the motion flow on the last frame from the video using Harris keypoint detector. \\
 
 \begin{figure}[!h]
 	\centering
