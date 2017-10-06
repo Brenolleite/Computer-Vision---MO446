@@ -48,7 +48,7 @@
 
 \textbf{\LARGE Question 2 - Input Data} \\
 
-	The data used in this project was obtained with a cellphone camera recording the magic cube from Figure \ref{fig:magicCube}. Two videos were used, (\textbf{p3-1-0}) shows a translation movement  (affine transformation) of a magic cube in a "blank" background and was used in the experiments of Question 4 - Feature Tracking, (\textbf{p3-1-1}) shows a rotation movement of the same magic cube and was used in Question 5 - Structure from Motion. Figure\\
+The input data used in this project was obtained with a cellphone camera,  recording the magic cube from Figure \ref{fig:magicCube}. Two videos were taken, the first one (\textbf{p3-1-0}) shows a translation movement (affine transformation) of the magic cube in a "blank" background and was used in the experiments of Question 4 - Feature Tracking. The second (\textbf{p3-1-1}) shows the magic cubic performing a rotation movement and it was used in Question 5 - Structure from Motion experiments. \\
 
 \begin{figure}[!h]
 	\centering
@@ -63,7 +63,7 @@
 
 \textbf{\LARGE Question 3 - Keypoint Selection} \\
 
-	The keypoint detectors explored in this project were Harris and SIFT detector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, Figure \ref{fig:keypointSelection} shows the extraction of both detector. To extract the keypoints in Figure \ref{fig:keypointSelectionHarris} using Harris the algorithm took 0.0067 seconds, on the other hand of the spectrum, to extract the keypoints in Figure \ref{fig:keypointSelectionSift} using SIFT the algorithm took 0.0736 seconds presenting a tradeoff between the amount of keypoints and the time to calculate them.\\
+The Harris and SIFT keypoint detector were explored in this project. The most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts more keypoints than Harris, see Figure \ref{fig:keypointSelection}. However the SIFT is more time expensive, in this experiment it took 0.0736 seconds to extract the keypoints, while the Harris took just 0.0067 seconds. \\
 
 \begin{figure}[!h]
 	\centering
@@ -71,7 +71,7 @@
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.30]{output/p3-3-0}}
+			\fbox{\includegraphics[scale=0.3]{output/p3-3-0}}
 		}
 		\label{fig:keypointSelectionHarris}
 	}
@@ -80,7 +80,7 @@
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.30]{output/p3-3-1}}
+			\fbox{\includegraphics[scale=0.3]{output/p3-3-1}}
 		}
 		\label{fig:keypointSelectionSift}
 	}
@@ -88,20 +88,20 @@
 	\label{fig:keypointSelection}
 \end{figure}
 
-	Considering that the keypoints will be used later on to track the object flow it is vital to obtain points regarding only the magic cube in this step. Using Harris detector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected, the same is not true for the SIFT detector, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected.
+Considering that the keypoints will be used later to the object flow, it is vital to obtain points regarding only the magic cube in this step. Using Harris detector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected. The same does not hold for SIFT, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected. Figure \ref{fig:keypointSelectionSiftPoints} highlights in yellow  these selected  keypoints, the main reasons for that are the shadows in the image and other objects that appears in the scene like the thread.\\
 	
 \begin{figure}[!h]
 	\centering
 	{
 		\setlength{\fboxsep}{1pt}
 		\setlength{\fboxrule}{1pt}
-		\fbox{\includegraphics[scale=0.4]{report/out_points}}
+		\fbox{\includegraphics[scale=0.6]{report/out_points}}
 	}
 	\caption{SIFT extra keypoints.}
 	\label{fig:keypointSelectionSiftPoints}
 \end{figure}
 
-	Figure \ref{fig:keypointSelectionSiftPoints} highlights in yellow rectangles the "outliers" keypoints detected by SIFT, some cause by shadows in the image and others by sharp gradients beyond the magic cube.\\
+	
 
 %%---------------------------------------------------------------------
 
