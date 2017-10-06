@@ -63,11 +63,11 @@
 
 \textbf{\LARGE Question 3 - Keypoint Selection} \\
 
-	The keypoint selectors explored in this project were Harris and SIFT selector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, Figure \ref{fig:keypointSelection} shows the extraction of both selectors. To extract the keypoints in Figure \ref{fig:keypointSelectionHarris} using Harris the algorithm took 0.0067 seconds, on the other hand of the spectrum, to extract the keypoints in Figure \ref{fig:keypointSelectionSift} using SIFT the algorithm took 0.0736 seconds presenting a tradeoff between the amount of keypoints and the time to calculate them.\\
+	The keypoint detectors explored in this project were Harris and SIFT detector, the most noticeable difference between them is the amount of keypoints extracted, the SIFT algorithm extracts way more keypoints than Harris, Figure \ref{fig:keypointSelection} shows the extraction of both detector. To extract the keypoints in Figure \ref{fig:keypointSelectionHarris} using Harris the algorithm took 0.0067 seconds, on the other hand of the spectrum, to extract the keypoints in Figure \ref{fig:keypointSelectionSift} using SIFT the algorithm took 0.0736 seconds presenting a tradeoff between the amount of keypoints and the time to calculate them.\\
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[Using Harris selector (\textbf{p3-3-1}).]{
+	\subfloat[Using Harris detector (\textbf{p3-3-1}).]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -76,7 +76,7 @@
 		\label{fig:keypointSelectionHarris}
 	}
 	\quad
-	\subfloat[Using SIFT selector (\textbf{p3-3-0}).]{
+	\subfloat[Using SIFT detector (\textbf{p3-3-0}).]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -84,11 +84,11 @@
 		}
 		\label{fig:keypointSelectionSift}
 	}
-	\caption{Difference between keypoint selection methods.}
+	\caption{Difference between keypoint detection methods.}
 	\label{fig:keypointSelection}
 \end{figure}
 
-	Considering that the keypoints will be used later on to track the object flow it is vital to obtain points regarding only the magic cube in this step. Using Harris selector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected, the same is not true for the SIFT selector, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected.
+	Considering that the keypoints will be used later on to track the object flow it is vital to obtain points regarding only the magic cube in this step. Using Harris detector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected, the same is not true for the SIFT detector, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected.
 	
 \begin{figure}[!h]
 	\centering
@@ -109,7 +109,7 @@
 
 \textbf{\LARGE Question 4 - Feature Tracking} \\
 
-In this section the results obtained in the optical flow will be shown. The video \textbf{p3-1-0} was used, which contains basically a translation movement. Two different videos were created in this section \textbf{p3-4-0} and \textbf{p3-4-1}, the first will be showing the results using the Harris as keypoint selector, and the second uses SIFT. Both videos are showing the results of our implementation (Left image, green color) and the OpenCV implementation (Righ image, pink color). \\
+In this section the results obtained in the optical flow will be shown. The video \textbf{p3-1-0} was used, which contains basically a translation movement. Two different videos were created in this section \textbf{p3-4-0} and \textbf{p3-4-1}, the first will be showing the results using the Harris as keypoint detector, and the second uses SIFT. Both videos are showing the results of our implementation (Left image, green color) and the OpenCV implementation (Righ image, pink color). \\
 
 In \textbf{Question 3} it was shown that the SIFT usually finds more keypoints than the Harris corner detection, however, it is more expensive. A time comparison is shown in Table \ref{table:flowTime}\\
 
@@ -119,7 +119,7 @@ In \textbf{Question 3} it was shown that the SIFT usually finds more keypoints t
 	\begin{tabular}{|c|c|c|}
 		\hline
 		& \multicolumn{2}{c|}{Time (seconds)} \\ \hline
-		\backslashbox{\textbf{Implementation}}{\textbf{KP Selector}}      & Harris            & SIFT            \\ \hline
+		\backslashbox{\textbf{Implementation}}{\textbf{KP Detector}}      & Harris            & SIFT            \\ \hline
 		Ours   & 3.79              & 26.20           \\ \hline
 		OpenCV & 0.57              & 0.86            \\ \hline
 	\end{tabular}
@@ -213,7 +213,7 @@ Picking a good neighbourhood size is essential for the optical flow algorithm, t
 
 The image shows how the keypoints normally falls behind from the actual movement of the object, the first row (representing the $7x7$ neighbourhood) is the most affected by this problem. On the other hand, the last row (representing $30x30$) is the most accurate on the points. However, the number of keypoints is really smaller than the others. The reason for this is the border filtering, as the neighbourhood increases more keypoints needs to be removed from the border in order to maintain the algorithm boundaries. This filtering process removes some keypoints, as seen in the last image from the first column (which represents the first frame of the video), note that for the $7x7$ and $15x15$ neighbourhood the image is identical. \\
 
-The $15x15$ neighbourhood has shown the best results, it does not lack the number of keypoints as the $30x30$ neighbourhood and it also does not suffer as much as the $7x7$ neighbourhood from falling behind the object. Because of this the $15x15$ neighbourhood has been selected to generate de video. The Figure \ref{fig:flowVideo} shows the motion flow on the last frame from the video using Harris keypoint selector. \\
+The $15x15$ neighbourhood has shown the best results, it does not lack the number of keypoints as the $30x30$ neighbourhood and it also does not suffer as much as the $7x7$ neighbourhood from falling behind the object. Because of this the $15x15$ neighbourhood has been selected to generate de video. The Figure \ref{fig:flowVideo} shows the motion flow on the last frame from the video using Harris keypoint detector. \\
 
 \begin{figure}[!h]
 	\centering
@@ -224,7 +224,7 @@ The $15x15$ neighbourhood has shown the best results, it does not lack the numbe
 			\fbox{\includegraphics[scale=0.3]{report/videoFlow}}
 		}
 		\label{fig:videoFlowOur}
-	}
+	}`
 	\enskip
 	\subfloat[OpenCV implementation.]{
 		{
