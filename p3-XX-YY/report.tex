@@ -129,7 +129,7 @@ In \textbf{Question 3} it was shown that SIFT usually finds more keypoints than 
 
 As seen the SIFT is really more expensive, the reason for that is not only SIFT is, by its own, less time efficient than Harris but the large number of keypoints found by SIFT increases the cost of computing the optical flow. Because of the better performance, and also for easiness on the results visualization the Harris implementation was used in some of the experiments in this section. \\
 
-Picking a good neighbourhood size is essential for the optical flow algorithm, the Figure \ref{fig:keypointSelection} shows some comparisons between different sizes of neighbourhoods. The images were taken from the first, middle, and last frame in the video (left to right). \\
+Picking a good neighborhood size is essential for the optical flow algorithm, the Figure \ref{fig:keypointSelection} shows some comparisons between different sizes of neighborhoods. The images were taken from the first, middle, and last frame of the video (left to right). \\
 
 \begin{figure}[!h]
 	\centering
@@ -211,9 +211,9 @@ Picking a good neighbourhood size is essential for the optical flow algorithm, t
 	\label{fig:keypointSelection}
 \end{figure}
 
-The results shows that the keypoints normally falls behind from the actual movement of the object, the first row (representing the $7x7$ neighborhood) is the most affected by this problem. On the other hand, the last row (representing $30x30$) is the most accurate on the points. However, the number of keypoints is really smaller than the others. \\
+The results shows that the keypoints normally falls behind from the actual movement of the object, the first row (representing the $7x7$ neighborhood) is the most affected by this problem. On the other hand, the last row (representing $30x30$) is the most accurate on the points. However, the number of keypoints was largely reduced. \\
 
-The reason for this is the border filtering, as the neighborhood increases more keypoints needs to be removed from the border in order to maintain the algorithm boundaries. This filtering process removes some keypoints, as seen in the last image from the first column (which represents the first frame of the video). Note that for the $7x7$ and $15x15$ neighborhood the image is identical. \\
+The reason for this is the border filtering, as the neighborhood increases more keypoints must be removed from the border in order to maintain the algorithm boundaries. This filtering process removes some keypoints, as seen in the last image from the first column (which represents the first frame of the video). Note that for the $7x7$ and $15x15$ neighborhood the images are identical. \\
 
 The $15x15$ neighborhood has shown the best results, it does not lack the number of keypoints as the $30x30$ neighborhood and it also does not suffer as much as the $7x7$ neighborhood from falling behind the object. Because of this the $15x15$ neighborhood has been selected to generate the video. The Figure \ref{fig:flowVideo} shows the motion flow on the last frame from the video using Harris keypoint detector. \\
 
@@ -226,7 +226,7 @@ The $15x15$ neighborhood has shown the best results, it does not lack the number
 			\fbox{\includegraphics[scale=0.3]{report/videoFlow}}
 		}
 		\label{fig:videoFlowOur}
-	}`
+	}
 	\enskip
 	\subfloat[OpenCV implementation.]{
 		{
