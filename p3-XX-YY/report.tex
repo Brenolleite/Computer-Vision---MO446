@@ -56,7 +56,7 @@
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[Using Harris. (\textbf{p3-3-1})]{
+	\subfloat[Using Harris selector (\textbf{p3-3-1}).]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -65,7 +65,7 @@
 		\label{fig:keypointSelectionHarris}
 	}
 	\quad
-	\subfloat[Using SIFT. (\textbf{p3-3-0})]{
+	\subfloat[Using SIFT selector (\textbf{p3-3-0}).]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
@@ -77,8 +77,8 @@
 	\label{fig:keypointSelection}
 \end{figure}
 
-	Considering that the keypoints will be used later on to track the object flow it is vital to obtain points regarding only the magic cube in this step. Using Harris selector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected, the same is not true for the SIFT selector, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected. Figure \ref{fig:keypointSelectionSiftPoints} highlights in yellow rectangles the "outliers" keypoints detected by SIFT, some cause by shadows in the image and others by sharp gradients beyond the magic cube.\\
-
+	Considering that the keypoints will be used later on to track the object flow it is vital to obtain points regarding only the magic cube in this step. Using Harris selector many corners of the magic cube were selected and as seen in Figure \ref{fig:keypointSelectionHarris} not a single keypoint outside the magic cube boundaries was selected, the same is not true for the SIFT selector, Figure \ref{fig:keypointSelectionSift}, since it's based on gradients a few points outside the magic cube boundaries were selected.
+	
 \begin{figure}[!h]
 	\centering
 	{
@@ -90,18 +90,7 @@
 	\label{fig:keypointSelectionSiftPoints}
 \end{figure}
 
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{|c|c|c|c|}
-		\hline
-		& \multicolumn{3}{c|}{\textbf{Time (seconds)}} \\ \hline
-		\backslashbox{\textbf{Average of}}{\textbf{Selector}}    & \textbf{Harris}         & \textbf{SIFT}          & \textbf{-1}      \\ \hline
-		\textbf{5 runs}  & 0.0067      & 0.0736      & -1     \\ \hline
-		\textbf{-1} & -1      & -1       & -1     \\ \hline
-	\end{tabular}
-	\caption{Comparison between our implementation and OpenCV convolution time.}
-	\label{table:timeHarrisSift}
-\end{table}
+	Figure \ref{fig:keypointSelectionSiftPoints} highlights in yellow rectangles the "outliers" keypoints detected by SIFT, some cause by shadows in the image and others by sharp gradients beyond the magic cube.\\
 
 %%---------------------------------------------------------------------
 
@@ -111,7 +100,7 @@
 
 In this section the results obtained in the optical flow will be shown. The video \textbf{p3-1-0} was used, which contains basically a translation movement. Two different videos were created in this section \textbf{p3-4-0} and \textbf{p3-4-1}, the first will be showing the results using the Harris as keypoint selector, and the second uses SIFT. Both videos are showing the results of our implementation (Left image, green color) and the OpenCV implementation (Righ image, pink color). \\
 
-In \textbf{Question 3} it was shown that the SIFT usually finds more keypoints than the Harris corner detection, however, it is more expensive. A time comparisons is shown in Table \ref{table:flowTime} \\
+In \textbf{Question 3} it was shown that the SIFT usually finds more keypoints than the Harris corner detection, however, it is more expensive. A time comparison is shown in Table \ref{table:flowTime}\\
 
 
 \begin{table}[!h]
@@ -123,13 +112,13 @@ In \textbf{Question 3} it was shown that the SIFT usually finds more keypoints t
 		Ours   & 3.79              & 26.20           \\ \hline
 		OpenCV & 0.57              & 0.86            \\ \hline
 	\end{tabular}
-	\caption{Comparison between our implementation and OpenCV for optical flow.}
+	\caption{Comparison between our implementation and OpenCV's for optical flow.}
 	\label{table:flowTime}
 \end{table}
 
-As seen the SIFT is really more expensive, the reason for that is not only SIFT is, by its own, less time efficient than Harris. The large number of keypoints increases the cost of finding the optical flow for every keypoint. Because of the better performance, and also for easiness on the visualization on the results the Harris implementation was used in some of the experiments in this section. \\
+As seen the SIFT is really more expensive, the reason for that is not only SIFT is, by its own, less time efficient than Harris but the large number of keypoints increases the cost of finding the optical flow for every keypoint. Because of the better performance, and also for easiness on the visualization of the results the Harris implementation was used in some of the experiments in this section. \\
 
-The choose of a good neighborhood is essential for the optical flow algorithm, the Figure \ref{fig:keypointSelection} shows some comparisons between different size of neighborhood. The images were taken from the first, middle, and last frame from the video (left to right). \\
+Picking a good neighbourhood size is essential for the optical flow algorithm, the Figure \ref{fig:keypointSelection} shows some comparisons between different sizes of neighbourhoods. The images were taken from the first, middle, and last frame from the video (left to right). \\
 
 \begin{figure}[!h]
 	\centering
@@ -207,13 +196,13 @@ The choose of a good neighborhood is essential for the optical flow algorithm, t
 		}	
 	}
 	
-	\caption{Three different frames from the video using $7x7$, $15x15$, and $30x30$ neighborhood, respectively in each row.}
+	\caption{Three different frames from the video using $7x7$, $15x15$, and $30x30$ neighbourhood, respectively in each row.}
 	\label{fig:keypointSelection}
 \end{figure}
 
-The image shows how the keypoints normally falls behind from the actual movement of the object, the first row (representing the $7x7$ neighborhood) is the most affected by this problem. In other hand, the last row (representing $30x30$) is the most accurate on the points. However, the number of keypoints is really smaller than the others. The reason for this is the border filtering, as the neighborhood increases more keypoints needs to be removed from the border in order to maintain the algorithm boundaries. This filtering process removes some keypoints, as seen in the last image from the first column (which represents the first frame of the video), note that for the $7x7$ and $15x15$ neighborhood the image is identical. \\
+The image shows how the keypoints normally falls behind from the actual movement of the object, the first row (representing the $7x7$ neighbourhood) is the most affected by this problem. On the other hand, the last row (representing $30x30$) is the most accurate on the points. However, the number of keypoints is really smaller than the others. The reason for this is the border filtering, as the neighbourhood increases more keypoints needs to be removed from the border in order to maintain the algorithm boundaries. This filtering process removes some keypoints, as seen in the last image from the first column (which represents the first frame of the video), note that for the $7x7$ and $15x15$ neighbourhood the image is identical. \\
 
-The $15x15$ neighborhood has shown the best results, it does not lack the number of keypoints as the $30x30$ neighborhood and it also does not suffer as much as the $7x7$ neighborhood from falling behind the object. Because of this the $15x15$ neighborhood has been selected to generate de video. The Figure \ref{fig:flowVideo} shows the motion flow on the last frame from the video using Harris keypoint selector. \\
+The $15x15$ neighbourhood has shown the best results, it does not lack the number of keypoints as the $30x30$ neighbourhood and it also does not suffer as much as the $7x7$ neighbourhood from falling behind the object. Because of this the $15x15$ neighbourhood has been selected to generate de video. The Figure \ref{fig:flowVideo} shows the motion flow on the last frame from the video using Harris keypoint selector. \\
 
 \begin{figure}[!h]
 	\centering
@@ -238,7 +227,7 @@ The $15x15$ neighborhood has shown the best results, it does not lack the number
 	\label{fig:flowVideo}
 \end{figure}
 
-The Figure \ref{fig:videoFlowOur} shows the optical flow of the object, however, it is noticeable that the keypoints are falling behind the object. This effect could be optimized using other techniques such pyramids or even recomputing the keypoints after a certain amount of frames. None of this approaches were implemented in this work. As seen the OpenCV implementation tracks the keypoints with more precision than our implementation, see Figure \ref{fig:videoFlowCV}.  \\
+The Figure \ref{fig:videoFlowOur} shows the optical flow of the object, however, it is noticeable that the keypoints are falling behind the object. This effect could be optimized using other techniques such as pyramids or even recomputing the keypoints after a certain amount of frames. None of this approaches were implemented in this work. As seen the OpenCV implementation tracks the keypoints with more precision than our implementation, see Figure \ref{fig:videoFlowCV}.  \\
 
 
 %%---------------------------------------------------------------------
