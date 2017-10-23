@@ -17,7 +17,7 @@ class Time:
 # Save kmeans colored image
 def k_image(img, center, label):
     center = np.uint8(center)
-    res = center[label.flatten()]
-    res2 = res.reshape((img.shape))
+    aux = center[label.flatten()]
+    kimg = aux.reshape((img.shape))
 
-    return res2
+    return kimg
