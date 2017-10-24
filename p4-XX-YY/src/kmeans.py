@@ -9,13 +9,14 @@ def k_means(img):
     img = img.reshape((-1, 3))
     img = np.float32(img)
 
-    # define criteria, number of clusters(K) and apply kmeans()
+    # Define criteria, number of clusters(K) and apply kmeans()
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-    
-    # Number of Clusters
-    c_num = 3
 
-    aux, label, center = cv2.kmeans(img, c_num, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+    # Number of Clusters
+    K = 5
+
+    # Using kmeans on colors intensity
+    aux, label, center = cv2.kmeans(img, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
 
     return center, label
 
@@ -26,6 +27,6 @@ center, label = k_means(img)
 
 kimg = utils.k_image(img, center, label)
 
-cv2.imwrite('../output/teste.jpg', kimg)
+cv2.imwrite('../output/teste_kmeans.jpg', kimg)
 
-labels, centroids = cc.conn_comp(kimg, 4)
+labels, centroids = cc.conn_comp(kimg, 8)
