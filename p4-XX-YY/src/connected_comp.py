@@ -5,6 +5,7 @@ import collections as col
 
 import utils
 
+# Clear components which is too small
 def clear_components(labels, nlabels):
     counter = np.zeros(nlabels)
 
@@ -18,13 +19,14 @@ def clear_components(labels, nlabels):
 
     return labels
 
-
+# Finding connected components
 def conn_comp(img, connectivity):
     # Transform image to gray color
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Creating all components
     components = np.zeros(img.shape).astype(int)
+    centroids_comp = [(-1,-1)]
     comp_count = 1
 
     B = []
@@ -42,6 +44,7 @@ def conn_comp(img, connectivity):
         # Find connected componnents
         nlabels, labels, stats, centroids = cv2.connectedComponentsWithStats(img_aux, connectivity, cv2.CV_32S)
 
+        print(nlabels, centroids.shape)
 
         # Remove small componnents found
         labels = clear_components(labels, nlabels)
@@ -53,6 +56,7 @@ def conn_comp(img, connectivity):
         # Update components counter
         for i in np.unique(labels):
             if i != -1 and i != 0:
+                centroids_comp.append(centroids)
                 labels[labels == i] = comp_count
                 comp_count += 1
 
@@ -68,4 +72,4 @@ def conn_comp(img, connectivity):
     out = utils.components_image(components)
     cv2.imwrite('../output/final.jpg', out)
 
-    return components, centroids
+    return components, centroids_comp
