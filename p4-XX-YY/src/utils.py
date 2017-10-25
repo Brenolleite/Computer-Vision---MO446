@@ -35,7 +35,6 @@ def components_image(comps):
 
     # Define some colors manually
     colors.append((255,255,255))
-    colors.append((0,0,0))
     colors.append((0,255,0))
     colors.append((0,0,255))
     colors.append((255,0,0))

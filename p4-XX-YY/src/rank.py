@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 DS =[
-        ['boat_1.jpg', []]
+        ['beach_2.jpg', []]
 ]
 
 # Create DS structure for names and regions features
@@ -56,7 +56,7 @@ DS_AUX =[
 ]
 
 def load_features_DS():
-    # DS composed by [filename, features]
+    # DS composed by [filename, descriptors]
     for image in DS:
         img = cv2.imread('../input/' + image[0])
         image[1] = desc.get(img)
@@ -64,30 +64,30 @@ def load_features_DS():
 
     print('Dataset Loaded and Regions Descriptors Adquired')
 
-def features_distance(feat1, feat2, weights):
+def features_distance(feat1, feat2, w):
     feat_diff = abs(feat1 - feat2)
 
-    return np.average(feat_diff, weights)
+    return np.average(feat_diff, weights=w)
 
 # Regions [size, mean_color, texture, centroid, bounding_box]
-def distance(reg1, reg2, weights, feat_weights):
-    print(reg1, reg2)
-    size_diff = abs(reg1[0] - reg2[0])
-    mean_color_diff = abs(reg1[1] - reg2[1])
-    centroid_dist = 0 #np.sqrt(np.sum((reg1[3] - reg2[3])**2))
-    features_diff = 0 #features_distance(reg1[2], reg2[2], feat_weights)
+def distance(reg1, reg2, w, feat_w):
 
-    return np.average([size_diff, mean_color_diff, centroid_dist, features_diff], weights)
+    size_diff = abs(reg1[0] - reg2[0])
+    mean_color_diff = np.mean(abs(reg1[1] - reg2[1]))
+    centroid_dist = 0 #np.sqrt(np.sum((reg1[3] - reg2[3])**2))
+    features_diff = 0 #features_distance(reg1[2], reg2[2], feat_w)
+
+    return np.average([size_diff, mean_color_diff, centroid_dist, features_diff], weights=w)
 
 def compare_regions(regions_q, regions_s):
     total = 0
-    for x in range(len(regions_q)):
+    for reg_q in regions_q:
         # Set high dissimilarity
         minimun = 9999999
 
         # Compare all the regions
-        for y in range(len(regions_s)):
-            dist = distance(regions_q[x], regions_s[y], None, None)
+        for reg_s in regions_s:
+            dist = distance(reg_q, reg_s, None, None)
 
             if dist < minimun:
                 minimun = dist
@@ -107,9 +107,10 @@ def top(img, number):
     # Comparing image query with datasets
     for i in range(len(DS)):
         rank[i] = compare_regions(regions, DS[i][1])
-        print(rank[i])
-        break
+
+    print(rank)
+
+load_features_DS()
 
 img = cv2.imread('../input/beach_2.jpg')
-load_features_DS()
 top(img, 3)
