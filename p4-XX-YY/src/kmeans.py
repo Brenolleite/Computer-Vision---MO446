@@ -13,7 +13,7 @@ def k_means(img):
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
 
     # Number of Clusters
-    K = 2
+    K = 5
 
     # Using kmeans on colors intensity
     aux, label, center = cv2.kmeans(img, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)

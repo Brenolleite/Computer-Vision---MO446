@@ -12,7 +12,7 @@ def clear_components(labels, nlabels):
     for i in range(nlabels):
         counter[i] = len(labels[labels == i])
 
-    mean = np.mean(counter)
+    mean = np.mean(counter)*2
 
     for i in np.where(counter<mean)[0]:
         labels[labels == i] = -1
