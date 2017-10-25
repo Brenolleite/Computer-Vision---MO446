@@ -6,67 +6,91 @@ import collections as col
 import utils
 
 # Clear components which is too small
-def clear_components(labels, nlabels):
-    counter = np.zeros(nlabels)
+def clear_components(components):
+    counter = np.zeros(len(np.unique(components)))
 
-    for i in range(nlabels):
-        counter[i] = len(labels[labels == i])
+    for i in range(1, len(counter)):
+        counter[i] = len(components[components == i])
 
     mean = np.mean(counter)*2
 
     for i in np.where(counter<mean)[0]:
-        labels[labels == i] = -1
+        components[components == i] = -1
 
-    return labels
+    return components
+
+# Check neighbors
+def checkPixelForConnection(i, j, currentLabel, labels, components):
+    return (i >= 0 and i < labels.shape[0] and
+            j >= 0 and j < labels.shape[1] and
+            labels[i][j] == currentLabel  and
+            components[i][j] == -1)
+
+# BFS for connected components
+def BFS(labels):
+    # Create queue and variables
+    queue = []
+    compIndex = 0
+    components = np.zeros(labels.shape).astype(int) - 1
+
+    # Loop in disconnected components
+    for i in range(labels.shape[0]):
+        for j in range(labels.shape[1]):
+            if components[i][j] == -1:
+
+                currentLabel = labels[i,j]
+                queue.append((i,j))
+
+                # Get all connected components
+                while len(queue) > 0:
+                    x , y = queue.pop(0)
+
+                    for m in range(x - 1, x + 2):
+                        for l in range(y - 1, y + 2):
+                            if checkPixelForConnection(m, l, currentLabel, labels, components):
+                                components[m, l] = compIndex
+                                queue.append((m, l))
+
+                compIndex += 1
+
+    return components
 
 # Finding connected components
-def conn_comp(img, connectivity):
-    # Transform image to gray color
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+def conn_comp(labels, img):
+    # Reshaping after kmeans
+    labels = labels.reshape((img.shape[0], img.shape[1]))
 
-    # Creating all components
-    components = np.zeros(img.shape).astype(int)
-    centroids_comp = [(-1,-1)]
-    comp_count = 1
+    # Using BFS for connected components
+    components = BFS(labels)
 
-    B = []
-    # Transform to binary image using k-means colors
-    for i in np.unique(img):
-        img_aux = cp.copy(img)
+    # Clearing small components
+    components = clear_components(components)
 
-        # Create binary image
-        img_aux[img == i] = 255
-        img_aux[img != i] = 0
+    # Update components counter
+    comp_count = 0
+    for i in np.unique(components):
+        components[components == i] = comp_count
+        comp_count += 1
 
-        cv2.imwrite('../output/back{0}.jpg'.format(i), img_aux)
+    return components
 
-        # Find connected componnents
-        nlabels, labels, stats, centroids = cv2.connectedComponentsWithStats(img_aux, connectivity, cv2.CV_32S)
+# Finding centroids
+def centroid(components):
+    centroids = np.zeros((len(np.unique(components)), 2))
 
-        # Remove small componnents found
-        labels = clear_components(labels, nlabels)
+    for comp in np.unique(components):
+        points = []
 
-        out = utils.components_image(labels)
-        cv2.imwrite('../output/teste{0}.jpg'.format(i), out)
-        #B.append(np.where(labels != 0)[0])
+        for i in range(components.shape[0]):
+            for j in range(components.shape[1]):
+                if components[i,j] == comp:
+                    points.append((j,i))
 
-        # Update components counter
-        for i in np.unique(labels):
-            if i != -1 and i != 0:
-                centroids_comp.append(centroids)
-                labels[labels == i] = comp_count
-                comp_count += 1
+        points = np.array(points)
 
-        # Updating components
-        height, width = labels.shape
-        for y in range(height):
-            for x in range(width):
-                if labels[y,x] != 0:
-                    components[y,x] = labels[y,x]
+        length = points.shape[0]
+        sum_x = np.sum(points[:, 0])
+        sum_y = np.sum(points[:, 1])
+        centroids[comp] = [sum_x/length, sum_y/length]
 
-    #print(len(set(B[0]).intersection(B[1])))
-
-    out = utils.components_image(components)
-    cv2.imwrite('../output/final.jpg', out)
-
-    return components, centroids_comp
+    return centroids

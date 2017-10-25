@@ -23,12 +23,12 @@ def k_image(img, center, label):
     return kimg
 
 # Create image from components
-def components_image(labels):
+def components_image(comps):
     # Create serial components for coloring
     count = 1
-    for i in np.unique(labels):
+    for i in np.unique(comps):
         if i != -1 and i != 0:
-            labels[labels == i] = count
+            comps[comps == i] = count
             count += 1
 
     colors = []
@@ -42,16 +42,16 @@ def components_image(labels):
     colors.append((255,0,255))
 
     # Create random colors
-    for i in np.unique(labels) - len(colors):
+    for i in np.unique(comps) - len(colors):
         colors.append(((randint(0, 255)), randint(0, 255), randint(0, 255)))
 
     # Create image
-    height, width = labels.shape
+    height, width = comps.shape
     img = np.zeros((height, width, 3))
 
     for y in range(height):
         for x in range(width):
-            img[y,x] = colors[labels[y,x] + 1]
+            img[y,x] = colors[comps[y,x] + 1]
 
     return img.astype(np.uint8)
 
