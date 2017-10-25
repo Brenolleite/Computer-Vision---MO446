@@ -32,7 +32,6 @@ def conn_comp(img, connectivity):
     B = []
     # Transform to binary image using k-means colors
     for i in np.unique(img):
-        print("=======================")
         img_aux = cp.copy(img)
 
         # Create binary image
@@ -43,8 +42,6 @@ def conn_comp(img, connectivity):
 
         # Find connected componnents
         nlabels, labels, stats, centroids = cv2.connectedComponentsWithStats(img_aux, connectivity, cv2.CV_32S)
-
-        print(nlabels, centroids.shape)
 
         # Remove small componnents found
         labels = clear_components(labels, nlabels)
