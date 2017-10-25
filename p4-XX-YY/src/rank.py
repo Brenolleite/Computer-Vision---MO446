@@ -6,13 +6,10 @@ import warnings
 # Remove warning from code, sqrt warning is expected on code
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-DS =[
-        ['beach_2.jpg', []]
-]
 
 # Create DS structure for names and regions features
 # [Filename, Regions Features]
-DS_AUX =[
+DS =[
         ['beach_1.jpg', []],
         ['beach_2.jpg', []],
         ['beach_3.jpg', []],
@@ -65,7 +62,7 @@ def load_features_DS():
     print('Dataset Loaded and Regions Descriptors Adquired')
 
 def features_distance(feat1, feat2, w):
-    feat_diff = abs(feat1 - feat2)
+    feat_diff = abs(np.array(feat1) - np.array(feat2))
 
     return np.average(feat_diff, weights=w)
 
@@ -74,8 +71,8 @@ def distance(reg1, reg2, w, feat_w):
 
     size_diff = abs(reg1[0] - reg2[0])
     mean_color_diff = np.mean(abs(reg1[1] - reg2[1]))
-    centroid_dist = 0 #np.sqrt(np.sum((reg1[3] - reg2[3])**2))
-    features_diff = 0 #features_distance(reg1[2], reg2[2], feat_w)
+    centroid_dist = np.sqrt(np.sum((reg1[3] - reg2[3])**2))
+    features_diff = features_distance(reg1[2], reg2[2], feat_w)
 
     return np.average([size_diff, mean_color_diff, centroid_dist, features_diff], weights=w)
 
@@ -87,7 +84,7 @@ def compare_regions(regions_q, regions_s):
 
         # Compare all the regions
         for reg_s in regions_s:
-            dist = distance(reg_q, reg_s, None, None)
+            dist = distance(reg_q, reg_s, [1, 1, 1, 0], [1, 1, 1, 1, 1])
 
             if dist < minimun:
                 minimun = dist

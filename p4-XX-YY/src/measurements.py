@@ -62,7 +62,7 @@ def region_info(img, components, centroids):
             info[2].append(int((int(img[i, k][0]) + int(img[i, k][1]) + int(img[i, k][2]))/3))
 
             # Get centroid into info [3]
-            #info[3] = centroids[index]
+            info[3] = centroids[index]
 
             # Set bounding box
             # [width_min, width_max, height_min, height_max] [4]

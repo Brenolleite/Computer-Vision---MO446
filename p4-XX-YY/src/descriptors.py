@@ -7,7 +7,7 @@ import numpy as np
 # Get feature vector
 def get(img):
     # Using kmeans to create clusters
-    center, labels = clustering.kmeans(img, 2)
+    center, labels = clustering.kmeans(img, 5)
 
     # Generate image from clusters
     kimg = utils.k_image(img, center, labels)
