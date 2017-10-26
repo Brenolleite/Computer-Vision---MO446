@@ -6,10 +6,13 @@ import warnings
 # Remove warning from code, sqrt warning is expected on code
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
+DS =[
+        ['beach_1.jpg', []]
+]
 
 # Create DS structure for names and regions features
 # [Filename, Regions Features]
-DS =[
+DS_AUX =[
         ['beach_1.jpg', []],
         ['beach_2.jpg', []],
         ['beach_3.jpg', []],
@@ -99,15 +102,20 @@ def top(img, number):
     regions = desc.get(img)
 
     # Create a rank of dissimilarity with DS
-    rank = np.zeros(len(DS))
+    rank = []
+    for image in DS:
+        rank.append([image[0], 99999999])
 
     # Comparing image query with datasets
     for i in range(len(DS)):
-        rank[i] = compare_regions(regions, DS[i][1])
+        rank[i][1] = compare_regions(regions, DS[i][1])
 
-    print(rank)
+    sorted(rank, key=lambda x: x[1])
+
+    return rank[:number+1]
 
 load_features_DS()
 
 img = cv2.imread('../input/beach_2.jpg')
-top(img, 3)
+top3 = top(img, 3)
+print(top3)
