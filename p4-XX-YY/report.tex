@@ -171,6 +171,50 @@
 
 \textbf{\LARGE Question 3 - Distance Measure} \\
 
-In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm.
+Each region acquired has a descriptor that is composed by a vector of features, this vector is composed by the following features region size, region mean color, centroid of the regions, and texture features for the region patch. \\
+
+The former is composed by different texture features, like contrast, correlation, dissimilarity, energy, and entropy. These texture features are extracted using the a co-occurrence matrix applied to the patch created by the region, this features tend to describe correlation between pixels in the region. \\
+
+% -----------------------
+
+In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm. The distance formula used was a simple difference method over the features size, mean color, and the textures features for each region. Moreover, euclidean distance was used for compute the centroids distance. \\
+
+Every region is described by a single value that is composed by the average between all the differences found in the features descriptors for that region. Two different average process are taken, the first one is between the feature vector for the textures obtained by the co-occurrence matrix.And, the other one is an average operation between all the features for that region. \\
+
+As images might contain different number of regions, a region is compared to all others and the minimum distance is chosen to represent the region. After determining all the distances for the regions, a average is performed between them giving a single value to classify the similarity between both images. Smaller values mean more correlation, while higher values describe more distinctive images. The Figure \ref{fig:simpleAvr} shows a result for some queried images. 
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/beach_2.jpg}}
+		}
+	}
+	\subfloat[]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/boat_2.jpg}}
+		}
+	}
+	\subfloat[]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/boat_5.jpg}}
+		}
+	}
+	\subfloat[]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/crater_1.jpg}}
+		}
+	}
+	\caption{Difference between keypoint detection methods.}
+	\label{fig:simpleAvr}
+\end{figure}
 
 \end{document}
