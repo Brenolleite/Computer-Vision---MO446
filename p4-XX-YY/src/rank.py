@@ -2,17 +2,14 @@ import numpy as np
 import cv2
 import descriptors as desc
 import warnings
+import os.path
 
 # Remove warning from code, sqrt warning is expected on code
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-DS =[
-        ['beach_1.jpg', []]
-]
-
 # Create DS structure for names and regions features
 # [Filename, Regions Features]
-DS_AUX =[
+DS = [
         ['beach_1.jpg', []],
         ['beach_2.jpg', []],
         ['beach_3.jpg', []],
@@ -55,31 +52,73 @@ DS_AUX =[
         ['sunset2_5.jpg', []]
 ]
 
-def load_features_DS():
+def load_features_DS(file = False, verbose = False):
+    # If using file
+    if file:
+        filexists = os.path.exists('src/descriptors.data')
+
+        if filexists:
+            # Open file and read descriptors
+            f = open('src/descriptors.data', 'r')
+            for image in DS:
+                # Remove string array() for use eval
+                image[1] = eval(f.readline().replace(')', '').replace('array(', ''))
+
+                if verbose:
+                    print(image[0], 'Loaded')
+
+            print('Dataset Loaded and Regions Descriptors Adquired by File Data')
+
+            # Close and exit
+            f.close()
+            return
+        else:
+            f = open('src/descriptors.data', 'w+')
+
     # DS composed by [filename, descriptors]
     for image in DS:
-        img = cv2.imread('../input/' + image[0])
+        img = cv2.imread('input/' + image[0])
         image[1] = desc.get(img)
-        print(image[0] + ' Features obtained')
+
+        # Write descriptors to file
+        if file:
+            f.write(','.join(str(x) for x in image[1]))
+            f.write('\n')
 
     print('Dataset Loaded and Regions Descriptors Adquired')
 
-def features_distance(feat1, feat2, w):
+    # Close file
+    if file:
+        print('Descriptors wrote in ''descriptors.data'' inside src folder')
+        f.close()
+
+def features_distance(feat1, feat2, feat_w):
     feat_diff = abs(np.array(feat1) - np.array(feat2))
 
-    return np.average(feat_diff, weights=w)
+    return np.average(feat_diff, weights=feat_w)
 
 # Regions [size, mean_color, texture, centroid, bounding_box]
-def distance(reg1, reg2, w, feat_w):
+def distance(reg1, reg2, dist_w, feat_w):
 
-    size_diff = abs(reg1[0] - reg2[0])
-    mean_color_diff = np.mean(abs(reg1[1] - reg2[1]))
-    centroid_dist = np.sqrt(np.sum((reg1[3] - reg2[3])**2))
+    # Calculate all the destances between regions
+    size_diff = abs(np.array(reg1[0]) - np.array(reg2[0]))
+    mean_color_diff = np.mean(abs(np.array(reg1[1]) - (reg2[1])))
+    centroid_dist = np.sqrt(np.sum((np.array(reg1[3]) - np.array(reg2[3]))**2))
     features_diff = features_distance(reg1[2], reg2[2], feat_w)
 
-    return np.average([size_diff, mean_color_diff, centroid_dist, features_diff], weights=w)
+    return np.average([size_diff, mean_color_diff, centroid_dist, features_diff], weights=dist_w)
 
-def compare_regions(regions_q, regions_s):
+def compare_regions(regions_q, regions_s, dist_w = None, feat_w = None):
+    # If weights are not passed
+    # Use default values
+    if dist_w == None:
+        dist_w = [1, 1, 1, 1]
+    if feat_w == None:
+        feat_w = [1, 1, 1, 1, 1]
+
+    dist_w = np.array(dist_w)
+    feat_w = np.array(feat_w)
+
     total = 0
     for reg_q in regions_q:
         # Set high dissimilarity
@@ -87,7 +126,7 @@ def compare_regions(regions_q, regions_s):
 
         # Compare all the regions
         for reg_s in regions_s:
-            dist = distance(reg_q, reg_s, [1, 1, 1, 0], [1, 1, 1, 1, 1])
+            dist = distance(reg_q, reg_s, dist_w, feat_w)
 
             if dist < minimun:
                 minimun = dist
@@ -110,12 +149,8 @@ def top(img, number):
     for i in range(len(DS)):
         rank[i][1] = compare_regions(regions, DS[i][1])
 
-    sorted(rank, key=lambda x: x[1])
+    # Sort array and transform to ndarray
+    rank = np.array(sorted(rank, key=lambda x: x[1]))
 
-    return rank[:number+1]
-
-load_features_DS()
-
-img = cv2.imread('../input/beach_2.jpg')
-top3 = top(img, 3)
-print(top3)
+    # Return just the labels for the images
+    return rank[:number, 0]
