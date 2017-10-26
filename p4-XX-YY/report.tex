@@ -46,7 +46,53 @@
 
 %% ---------------- Starts here --------------------------------
 
+\textbf{\LARGE Question 3 - Image Descriptor}\\
 
+	In this question we extracted the descriptor of all the images in the dataset and saved these descriptors in a file, so the next time the program was executed it could load the descriptors, and perform way faster, instead of recalculating every descriptor again.\\
 
+	An image descriptor consist of all the regions in an image and their information. To extract all regions in an image, firstly we used OpenCV's implementation of the Kmeans algorithm, check Figure \ref{fig:kmeans}.
+
+\begin{figure}[!h]
+	\centering
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{output/p4-3-0}}
+		}
+	\caption{Regions extracted with Kmeans implemented by OpenCV \textbf{(p4-3-0)}.}
+	\label{fig:kmeans}
+\end{figure}
+
+\newpage
+
+	The algorithm Kmeans returns K regions extracted based only in their colour and intensity, in Figure \ref{fig:kmeans} each colour represents a region, the number of regions ($K$) was selected by trial and error and value with the best results was $K = 5$ regions.
+
+\begin{figure}[!h]
+	\centering
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{output/p4-3-1}}
+		}
+	\caption{Connected regions extracted using a BFS explorer \textbf{(p4-3-1)}.}
+	\label{fig:bfs}
+\end{figure}
+
+	In order to use these regions as an image descriptor, each region has to be descriptive enough. The regions returned by Kmeans
+	
+	The regions returned by Kmeans are based on the intensity of the colours, which means that it is possible that two regions of the same colour and intensity are in opposite corners of the image, disconnected from each other. In order to extract the most expressive features from the image it was necessary to split these cases described above into two or more regions, and to achieve this we used a BFS, as seen in Figure \ref{fig:bfs}, to explore all K regions and create new labels if a region was disconnected. We didn't change the regions boundaries, but doing so would reduce the noise on their borders, leading to better descriptors later on.\\
+
+	The regions will be used as descriptor of the query image, and to do so we extracted some informations describing each region, we extracted the recommended informations: size of regions, mean colour, centroid and bounding box, and also regarding the texture features we got contrast, correlation and entropy as recommended and also included dissimilarity and energy of the neighbourhood. All the texture features were calculating in an image patch limited by the bounding box of the region, the bounding boxes can be seen in Figure \ref{fig:bbox}.
+
+\begin{figure}[!h]
+	\centering
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{output/p4-3-2}}
+		}
+	\caption{Bounding boxes of the regions \textbf{(p4-3-2)}.}
+	\label{fig:bbox}
+\end{figure}
 
 \end{document}
