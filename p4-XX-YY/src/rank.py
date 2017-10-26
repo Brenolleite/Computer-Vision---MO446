@@ -150,7 +150,7 @@ def top(name, img, number):
     for i in range(len(DS)):
         # Remove query from DS results
         if name + '.jpg' != DS[i][0]:
-            rank[i][1] = compare_regions(regions, DS[i][1], [1, 2, 2, 0], None)
+            rank[i][1] = compare_regions(regions, DS[i][1], [1, 2, 1, 2], [1, 1, 2, 2, 1])
 
     # Sort array and transform to ndarray
     rank = np.array(sorted(rank, key=lambda x: x[1]))
