@@ -7,7 +7,7 @@ import collections as col
 def clear_components(components):
     counter = np.zeros(len(np.unique(components)))
 
-    for i in range(1, len(counter)):
+    for i in range(len(counter)):
         counter[i] = len(components[components == i])
 
     mean = np.mean(counter)*10
