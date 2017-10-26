@@ -54,10 +54,3 @@ def find_best_weigths():
                     weigths_m = weigths
 
                 print("Min -> {0}  {1}".format(mi, weigths_m))
-
-
-    return sorted(sorted(attempts, key=lambda x: x[2]))
-
-f = open('opt.txt', 'w+')
-f.write(find_best_weigths())
-f.close()
