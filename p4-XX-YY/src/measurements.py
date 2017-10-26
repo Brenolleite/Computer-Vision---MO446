@@ -31,7 +31,7 @@ def coccurrence_features(img, bbox):
 def region_info(img, components, centroids):
 
     # Number of regions -1 to ignore the label == -1
-    regions = [0] * (len(np.unique(components)))
+    regions = [0] * (len(np.unique(components))-1)
 
     # i = height, k = width
     for i in range(components.shape[0]):
@@ -79,7 +79,7 @@ def region_info(img, components, centroids):
 
     # Get mean value of colors
     # and compute contrast, correlation, and entropy
-    for i in range(1, len(regions)):
+    for i in range(len(regions)):
         reg = regions[i]
         # Divide total color from number of pixels
         reg[1] = reg[1]/reg[0]
@@ -88,4 +88,4 @@ def region_info(img, components, centroids):
         # Return [contrast, correlation, dissimilarity, energy, entropy]
         reg[2] = coccurrence_features(img, reg[4])
 
-    return regions[1:]
+    return regions

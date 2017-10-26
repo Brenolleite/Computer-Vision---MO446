@@ -31,6 +31,8 @@ regions = measurements.region_info(img, components, centroids)
 # Save bounding boxes
 cv2.imwrite('output/p4-3-2.jpg', utils.drawBoundingBox(img, regions))
 
+print("Starting macthing process")
+
 # Load all the data from images, and their descriptors
 rank.load_features_DS(True)
 
@@ -39,4 +41,4 @@ vec = ['beach_2', 'boat_5', 'cherry_3', 'pond_2', 'stHelens_2', 'sunset1_2', 'su
 
 for image in vec:
     img = cv2.imread('input/' + image + '.jpg')
-    print('Query: {0} \t -> Results: {1}'.format(image, rank.top(img, 3)))
+    print('Query: {0} \t -> Results: {1}'.format(image, rank.top(image, img, 3)))

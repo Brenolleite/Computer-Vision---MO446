@@ -3,8 +3,6 @@ import numpy as np
 import copy as cp
 import collections as col
 
-import utils
-
 # Clear components which is too small
 def clear_components(components):
     counter = np.zeros(len(np.unique(components)))
@@ -12,7 +10,7 @@ def clear_components(components):
     for i in range(1, len(counter)):
         counter[i] = len(components[components == i])
 
-    mean = np.mean(counter)*2
+    mean = np.mean(counter)*10
 
     for i in np.where(counter<mean)[0]:
         components[components == i] = -1
@@ -69,8 +67,9 @@ def conn_comp(labels, img):
     # Update components counter
     comp_count = 0
     for i in np.unique(components):
-        components[components == i] = comp_count
-        comp_count += 1
+        if i != -1:
+            components[components == i] = comp_count
+            comp_count += 1
 
     return components
 

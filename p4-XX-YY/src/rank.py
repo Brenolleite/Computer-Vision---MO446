@@ -53,6 +53,7 @@ DS = [
 ]
 
 def load_features_DS(file = False, verbose = False):
+    print('Loading dataset and descriptors')
     # If using file
     if file:
         filexists = os.path.exists('src/descriptors.data')
@@ -136,7 +137,7 @@ def compare_regions(regions_q, regions_s, dist_w = None, feat_w = None):
     # Returning mean value
     return total/len(regions_q)
 
-def top(img, number):
+def top(name, img, number):
     # Get regions of image quered
     regions = desc.get(img)
 
@@ -147,7 +148,9 @@ def top(img, number):
 
     # Comparing image query with datasets
     for i in range(len(DS)):
-        rank[i][1] = compare_regions(regions, DS[i][1])
+        # Remove query from DS results
+        if name + '.jpg' != DS[i][0]:
+            rank[i][1] = compare_regions(regions, DS[i][1], [1, 1, 1, 0], [1, 1, 1, 1, 1])
 
     # Sort array and transform to ndarray
     rank = np.array(sorted(rank, key=lambda x: x[1]))

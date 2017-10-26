@@ -24,17 +24,9 @@ def k_image(img, center, label):
 
 # Create image from components
 def components_image(comps):
-    # Create serial components for coloring
-    count = 1
-    for i in np.unique(comps):
-        if i != -1 and i != 0:
-            comps[comps == i] = count
-            count += 1
-
     colors = []
 
     # Define some colors manually
-    colors.append((255,255,255))
     colors.append((0,255,0))
     colors.append((0,0,255))
     colors.append((255,0,0))
@@ -50,16 +42,18 @@ def components_image(comps):
 
     for y in range(height):
         for x in range(width):
-            img[y,x] = colors[comps[y,x] + 1]
+            val = comps[y,x]
+            if val == -1:
+                img[y,x] = (255,255,255)
+            else:
+                img[y,x] = colors[val]
 
     return img.astype(np.uint8)
 
 # Draw the bounding boxes
 def drawBoundingBox(img, regions):
-
     # Goes over all found regions
-    for i in range(1, len(regions)):
-
+    for i in range(len(regions)):
         # Set the left upper corner of the square
         pt1 = (regions[i][4][0], regions[i][4][2])
 
@@ -67,7 +61,6 @@ def drawBoundingBox(img, regions):
         pt2 = (regions[i][4][1], regions[i][4][3])
 
         # Set a color for the bouding box
-        # color = (255, 0, 255)
         color = ((randint(0, 255), randint(0, 255), randint(0, 255)))
 
         # Draw the rectangle
