@@ -1,5 +1,23 @@
 import rank as r
 import numpy as np
+import copy as cp
+
+def test_weights(DS, weigths):
+    total = 0
+    for t in range(0, len(DS), 2):
+        # Get initial index of class
+        class_s = int((t+1)/5)
+        total_class = 0
+
+        for i in range(class_s, class_s + 5):
+            if i != t:
+                # Get distance for the class
+                total_class += r.compare_regions(DS[t][1], DS[i][1], weigths[0:3].append(1), weigths[3:])
+
+        # Sum distance for all classes
+        total += total_class/4
+
+    return total/40
 
 def find_best_weigths():
     r.load_features_DS(True)
@@ -7,30 +25,39 @@ def find_best_weigths():
     DS = r.DS
 
     # Comparing image query with datasets
-    Attempts = []
+    attempts = []
     # 3 for dist_w and 5 for feat_w
-    dist_w = [1, 1, 1, 1]
-    feat_w = [1, 1, 1, 1, 1]
+    weigths = [-1, 0, 0, 0, 0, 0, 0, 0]
 
-    total = 0
-    for x in range(3**len(dist_w)-1):
+    ix = n = total = 0
+    weigths_m = []
+    mi = 9999999999
+    while n < 3**len(weigths):
+        weigths[ix] += 1
+        if weigths[ix] > 2:
+            weigths[ix] = 0
+            ix -= 1
+        else:
+            n += 1
 
-        for t in range(len(DS)):
-            # Get initial index of class
-            class_s = int((t+1)/5)
-            total_class = 0
+            if ix < len(weigths) - 1:
+                ix += 1
 
-            for i in range(class_s, class_s + 5, 2):
-                if i != t:
-                    # Get distance for the class
-                    total_class += r.compare_regions(DS[t][1], DS[i][1], dist_w, feat_w)
-                    #total_class += r.compare_regions(DS[t][1], DS[i][1], weigths[0:4], weigths[4:])
+            if(np.sum(weigths[3:]) != 0):
+                print("{0} - Testing {1}".format(n, weigths), end='')
+                result = test_weights(DS, weigths)
+                print(" got {0} ".format(result), end='')
+                attempts.append([weigths, result])
 
-            # Sum distance for all classes
-            total += total_class/4
+                if result < mi:
+                    mi = result
+                    weigths_m = weigths
 
-        Attempts.append([dist_w, feat_w, total/40])
+                print("Min -> {0}  {1}".format(mi, weigths_m))
 
-    return sorted(sorted(Attempts, key=lambda x: x[2]))
 
-print(find_best_weigths())
+    return sorted(sorted(attempts, key=lambda x: x[2]))
+
+f = open('opt.txt', 'w+')
+f.write(find_best_weigths())
+f.close()
