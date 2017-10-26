@@ -15,9 +15,9 @@ def test_weights(DS, weigths):
                 total_class += r.compare_regions(DS[t][1], DS[i][1], weigths[0:3].append(1), weigths[3:])
 
         # Sum distance for all classes
-        total += total_class/4
+        total += total_class/2
 
-    return total/40
+    return total/8
 
 def find_best_weigths():
     r.load_features_DS(True)
