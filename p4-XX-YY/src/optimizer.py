@@ -4,20 +4,20 @@ import copy as cp
 
 def test_weights(DS, weigths):
     total = 0
-    for t in range(0, len(DS), 5):
+    for t in range(0, len(DS)):
         # Get initial index of class
         class_s = int((t+1)/5)
         total_class = 0
 
-        for i in range(class_s, class_s + 2):
+        for i in range(class_s, class_s + 5):
             if i != t:
                 # Get distance for the class
                 total_class += r.compare_regions(DS[t][1], DS[i][1], weigths[0:4], weigths[4:])
 
         # Sum distance for all classes
-        total += total_class/2
+        total += total_class/4
 
-    return total/8
+    return total/40
 
 def find_best_weigths():
     r.load_features_DS(True)
@@ -51,7 +51,7 @@ def find_best_weigths():
 
                 if result < mi:
                     mi = result
-                    weigths_m = weigths
+                    weigths_m = cp.copy(weigths)
 
                 print("Min -> {0}  {1}".format(mi, weigths_m))
 
