@@ -4,8 +4,9 @@ import clustering
 import connected_comp as cc
 import measurements
 import utils
+import copy as cp
 
-img = cv2.imread('input/beach_2.jpg')
+img = cv2.imread('input/cherry_1.jpg')
 
  # Using kmeans to create clusters
 center, labels = clustering.kmeans(img, 5)
@@ -29,7 +30,9 @@ centroids = cc.centroid(components)
 regions = measurements.region_info(img, components, centroids)
 
 # Save bounding boxes
-cv2.imwrite('output/p4-3-2.jpg', utils.drawBoundingBox(img, regions))
+cv2.imwrite('output/p4-3-2.jpg', utils.drawBoundingBox(cp.copy(img), regions))
+
+cv2.imwrite('output/p4-3-3.jpg', utils.drawCentroids(cp.copy(img), regions))
 
 print("Starting macthing process")
 
