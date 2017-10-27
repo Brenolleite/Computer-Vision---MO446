@@ -46,6 +46,8 @@
 
 %% ---------------- Starts here --------------------------------
 
+\newpage
+
 \textbf{\LARGE Question 3 - Image Descriptor}\\
 
 To create a retrieval system we need to have image descriptors, in this question we extracted these descriptors for all the images in the dataset. This descriptors were saved in the disc, so the next time the program was executed it could load them, and perform faster, instead of recalculating every descriptor which is a high cost operation. \\
@@ -293,9 +295,9 @@ As images might contain different number of regions, a region is compared to all
 		}
 	}
 	\enskip
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -329,7 +331,7 @@ As images might contain different number of regions, a region is compared to all
 	}
 	\enskip
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -363,7 +365,7 @@ As images might contain different number of regions, a region is compared to all
 	}
 	\enskip
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -395,9 +397,9 @@ As images might contain different number of regions, a region is compared to all
 			\fbox{\includegraphics[scale=0.6]{input/stHelens_3.jpg}}
 		}
 	}\enskip
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -429,9 +431,9 @@ As images might contain different number of regions, a region is compared to all
 			\fbox{\includegraphics[scale=0.6]{input/cherry_5.jpg}}
 		}
 	}
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -463,9 +465,9 @@ As images might contain different number of regions, a region is compared to all
 			\fbox{\includegraphics[scale=0.6]{input/sunset2_5.jpg}}
 		}
 	}
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -497,13 +499,13 @@ As images might contain different number of regions, a region is compared to all
 			\fbox{\includegraphics[scale=0.6]{input/stHelens_5.jpg}}
 		}
 	}
-	
-		
+
+
 	\caption{Retrieved images using the left column as queries, in order the columns are Queried image, 1º rank, 2º rank, and 3º rank.}
 	\label{fig:simpleAvr}
 \end{figure}
 
-Figure \ref{fig:simpleAvr} shows that in some cases the results are pretty good, for example for the query (boat\_5) which is represented by the second row, two of the images has a boat in it. Moreover, the second ranked image, is also composed of a land and a river. However, in the third row the second ranked (crater\_3) image is not so similar to the queried image (cherry\_3). \\ 
+Figure \ref{fig:simpleAvr} shows that in some cases the results are pretty good, for example for the query (boat\_5) which is represented by the second row, two of the images has a boat in it. Moreover, the second ranked image, is also composed of a land and a river. However, in the third row the second ranked (crater\_3) image is not so similar to the queried image (cherry\_3). \\
 
 Those results shows us that large regions are being largely used for comparing the images, however, it is hard to choose the best features to use. In this way, in order to create a more robust system we decided to change the simple average to a weighted average (in both averages processes), this way we could optimize the weights for the average choosing the best weights for our dataset. Equations \ref{eq:complex_dist} and \ref{eq:complex_feat} shows the new average processes. \\
 
@@ -518,7 +520,7 @@ region\_distance =  \frac{w_6 * size + w_7 * mean\_color + w_8 * centroid +  w_9
 \end{equation}
 
 
-In order to optimize these weights, the mean distance between one specified image with all images in the same class were used. We searched in a space between 0 and 2 for each feature, as we have 9 values a total of 19683 different weights were tested and the following weights had the best results (smaller mean distance for images of the same class): $w_1 = 0, \ w_2 = 0, \ w_3 = 0, \ w_4 = 0, \ w_5 = 1, \ w_6 = 1, \ w_7 = 1, \ w_8 = 1, \ w_9 = 1 \ $. These weights shows that the optimization decided that some of the co-occurrence features were not improving the overall result, the only feature used was entropy which seems to not help a lot the algorithm to not be based just on color intensity. Figure \ref{fig:complexAvr} shows the retrieved images for the same queries as before. \\
+In order to optimise these weights, the mean distance between one specified image with all images in the same class were used. We searched in a space between 0 and 2 for each feature, as we have 9 values a total of 19683 different weights were tested and the following weights had the best results (smaller mean distance for images of the same class): $w_1 = 0, \ w_2 = 0, \ w_3 = 0, \ w_4 = 0, \ w_5 = 1, \ w_6 = 1, \ w_7 = 1, \ w_8 = 1, \ w_9 = 1 \ $. These weights shows that the optimisation decided that some of the co-occurrence features were not improving the overall result, the only feature used was entropy which seems to not help a lot the algorithm to not be based just on color intensity. Figure \ref{fig:complexAvr} shows the retrieved images for the same queries as before. \\
 
 \begin{figure}[!h]
 	\centering
@@ -554,9 +556,9 @@ In order to optimize these weights, the mean distance between one specified imag
 		}
 	}
 	\enskip
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -590,7 +592,7 @@ In order to optimize these weights, the mean distance between one specified imag
 	}
 	\enskip
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -624,7 +626,7 @@ In order to optimize these weights, the mean distance between one specified imag
 	}
 	\enskip
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -656,9 +658,9 @@ In order to optimize these weights, the mean distance between one specified imag
 			\fbox{\includegraphics[scale=0.6]{input/beach_3.jpg}}
 		}
 	}\enskip
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -690,9 +692,9 @@ In order to optimize these weights, the mean distance between one specified imag
 			\fbox{\includegraphics[scale=0.6]{input/pond_3.jpg}}
 		}
 	}
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -724,9 +726,9 @@ In order to optimize these weights, the mean distance between one specified imag
 			\fbox{\includegraphics[scale=0.6]{input/boat_4.jpg}}
 		}
 	}
-	
+
 	%-------------------
-	
+
 	{
 		{
 			\setlength{\fboxsep}{1pt}
@@ -758,15 +760,15 @@ In order to optimize these weights, the mean distance between one specified imag
 			\fbox{\includegraphics[scale=0.6]{input/pond_3.jpg}}
 		}
 	}
-	
-	
+
+
 	\caption{Retrieved images using weights, in order the columns are queried image, 1º rank, 2º rank, and 3º rank.}
 	\label{fig:complexAvr}
 \end{figure}
 
 Figure \ref{fig:complexAvr} shows some improvements for some classes as the beach class, however, it is still guessing some weird results like the third rank for the beach query (cherry\_5). It is also clear that the system is retrieving more similar images in the higher ranks compared to the other approach. Another important note is that the algorithm is highly related with colors, which some times confuses different image because of a large amount of blue sky or ocean. \\
 
-In order to retrieve better results, we could have searched for betters weights in a larger space domain. However, this search is highly computer expensive. A better approach would be to use different features extractor, which are not too related with colors. A SIFT or HOG descriptor for each region could be applied, but it would turn the algorithm more time consuming. 
+In order to retrieve better results, we could have searched for betters weights in a larger space domain. However, this search is highly computer expensive. A better approach would be to use different features extractor, which are not too related with colors. A SIFT or HOG descriptor for each region could be applied, but it would turn the algorithm more time consuming.
 
 
 \end{document}
