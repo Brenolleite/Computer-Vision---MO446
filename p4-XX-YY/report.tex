@@ -249,9 +249,9 @@
 
 \textbf{\LARGE Question 3 - Distance Measure} \\
 
-In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm. The distance formula used was a simple difference method over the features size, mean color, and the textures features for each region. Moreover, euclidean distance was used for compute the centroids distance. \\
+In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm. The distance formula used was a simple difference method over the features size, mean colour and the textures features for each region. Moreover, euclidean distance was used to compute the centroids distances. \\
 
-Every region is described by a single value that is composed by the average between all the differences found in the features descriptors for that region. Two different average process are taken, the first one is between the feature vector for the textures obtained by the co-occurrence matrix. And, the other one is an average operation between all the features for that region. Equations \ref{eq:dist_avr} and \ref{eq:feat_avr} shows the equations for the texture features, and the average of all features, respectively. \\
+Every region is described by a single value that is composed by the average between all the differences found in the features descriptors for that region. Two different average processes are taken, the first one between the feature vector for the textures obtained by the co-occurrence matrix, and, the other one is an average operation between all the features for that region. Equations \ref{eq:dist_avr} and \ref{eq:feat_avr} shows the equations for the texture features, and the average of all features, respectively. \\
 
 \begin{equation}
 	feat\_weight =  \frac{contrast + correlation + dissimilarity +  energy + entropy}{5}
@@ -263,7 +263,7 @@ region\_distance =  \frac{size + mean\_color + centroid +  feat\_weight}{4}
 \label{eq:feat_avr}
 \end{equation}
 
-As images might contain different number of regions, a region is compared to all others and the minimum distance is chosen to represent the region. After determining all the distances for the regions, a average is performed between them giving a single value to classify the similarity between both images. Smaller values mean more correlation, while higher values describe more distinctive images. These averages are important, they normalize the proportion of each feature. The Figure \ref{fig:simpleAvr} shows a result for some queried images. \\
+As images might contain different number of regions, a region is compared to all others and the minimum distance is chosen to represent the region. After determining all the distances for the regions, a average is performed between them, giving a single value to classify the similarity between both images. Smaller values mean more correlation, while higher values describe more distinctive images. These averages are important, they normalize the proportion of each feature. Figure \ref{fig:simpleAvr} shows a result for some queried images. \\
 
 \begin{figure}[!h]
 	\centering
@@ -505,13 +505,13 @@ As images might contain different number of regions, a region is compared to all
 	}
 	
 		
-	\caption{Retrieval images using images queries on the left, in order the columns are Queried image, 1º rank, 2º rank, and 3º rank.}
+	\caption{Retrieved images using the left column as queries, in order the columns are Queried image, 1º rank, 2º rank, and 3º rank.}
 	\label{fig:simpleAvr}
 \end{figure}
 
-The Figure shows that the in some cases the results are pretty good, for example for the query (boat\_5) which is represented by the second row, two of the images has a boat in it. Moreover, the second rank image, also is composed of a land a river. However, in the third row the second rank (crater\_3) image is not so similar to the queried image (cherry\_3). \\ 
+Figure \ref{fig:simpleAvr} shows that in some cases the results are pretty good, for example for the query (boat\_5) which is represented by the second row, two of the images has a boat in it. Moreover, the second ranked image, is also composed of a land and a river. However, in the third row the second ranked (crater\_3) image is not so similar to the queried image (cherry\_3). \\ 
 
-The image shows us that large regions are being largely used for comparing the images, however, it is hard to choose the best features to use. In this way, in order to create a more robust system we decided to change the simple average to a weighted average (in both averages processes), this way we could optimize the weights for the average choosing the best weights for our dataset. Equations \ref{eq:complex_dist} and \ref{eq:complex_feat} shows the new averages processes. \\
+Those results shows us that large regions are being largely used for comparing the images, however, it is hard to choose the best features to use. In this way, in order to create a more robust system we decided to change the simple average to a weighted average (in both averages processes), this way we could optimize the weights for the average choosing the best weights for our dataset. Equations \ref{eq:complex_dist} and \ref{eq:complex_feat} shows the new average processes. \\
 
 \begin{equation}
 feat\_weight =  \frac{w_1 * contrast + w_2 * correlation + w_3 * dissimilarity + w_4 *  energy + w_5 * entropy}{w_1 + w_2 + w_3 + w_4 + w_5}
@@ -524,7 +524,7 @@ region\_distance =  \frac{w_6 * size + w_7 * mean\_color + w_8 * centroid +  w_9
 \end{equation}
 
 
-In order to optimize this weights, the mean distance between one specified image with all images in the same class were used. We searched in a space between 0 and 2 for each feature, as we have 9 values a total of 19683 different weights were tested and the following weights had the best results (smaller mean distance for class images): $w_1 = 0, \ w_2 = 0, \ w_3 = 0, \ w_4 = 0, \ w_5 = 1, \ w_6 = 1, \ w_7 = 1, \ w_8 = 1, \ w_9 = 1 \ $. This weights shows that the optimization decided that some of the co-occurrence features were not improving the overall result, the only feature used was the entropy which seems to not help a lot the algorithm to not be based just on color intensity. Figure \ref{fig:complexAvr} shows the retrieval images for the same queries as before. \\
+In order to optimise these weights, the mean distance between one specified image with all images in the same class were used. We searched in a space between 0 and 2 for each feature, as we have 9 values a total of 19683 different weights were tested and the following weights had the best results (smaller mean distance for images of the same class): $w_1 = 0, \ w_2 = 0, \ w_3 = 0, \ w_4 = 0, \ w_5 = 1, \ w_6 = 1, \ w_7 = 1, \ w_8 = 1, \ w_9 = 1 \ $. These weights shows that the optimisation decided that some of the co-occurrence features were not improving the overall result, the only feature used was entropy which seems to not help a lot the algorithm to not be based just on colour intensity. Figure \ref{fig:complexAvr} shows the retrieved images for the same queries as before. \\
 
 \begin{figure}[!h]
 	\centering
@@ -766,13 +766,13 @@ In order to optimize this weights, the mean distance between one specified image
 	}
 	
 	
-	\caption{Retrieval images using weights, in order the columns are queried image, 1º rank, 2º rank, and 3º rank.}
+	\caption{Retrieved images using weights, in order the columns are queried image, 1º rank, 2º rank, and 3º rank.}
 	\label{fig:complexAvr}
 \end{figure}
 
-The figure shows some improvements for some classes as the beach class, however, it still guessing some weird results like the third rank for the beach query (cherry\_5). It is also clear that the system is retrieving more similar images in the higher ranks compared to the other approach. Another important note is that the algorithm is highly related with colors, which some times confuses different image because of a large amount of blue sky or ocean. \\
+Figure \ref{fig:complexAvr} shows some improvements for some classes as the beach class, however, it is still guessing some weird results like the third rank for the beach query (cherry\_5). It is also clear that the system is retrieving more similar images in the higher ranks compared to the other approach. Another important note is that the algorithm is highly related with colours, which some times confuses different image because of a large amount of blue sky or ocean. \\
 
-In order to retrieve better results, we could have searched for betters weights in a large space domain. However, this search is highly computer expensive. A better approach would be to use different features extractor, which is not too related with colors. A SIFT or HOG descriptor for each region could be applied, but it would turn the algorithm more time consuming. 
+In order to retrieve better results, we could have searched for betters weights in a larger space domain. However, this search is highly computer expensive. A better approach would be to use different features extractor, which are not too related with colours. A SIFT or HOG descriptor for each region could be applied, but it would turn the algorithm more time consuming. 
 
 
 \end{document}
