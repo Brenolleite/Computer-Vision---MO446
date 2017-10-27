@@ -181,40 +181,502 @@ In order to create a content-based image retrieval, we developed a distance meas
 
 Every region is described by a single value that is composed by the average between all the differences found in the features descriptors for that region. Two different average process are taken, the first one is between the feature vector for the textures obtained by the co-occurrence matrix.And, the other one is an average operation between all the features for that region. \\
 
-As images might contain different number of regions, a region is compared to all others and the minimum distance is chosen to represent the region. After determining all the distances for the regions, a average is performed between them giving a single value to classify the similarity between both images. Smaller values mean more correlation, while higher values describe more distinctive images. The Figure \ref{fig:simpleAvr} shows a result for some queried images. 
+As images might contain different number of regions, a region is compared to all others and the minimum distance is chosen to represent the region. After determining all the distances for the regions, a average is performed between them giving a single value to classify the similarity between both images. Smaller values mean more correlation, while higher values describe more distinctive images. These averages are important, they normalize the proportion of each feature. The Figure \ref{fig:simpleAvr} shows a result for some queried images. \\
 
 \begin{figure}[!h]
 	\centering
-	\subfloat[]{
+	{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/beach_2.jpg}}
+			\fbox{\includegraphics[scale=0.6]{input/beach_2.jpg}}
 		}
 	}
-	\subfloat[]{
+	\enskip
+	{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/boat_2.jpg}}
+			\fbox{\includegraphics[scale=0.6]{input/boat_2.jpg}}
 		}
 	}
-	\subfloat[]{
+	\enskip
+	{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/boat_5.jpg}}
+			\fbox{\includegraphics[scale=0.6]{input/boat_5.jpg}}
 		}
 	}
-	\subfloat[]{
+	\enskip
+	{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/crater_1.jpg}}
+			\fbox{\includegraphics[scale=0.6]{input/crater_1.jpg}}
 		}
 	}
-	\caption{Difference between keypoint detection methods.}
+	\enskip
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/crater_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_4.jpg}}
+		}
+	}
+	\enskip
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/cherry_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/cherry_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/crater_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_4.jpg}}
+		}
+	}
+	\enskip
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/pond_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/crater_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/pond_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_3.jpg}}
+		}
+	}\enskip
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/crater_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_4.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/cherry_5.jpg}}
+		}
+	}
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset1_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset1_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_1.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset2_5.jpg}}
+		}
+	}
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset2_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset2_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset2_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_5.jpg}}
+		}
+	}
+	
+		
+	\caption{Retrieval images using images queries on the left, in order the columns are Queried image, 1º rank, 2º rank, 3º rank.}
 	\label{fig:simpleAvr}
 \end{figure}
+
+The Figure shows that the in some cases the results are pretty good, for example for the query (boat\_5) which is represented by the second row, two of the images has a boat in it. Moreover, the second rank image, also is composed of a land a river. However, in the third row the second rank (crater\_3) image is not so similar to the queried image (cherry\_3). \\ 
+
+The image shows us that large regions are being largely used for comparing the images, however, it is hard to choose the best features to use. In this way, in order to create a more robust system we decided to change the simple average to a weighted average (in both averages processes), this way we could optimize the weights for the average choosing the best weights for our dataset. \\
+
+In order to optimize this weights, the mean distance between one specified image with all images in the same class were used. We searched in a space between 0 and 2 for each feature, as we have 9 values a total of 19683 different weights were tested and the following weights receive the best distance: . Figure \ref{fig:complexAvr} shows the retrieval images for the same queries as before.
+
+\begin{figure}[!h]
+	\centering
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/beach_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/beach_1.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/beach_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/cherry_5.jpg}}
+		}
+	}
+	\enskip
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/crater_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_2.jpg}}
+		}
+	}
+	\enskip
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/cherry_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/cherry_1.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_3.jpg}}
+		}
+	}
+	\enskip
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/pond_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_4.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_5.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/beach_3.jpg}}
+		}
+	}\enskip
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/crater_1.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_4.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/pond_3.jpg}}
+		}
+	}
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset1_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset1_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset1_1.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/boat_4.jpg}}
+		}
+	}
+	
+	%-------------------
+	
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset2_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/stHelens_2.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/sunset2_3.jpg}}
+		}
+	}
+	\enskip
+	{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.6]{input/pond_3.jpg}}
+		}
+	}
+	
+	
+	\caption{Retrieval images using weights, in order the columns are queried image, 1º rank, 2º rank, 3º rank.}
+	\label{fig:complexAvr}
+\end{figure}
+
+
 
 \end{document}
