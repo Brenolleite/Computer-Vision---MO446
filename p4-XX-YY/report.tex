@@ -46,6 +46,8 @@
 
 %% ---------------- Starts here --------------------------------
 
+\newpage
+
 \textbf{\LARGE Question 3 - Image Descriptor}\\
 
 To create a retrieval system we need to have image descriptors, in this question we extracted these descriptors for all the images in the dataset. This descriptors were saved in the disc, so the next time the program was executed it could load them, and perform faster, instead of recalculating every descriptor which is a high cost operation. \\
@@ -189,8 +191,9 @@ In Figure \ref{fig:bfs} each color represents a connected region and Figure \ref
 
 A region is considered too small if its size is smaller than the multiplication of a factor $X$ by the average region size, this value was chosen based on our analysis of the yielded results given by the input dataset. \\
 
-In Figure \ref{fig:bfs00} and Figure \ref{fig:bbox00} the value of $X$ is set to zero and it is possible to observe regions as big as one pixel line being taken, which is counter productive towards our goal as they don't describe something relevant. In Figure \ref{fig:bfs06} and Figure \ref{fig:bbox06}, with $X = 6$, smalls non-discriminative regions are still being selected, like the tree on the right upper side of the image, the human carrying a bag in the bottom centre (Figure \ref{fig:bfs06} shows that only the bag and pants were selected) and a few smalls patches of grass in the left bottom side, all of those describes non-discriminative features that could diminish the final result. In Figure \ref{fig:bfs10} and Figure \ref{fig:bbox10}, where $X = 10$, there are still some non-discriminative regions being selected, like half of the tree in the right upper corner, but they are few and contrasted with a majority of somewhat big, discriminative regions, like the cherry trees, the buildings in the back and the path in the centre. In Figure \ref{fig:bfs20} and Figure \ref{fig:bbox20}, with $X = 20$, almost all the small ignorable regions were discarded and it performed well in this image, but since it was a too big value it could start eliminating discriminative regions on other images, diminishing their accuracy, this and the inefficiency of the small values to determine good sized regions was the reason why we chose $X = 10$. \\
+In Figure \ref{fig:bfs00} and Figure \ref{fig:bbox00} the value of $X$ is set to zero and it is possible to observe regions as big as one pixel line being taken, which is counter productive towards our goal as they don't describe something relevant. In Figure \ref{fig:bfs06} and Figure \ref{fig:bbox06}, with $X = 6$, smalls non-discriminative regions are still being selected, like the tree on the right upper side of the image, the human carrying a bag in the bottom center (Figure \ref{fig:bfs06} shows that only the bag and pants were selected) and a few smalls patches of grass in the left bottom side, all of those describes non-discriminative features that could diminish the final result. In Figure \ref{fig:bfs10} and Figure \ref{fig:bbox10}, where $X = 10$, there are still some non-discriminative regions being selected, like half of the tree in the right upper corner, but they are few and contrasted with a majority of somewhat big, discriminative regions, like the cherry trees, the buildings in the back and the path in the center. In Figure \ref{fig:bfs20} and Figure \ref{fig:bbox20}, with $X = 20$, almost all the small ignorable regions were discarded and it performed well in this image, but since it was a too big value it could start eliminating discriminative regions on other images, diminishing their accuracy, this and the inefficiency of the small values to determine good sized regions was the reason why we chose $X = 10$. \\
 
+\newpage
 
 These regions will be used as descriptors of the image, and compared later on, to do so it is necessary to describe each region, in a data structure,  a vector and the following information were selected to do so: region size \textbf{(size)}, region mean color \textbf{(mean\_color)}, region centroid \textbf{(centroid)}, region bounding box \textbf{(bounding\_box)} and some texture features for the region patch. The patch of the texture features were extracted using the delimitations of their bounding boxes and are composed of: contrast \textbf{(contrast)}, correlation \textbf{(correlation)}, dissimilarity \textbf{(dissimilarity)}, energy \textbf{(energy)} and entropy \textbf{(entropy)}. These components were extracted using the co-occurrence matrix, applied to the region patch, and they tend to describe correlation between pixels in the region, Figure \ref{fig:cent} illustrate the centroid position of each region. The bold names will be explained in the next section. \\
 
@@ -241,7 +244,7 @@ These regions will be used as descriptors of the image, and compared later on, t
 
 \textbf{\LARGE Question 3 - Distance Measure} \\
 
-In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm. The distance formula used was a simple difference method over the features size, mean colour and the textures features for each region. Moreover, euclidean distance was used to compute the centroids distances. \\
+In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm. The distance formula used was a simple difference method over the features size, mean color and the textures features for each region. Moreover, euclidean distance was used to compute the centroids distances. \\
 
 Every region is described by a single value that is composed by the average between all the differences found in the features descriptors for that region. Two different average processes are taken, the first one between the feature vector for the textures obtained by the co-occurrence matrix, and, the other one is an average operation between all the features for that region. Equations \ref{eq:dist_avr} and \ref{eq:feat_avr} shows the equations for the texture features, and the average of all features, respectively. \\
 
@@ -516,7 +519,7 @@ region\_distance =  \frac{w_6 * size + w_7 * mean\_color + w_8 * centroid +  w_9
 \end{equation}
 
 
-In order to optimise these weights, the mean distance between one specified image with all images in the same class were used. We searched in a space between 0 and 2 for each feature, as we have 9 values a total of 19683 different weights were tested and the following weights had the best results (smaller mean distance for images of the same class): $w_1 = 0, \ w_2 = 0, \ w_3 = 0, \ w_4 = 0, \ w_5 = 1, \ w_6 = 1, \ w_7 = 1, \ w_8 = 1, \ w_9 = 1 \ $. These weights shows that the optimisation decided that some of the co-occurrence features were not improving the overall result, the only feature used was entropy which seems to not help a lot the algorithm to not be based just on colour intensity. Figure \ref{fig:complexAvr} shows the retrieved images for the same queries as before. \\
+In order to optimise these weights, the mean distance between one specified image with all images in the same class were used. We searched in a space between 0 and 2 for each feature, as we have 9 values a total of 19683 different weights were tested and the following weights had the best results (smaller mean distance for images of the same class): $w_1 = 0, \ w_2 = 0, \ w_3 = 0, \ w_4 = 0, \ w_5 = 1, \ w_6 = 1, \ w_7 = 1, \ w_8 = 1, \ w_9 = 1 \ $. These weights shows that the optimisation decided that some of the co-occurrence features were not improving the overall result, the only feature used was entropy which seems to not help a lot the algorithm to not be based just on color intensity. Figure \ref{fig:complexAvr} shows the retrieved images for the same queries as before. \\
 
 \begin{figure}[!h]
 	\centering
@@ -762,9 +765,9 @@ In order to optimise these weights, the mean distance between one specified imag
 	\label{fig:complexAvr}
 \end{figure}
 
-Figure \ref{fig:complexAvr} shows some improvements for some classes as the beach class, however, it is still guessing some weird results like the third rank for the beach query (cherry\_5). It is also clear that the system is retrieving more similar images in the higher ranks compared to the other approach. Another important note is that the algorithm is highly related with colours, which some times confuses different image because of a large amount of blue sky or ocean. \\
+Figure \ref{fig:complexAvr} shows some improvements for some classes as the beach class, however, it is still guessing some weird results like the third rank for the beach query (cherry\_5). It is also clear that the system is retrieving more similar images in the higher ranks compared to the other approach. Another important note is that the algorithm is highly related with colors, which some times confuses different image because of a large amount of blue sky or ocean. \\
 
-In order to retrieve better results, we could have searched for betters weights in a larger space domain. However, this search is highly computer expensive. A better approach would be to use different features extractor, which are not too related with colours. A SIFT or HOG descriptor for each region could be applied, but it would turn the algorithm more time consuming. 
+In order to retrieve better results, we could have searched for betters weights in a larger space domain. However, this search is highly computer expensive. A better approach would be to use different features extractor, which are not too related with colors. A SIFT or HOG descriptor for each region could be applied, but it would turn the algorithm more time consuming. 
 
 
 \end{document}
