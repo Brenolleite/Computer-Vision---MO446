@@ -105,64 +105,142 @@
 
 \newpage
 
+	To eliminate these disconnected regions we ran a BFS explorer in the entire image. The BFS returns every connected region separately, which receives a new label, eliminating disconnected regions altogether, Figure \ref{fig:bfs} shows the returned regions.
+	The borders remained unchanged during this process, but reducing their noise could improve the expression of some regions, increasing the accuracy of the solution.
+
 \begin{figure}[!h]
 	\centering
-	\subfloat[K = 2.]{
+	\subfloat[X = 0.]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-K02}}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-X00}}
 		}
-		\label{fig:bfs02}
+		\label{fig:bfs00}
 	}
 	\quad
-	\subfloat[K = 5.]{
+	\subfloat[X = 6.]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-K05}}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-X06}}
 		}
-		\label{fig:bfs05}
+		\label{fig:bfs06}
 	}
 	\quad
-	\subfloat[K = 8.]{
+	\subfloat[X = 10.]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-K08}}
-		}
-		\label{fig:bfs08}
-	}
-	\quad
-	\subfloat[K = 10.]{
-		{
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-K10}}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-X10}}
 		}
 		\label{fig:bfs10}
 	}
-	\caption{Connected regions extracted using the BFS explorer for different $K$ values.}
-	\label{fig:bfs}
-\end{figure}
-
-	To eliminate these disconnected regions we ran a BFS explorer in the entire image. The BFS returns every connected region, which receives a new label, eliminating disconnected regions altogether. In Figure \ref{fig:bfs} each colour represents a connected region. Regions that are too small don't really describe enough of a feature to be relevant, and thus are discarded, in Figure \ref{fig:bfs} the white colour is used to represent the discarded regions.
-
-	A region is considered too small if its size is smaller than the average of all regions sizes multiplied by a factor of $X$, this value was chosen based on our analysis of the yielded results given by the input data set. In Figure \ref{fig:bfs00} the value of $X$ is set to zero and it is possible to observe regions as big as one pixel being taken, which is counter productive towards our goal.
-
-	The regions returned by Kmeans are based on the intensity of the colours, which means that it is possible that two regions of the same colour and intensity are in opposite corners of the image, disconnected from each other. In order to extract the most expressive features from the image it was necessary to split these cases described above into two or more regions, and to achieve this we used a BFS, as seen in Figure \ref{fig:bfs}, to explore all K regions and create new labels if a region was disconnected. We didn't change the regions boundaries, but doing so would reduce the noise on their borders, leading to better descriptors later on.
-
-	The regions will be used as descriptor of the query image, and to do so we extracted some informations describing each region, we extracted the recommended informations: size of regions, mean colour, centroid and bounding box, and also regarding the texture features we got contrast, correlation and entropy as recommended and also included dissimilarity and energy of the neighbourhood. All the texture features were calculating in an image patch limited by the bounding box of the region, the bounding boxes can be seen in Figure \ref{fig:bbox}.
-
-\begin{figure}[!h]
-	\centering
+	\quad
+	\subfloat[X = 20.]{
 		{
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{output/p4-3-2}}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-1-X20}}
 		}
-	\caption{Bounding boxes of the regions \textbf{(p4-3-2)}.}
+		\label{fig:bfs20}
+	}
+	\caption{Connected regions extracted using the BFS explorer for different $X$ values.}
+	\label{fig:bfs}
+\end{figure}
+
+	In Figure \ref{fig:bfs} each colour represents a connected region and Figure \ref{fig:bbox} shows their bounding boxes. Regions that are too small don't really describe enough of a feature to be relevant, and thus are discarded, in Figure \ref{fig:bfs} the white colour is used to represent the discarded ones.
+
+\newpage
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[X = 0.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-2-B00}}
+		}
+		\label{fig:bbox00}
+	}
+	\quad
+	\subfloat[X = 6.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-2-B06}}
+		}
+		\label{fig:bbox06}
+	}
+	\quad
+	\subfloat[X = 10.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-2-B10}}
+		}
+		\label{fig:bbox10}
+	}
+	\quad
+	\subfloat[X = 20.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-2-B20}}
+		}
+		\label{fig:bbox20}
+	}
+	\caption{Bouding box of each region calculated with different $X$ values.}
 	\label{fig:bbox}
+\end{figure}
+
+	A region is considered too small if its size is smaller than the multiplication of a factor $X$ by the average region size, this value was chosen based on our analysis of the yielded results given by the input data set.
+	
+	In Figure \ref{fig:bfs00} and Figure \ref{fig:bbox00} the value of $X$ is set to zero and it is possible to observe regions as big as one pixel being taken, which is counter productive towards our goal as they don't describe something relevant. In Figure \ref{fig:bfs06} and Figure \ref{fig:bbox06}, with $X = 6$, smalls non-discriminative regions are still being selected, like the tree on the right upper side of the image, the human carrying a bag in the bottom centre, Figure \ref{fig:bfs06} shows that only the bag and pants were selected, and a few smalls patches of grass in the left bottom side, all of those describes general features that could diminish the final result. In Figure \ref{fig:bfs10} and Figure \ref{fig:bbox10}, where $X = 10$, there are still some non-discriminative regions being select, like half of the tree in the right upper corner, but they are few and contrasted with a majority of somewhat big discriminative regions, like the cherry trees, the buildings in the back and the path in the centre. In Figure \ref{fig:bfs20} and Figure \ref{fig:bbox20}, with $X = 20$, almost all the small ignorable regions were discarded and it performed well in this image, but since it was a too big value it could start eliminating discriminative regions on other images, diminishing their accuracy, this and the inefficiency of the small values to determine good sized regions was the reason why we chose $X = 10$.
+
+\newpage
+
+	The regions will be used as descriptor of the image, and compared later on, to do so it is necessary to describe each region and the following information were selected to do so: region size \textbf{(size)}, region mean color \textbf{(mean\_color)}, region centroid \textbf{(centroid)}, region bounding box \textbf{(bounding\_box)} and some texture features for the region patch. The patch of the texture features were extracted using the delimitations of their bounding boxes and are composed of: contrast \textbf{(contrast)}, correlation \textbf{(correlation)}, dissimilarity \textbf{(dissimilarity)}, energy \textbf{(energy)} and entropy \textbf{(entropy)}. These components were extracted using the co-occurrence matrix, applied to the region patch, and they tend to describe correlation between pixels in the region, Figure \ref{fig:cent} illustrate the centroid position of each region. The bold names will be explained in the next section.
+
+\begin{figure}[!h]
+	\centering
+	\subfloat[X = 0.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-3-C00}}
+		}
+		\label{fig:cent00}
+	}
+	\quad
+	\subfloat[X = 6.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-3-C06}}
+		}
+		\label{fig:cent06}
+	}
+	\quad
+	\subfloat[X = 10.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-3-C10}}
+		}
+		\label{fig:cent10}
+	}
+	\quad
+	\subfloat[X = 20.]{
+		{
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.3]{report/p4-3-3-C20}}
+		}
+		\label{fig:cent20}
+	}
+	\caption{Centroid of each image calculated with different $X$ values.}
+	\label{fig:cent}
 \end{figure}
 
 % =========================================================================================================================================================
@@ -170,12 +248,6 @@
 \newpage
 
 \textbf{\LARGE Question 3 - Distance Measure} \\
-
-Each region acquired has a descriptor that is composed by a vector of features, this vector is composed by the following features region size, region mean color, centroid of the regions, and texture features for the region patch. \\
-
-The former is composed by different texture features, like contrast, correlation, dissimilarity, energy, and entropy. These texture features are extracted using the a co-occurrence matrix applied to the patch created by the region, this features tend to describe correlation between pixels in the region. \\
-
-% -----------------------
 
 In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm. The distance formula used was a simple difference method over the features size, mean color, and the textures features for each region. Moreover, euclidean distance was used for compute the centroids distance. \\
 

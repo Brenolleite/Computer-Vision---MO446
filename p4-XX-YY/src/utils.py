@@ -67,3 +67,14 @@ def drawBoundingBox(img, regions):
         cv2.rectangle(img, pt1, pt2, color, thickness=2, lineType=8, shift=0)
 
     return img
+
+def drawCentroids(img, regions):
+    for k in range(len(regions)):
+        center = (int(regions[k][3][0]), int(regions[k][3][1]))
+
+        # Set a color for the bouding box
+        color = ((randint(0, 255), randint(0, 255), randint(0, 255)))
+
+        cv2.circle(img, center, 10, color, thickness=-1, lineType=8, shift=0)
+
+    return img
