@@ -46,13 +46,12 @@
 
 %% ---------------- Starts here --------------------------------
 
-\newpage
-
 \textbf{\LARGE Question 3 - Image Descriptor}\\
 
 To create a retrieval system we need to have image descriptors, in this question we extracted these descriptors for all the images in the dataset. This descriptors were saved in the disc, so the next time the program was executed it could load them, and perform faster, instead of recalculating every descriptor which is a high cost operation. \\
 
-An image descriptor consist of all the regions in an image and their information. To extract  these regions, we firstly used OpenCV's implementation of Kmeans algorithm, to create a $k$-colored image. Figure \ref{fig:kmeans} shows the result of this image. \\
+An image descriptor consist of all the regions in an image and their information. To extract  these regions, we firstly used OpenCV's implementation of Kmeans algorithm, to creoia
+ate a $k$-colored image. Figure \ref{fig:kmeans} shows the result of this image. \\
 
 \begin{figure}[!h]
 	\centering
@@ -239,11 +238,13 @@ These regions will be used as descriptors of the image, and compared later on, t
 	\label{fig:cent}
 \end{figure}
 
+
+
 % =========================================================================================================================================================
 
 \newpage
 
-\textbf{\LARGE Question 3 - Distance Measure} \\
+\textbf{\LARGE Question 4 - Distance Measure} \\
 
 In order to create a content-based image retrieval, we developed a distance measurement for our collected descriptors that are based on the regions obtained by the connected components algorithm. The distance formula used was a simple difference method over the features size, mean color and the textures features for each region. Moreover, euclidean distance was used to compute the centroids distances. \\
 
