@@ -1,10 +1,8 @@
+import utils
 import numpy as np
 import cv2
 
-DEBUG = True
-ballTrace = [(0, 0)]
-
-def detectByColor(frame, hsvColor):
+def detectByColor(frame, hsvColor, ballTrace):
 
     # Transform the color space into HSV
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -32,7 +30,7 @@ def detectByColor(frame, hsvColor):
     # Draw in GREEN the centroid of the largest connected component
     cv2.circle(frame, (int(conComponents[3][componentIndex][0]), int(conComponents[3][componentIndex][1])), 4, (0, 255, 0), -1)
 
-    drawBallTrace((conComponents[3][componentIndex][0], conComponents[3][componentIndex][1]))
+    frame, ballTrace = utils.drawBallTrace(frame, (conComponents[3][componentIndex][0], conComponents[3][componentIndex][1]), ballTrace)
 
     cv2.imshow('Mask', mask)
     cv2.imshow('Frame', frame)
@@ -52,31 +50,3 @@ def filterCentroid(centroid, status):
             largerIndex = i
 
     return largerIndex
-
-def drawBallTrace(coord):
-    x, y = coord
-
-    ballTrace.append(coord)
-    if (len(ballTrace) > 100):
-        ballTrace.pop(0)
-
-    for i in range(len(ballTrace)):
-        cv2.circle(frame, (int(ballTrace[i][0]), int(ballTrace[i][1])), 1, (0, 0, 255), -1)
-
-cap = cv2.VideoCapture(0)
-
-while(True):
-    ret, frame = cap.read()
-
-    height, width = frame.shape[:2]
-
-    if DEBUG:
-        frame = cv2.resize(frame, (int(width * 0.5), int(height * 0.5)))
-
-    detectByColor(frame, 120)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
-cv2.destroyAllWindows()
