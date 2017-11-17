@@ -2,32 +2,47 @@ import utils
 import numpy as np
 import cv2
 
-hsvColor = 120
-output = None
+hsvColor = []
+
+def initColors():
+    # Red
+    hsvColor.append(20)
+    hsvColor.append(160)
+
+    # Blue
+    hsvColor.append(120)
+
+    # Yellow
 
 def detectByColor(frame):
+
+    initColors()
+    output = []
 
     # Transform the color space into HSV
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    # Gets a black and white image, all the pixels in the color range will be
-    # painted white, everything else will be black
-    mask = cv2.inRange(hsv, (hsvColor - 20, 50, 0), (hsvColor + 20, 255, 255))
+    for i in range(len(hsvColor)):
 
-    # Remove some noise from image
-    kernel = np.ones((5, 5), np.uint8)
-    mask = cv2.dilate(mask, kernel, iterations = 1)
-    mask = cv2.erode(mask, kernel, iterations = 2)
-    mask = cv2.dilate(mask, kernel, iterations = 1)
+        print("1")
+        # Gets a black and white image, all the pixels in the color range will be
+        # painted white, everything else will be black
+        mask = cv2.inRange(hsv, (hsvColor[i] - 20, 50, 0), (hsvColor[i] + 20, 255, 255))
 
-    # Gets all the connected components in the mask
-    _, pixelsLabel, stats, centroids = cv2.connectedComponentsWithStats(mask, 4, cv2.CV_32S)
+        # Remove some noise from image
+        kernel = np.ones((5, 5), np.uint8)
+        mask = cv2.dilate(mask, kernel, iterations = 1)
+        mask = cv2.erode(mask, kernel, iterations = 2)
+        mask = cv2.dilate(mask, kernel, iterations = 1)
 
-    # Gets the index of the largest connected component
-    componentIndex = filterLargerComponent(stats[:,4])
+        # Gets all the connected components in the mask
+        _, pixelsLabel, stats, centroids = cv2.connectedComponentsWithStats(mask, 4, cv2.CV_32S)
 
-    x1, y1, x2, y2, _ = stats[componentIndex]
-    output = (x1, y1, x1 + x2, y1 + y2, int(centroids[componentIndex][0]), int(centroids[componentIndex][1]))
+        # Gets the index of the largest connected component
+        componentIndex = filterLargerComponent(stats[:,4])
+
+        x1, y1, x2, y2, _ = stats[componentIndex]
+        output.append((i, x1, y1, x1 + x2, y1 + y2, int(centroids[componentIndex][0]), int(centroids[componentIndex][1])))
 
     return output
 

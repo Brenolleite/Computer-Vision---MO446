@@ -4,9 +4,9 @@ import color
 import numpy as np
 import cv2
 
-WEBCAM      = True
-bBoxArray  = [(0, 0)]
-input_file  = '../input/input.mp4'
+WEBCAM      = False
+bBoxArray  = []
+input_file  = '../input/unique_color.mp4'
 output_file = '../output/output.mp4'
 
 def main():
@@ -29,7 +29,7 @@ def main():
         output = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
 
     while (i < length or WEBCAM):
-        print("Progress ", i, "|", length)
+        print("Progress ", i, "|", length - 1)
 
         _, frame = video.read()
 

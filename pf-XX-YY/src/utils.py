@@ -80,9 +80,10 @@ def drawCentroids(img, regions):
     return img
 
 def drawBallTrace(frame, bBox):
-    box_x1, box_y1, box_x2, box_y2, cen_x, cen_y = bBox
+    for i in range(len(bBox)):
+        color, box_x1, box_y1, box_x2, box_y2, cen_x, cen_y = bBox[i]
 
-    cv2.rectangle(frame, (box_x1, box_y1), (box_x2, box_y2), (255, 0, 255), thickness = 1)
-    cv2.circle(frame, (cen_x, cen_y), 2, (0, 255, 0), thickness = -1)
+        cv2.rectangle(frame, (box_x1, box_y1), (box_x2, box_y2), (255, 0, 255), thickness = 1)
+        cv2.circle(frame, (cen_x, cen_y), 2, (0, 255, 0), thickness = -1)
 
     return frame
