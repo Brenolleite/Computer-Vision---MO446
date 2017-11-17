@@ -79,14 +79,10 @@ def drawCentroids(img, regions):
 
     return img
 
-def drawBallTrace(frame, coord, ballTrace):
-    x, y = coord
+def drawBallTrace(frame, bBox):
+    box_x1, box_y1, box_x2, box_y2, cen_x, cen_y = bBox
 
-    ballTrace.append(coord)
-    if (len(ballTrace) > 100):
-        ballTrace.pop(0)
+    cv2.rectangle(frame, (box_x1, box_y1), (box_x2, box_y2), (255, 0, 255), thickness = 1)
+    cv2.circle(frame, (cen_x, cen_y), 2, (0, 255, 0), thickness = -1)
 
-    for i in range(len(ballTrace)):
-        cv2.circle(frame, (int(ballTrace[i][0]), int(ballTrace[i][1])), 1, (0, 0, 255), -1)
-
-    return (frame, ballTrace)
+    return frame
