@@ -4,5 +4,5 @@ class Background:
     def __init__(self):
         self.fgbg = cv2.bgsegm.createBackgroundSubtractorMOG()
 
-    def subtraction(self, frame):
+    def substraction(self, frame):
         return self.fgbg.apply(frame)
