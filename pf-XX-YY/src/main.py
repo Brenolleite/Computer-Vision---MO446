@@ -4,7 +4,7 @@ import color
 import numpy as np
 import cv2
 
-WEBCAM      = False
+WEBCAM      = True
 bBoxArray  = []
 input_file  = '../input/unique_color.mp4'
 output_file = '../output/output.mp4'
@@ -32,6 +32,11 @@ def main():
         print("Progress ", i, "|", length - 1)
 
         _, frame = video.read()
+        width   = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height  = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        if WEBCAM:
+            frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
 
         bBoxArray = color.detectByColor(frame)
 

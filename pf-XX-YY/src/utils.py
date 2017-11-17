@@ -83,7 +83,11 @@ def drawBallTrace(frame, bBox):
     for i in range(len(bBox)):
         color, box_x1, box_y1, box_x2, box_y2, cen_x, cen_y = bBox[i]
 
-        cv2.rectangle(frame, (box_x1, box_y1), (box_x2, box_y2), (255, 0, 255), thickness = 1)
-        cv2.circle(frame, (cen_x, cen_y), 2, (0, 255, 0), thickness = -1)
+        bgr = cv2.cvtColor(np.uint8([[[color, 255, 127]]]), cv2.COLOR_HSV2BGR)[0][0]
+
+        aux = (int(bgr[0]), int(bgr[1]), int(bgr[2]))
+
+        cv2.rectangle(frame, (box_x1, box_y1), (box_x2, box_y2), aux, thickness = 2)
+        cv2.circle(frame, (cen_x, cen_y), 2, aux, thickness = -1)
 
     return frame
