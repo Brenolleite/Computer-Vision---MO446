@@ -3,14 +3,15 @@ import color
 
 import numpy as np
 import cv2
+import time
 
-WEBCAM      = True
-bBoxArray  = []
-input_file  = '../input/unique_color.mp4'
+WEBCAM      = False
+input_file  = '../input/collision_same_color.mp4'
 output_file = '../output/output.mp4'
 
 def main():
 
+    traceArray = []
     video = None
     length = -1
     i = 0
@@ -38,14 +39,15 @@ def main():
         if WEBCAM:
             frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
 
-        bBoxArray = color.detectByColor(frame)
+        traceArray = color.detectByColor(frame)
 
-        frame = utils.drawBallTrace(frame, bBoxArray)
+        frame = utils.drawBallTrace(frame, traceArray)
 
         if WEBCAM:
             cv2.imshow('Frame', frame)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
+                cv2.destroyAllWindows()
                 break
 
         else:
@@ -54,6 +56,11 @@ def main():
         i += 1
 
     video.release()
-    cv2.destroyAllWindows()
+
+def clearTraceArray(array):
+    while len(array) > 100:
+        array.pop(0)
+
+    return array
 
 main()
