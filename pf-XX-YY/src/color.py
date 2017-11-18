@@ -13,20 +13,13 @@ def initColors():
     # Blue
     hsvColor.append(120)
 
-def filterLargerComponent(areas, treshold = None):
-    if not treshold:
-        largest_area = 0
-        largest_i = -1
+def filterLargerComponent(areas):
 
-        # Goes over all region's label, skiping the 0 one, since it is background
-        for i in range(1, len(areas)):
-            if areas[i] > largest_area:
-                largest_area = areas[i]
-                largest_i = i
-
-        indexes = [largest_i]
-    else:
-        indexes = np.where(np.logical_and(areas > treshold, areas < treshold * 10))[0]
+    if len(areas) == 1:
+        return []
+    largest = sorted(areas, reverse = True)[1]
+    indexes = np.where(areas > largest / 1.05)[0]
+    indexes = indexes[indexes != 0]
 
     return indexes
 
@@ -51,7 +44,7 @@ def detectByColor(frame):
 
         # Gets the index of the largest connected component
         # stats[:, 4] gets all the areas of components
-        indexes = filterLargerComponent(stats[:,4], 3000)
+        indexes = filterLargerComponent(stats[:,4])
 
         for ix in indexes:
             x1, y1, x2, y2, _ = stats[ix]

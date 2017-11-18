@@ -6,7 +6,7 @@ import cv2
 
 # ------------ Params --------------------
 WEBCAM      = False
-input_file  = '../input/collision_same_color.mp4'
+input_file  = '../input/random_color.mp4'
 output_file = '../output/output.mp4'
 # ------------ Params --------------------
 
