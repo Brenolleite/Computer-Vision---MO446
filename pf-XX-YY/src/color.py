@@ -14,7 +14,6 @@ def initColors():
     hsvColor.append(120)
 
 def filterLargerComponent(areas):
-
     if len(areas) == 1:
         return []
     largest = sorted(areas, reverse = True)[1]
