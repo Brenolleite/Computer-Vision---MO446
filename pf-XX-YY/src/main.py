@@ -4,56 +4,52 @@ import color
 import numpy as np
 import cv2
 
-WEBCAM      = True
+WEBCAM      = False
 bBoxArray  = []
-input_file  = '../input/unique_color.mp4'
+input_file  = '../input/collision_same_color.mp4'
 output_file = '../output/output.mp4'
 
-def main():
+video = None
+length = -1
+i = 0
 
-    video = None
-    length = -1
-    i = 0
+if WEBCAM:
+    video = cv2.VideoCapture(0)
+else:
+    video = cv2.VideoCapture(input_file)
+
+    fourcc  = cv2.VideoWriter_fourcc(*'DIVX')
+    length  = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+    width   = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height  = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps     = video.get(cv2.CAP_PROP_FPS)
+
+    output = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
+
+while (i < length or WEBCAM):
+    print("Progress ", i, "|", length - 1)
+
+    _, frame = video.read()
+    width   = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height  = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     if WEBCAM:
-        video = cv2.VideoCapture(0)
+        frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
+
+    bBoxArray = color.detectByColor(frame)
+
+    frame = utils.drawBallTrace(frame, bBoxArray)
+
+    if WEBCAM:
+        cv2.imshow('Frame', frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
     else:
-        video = cv2.VideoCapture(input_file)
+        output.write(frame)
 
-        fourcc  = cv2.VideoWriter_fourcc(*'DIVX')
-        length  = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-        width   = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height  = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fps     = video.get(cv2.CAP_PROP_FPS)
+    i += 1
 
-        output = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
-
-    while (i < length or WEBCAM):
-        print("Progress ", i, "|", length - 1)
-
-        _, frame = video.read()
-        width   = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height  = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-        if WEBCAM:
-            frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
-
-        bBoxArray = color.detectByColor(frame)
-
-        frame = utils.drawBallTrace(frame, bBoxArray)
-
-        if WEBCAM:
-            cv2.imshow('Frame', frame)
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        else:
-            output.write(frame)
-
-        i += 1
-
-    video.release()
-    cv2.destroyAllWindows()
-
-main()
+video.release()
+cv2.destroyAllWindows()
