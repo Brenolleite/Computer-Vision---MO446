@@ -26,9 +26,7 @@ else:
 
 
 i = 0
-traceArray = []
-traceArrayLast = []
-traceColors = []
+traceBalls = []
 
 while (i < length or WEBCAM):
     print("Progress ", i, "|", length - 1)
@@ -40,14 +38,14 @@ while (i < length or WEBCAM):
     if WEBCAM:
         frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
 
-# TRACE
+    ballsInfo = color.detectByColor(frame)
 
-    ballsInfo.append(color.detectByColor(frame))
     if len(ballsInfo) > 0:
-        tracer(ballsInfo)
+        frame = utils.drawBallBox(frame, ballsInfo)
 
-    frame = utils.drawBallBox(frame, ballsInfo)
-    frame = utils.drawBallTrace(frame, traceArray)
+        # Update traceBalls and draw lines
+        traceBalls = utils.drawBallTrace(traceBalls, ballsInfo)
+
 
 # TRACE
 
@@ -62,28 +60,5 @@ while (i < length or WEBCAM):
         output.write(frame)
 
     i += 1
-
-video.release()
-
-def clearTraceArray(array):
-    while len(array) > 100:
-        array.pop(0)
-
-    return array
-
-def tracer(ballsInfo):
-    traceArray = np.array(ballsInfo)[:,5:7]
-    if len(traceArrayLast) == 0:
-        for i in range(len(traceArray)):
-            color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            traceColors.append(color)
-            traceArrayLast = traceArray
-
-    if len(traceArray) > len(traceArrayLast):
-        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        traceDist = euclidDistance(traceArray, traceArrayLast)
-
-        for i in range(len(traceDist)):
-
 
 video.release()
