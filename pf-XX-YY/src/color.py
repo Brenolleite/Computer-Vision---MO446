@@ -18,7 +18,7 @@ def filterLargerComponent(areas):
     if len(areas) == 1:
         return []
     largest = sorted(areas, reverse = True)[1]
-    indexes = np.where(areas > largest / 1.05)[0]
+    indexes = np.where(areas > largest / 3)[0]
     indexes = indexes[indexes != 0]
 
     return indexes
