@@ -6,13 +6,12 @@ import cv2
 import time
 
 WEBCAM      = False
-input_file  = '../input/collision_same_color.mp4'
+input_file  = '../input/random_color.mp4'
 output_file = '../output/output.mp4'
 
 def main():
 
     traceArray = []
-    video = None
     length = -1
     i = 0
 
