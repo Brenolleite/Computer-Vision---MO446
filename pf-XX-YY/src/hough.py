@@ -4,14 +4,23 @@ import copy as cp
 
 import background as bg
 
+param2_ = 0
+param2_max = 255
+
 def find(frame):
     # Copy frame
     img = cp.copy(frame)
 
     # Check if image is in grayscale
+<<<<<<< HEAD
     if len(img.shape) > 2:
         # Transform to gray scale
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+=======
+    #  if len(img.shape) > 2:
+    #      # Transform to gray scale
+    #      img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+>>>>>>> 517b18fe6b9f3b976076e5e506a3f39ffffdc9b8
 
     # Blur image to use in hough circles
     img = cv2.medianBlur(img, 5)
@@ -19,10 +28,17 @@ def find(frame):
     # Find circles using hough
     circles = None
 
+<<<<<<< HEAD
     param = 50
     while(type(circles) != np.ndarray and param > 0):
         circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT, 1, 10, param2 = param, minRadius = 0, maxRadius = 0)
         print(param)
+=======
+    param = 25
+    while(type(circles) != np.ndarray and param > 10):
+        circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT, 1, 10, param2 = param, minRadius = 0, maxRadius = 0)
+        #  print(param)
+>>>>>>> 517b18fe6b9f3b976076e5e506a3f39ffffdc9b8
         param -= 1
 
     if type(circles) == np.ndarray:

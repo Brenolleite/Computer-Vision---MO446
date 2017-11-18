@@ -46,6 +46,22 @@ def detectByColor(frame):
         mask = cv2.dilate(mask, kernel, iterations = 1)
         mask = cv2.erode(mask, kernel, iterations = 1)
 
+<<<<<<< HEAD
+=======
+        # res = cv2.bitwise_and(frame,frame, mask= mask)
+        #
+        # circles = hough.find(mask)
+        # if type(circles) == np.ndarray:
+        #     print("Circles: ", len(circles))
+        #     mask = hough.draw(mask, circles)
+
+        # DEBUG
+        # wName = "Mask" + str(i)
+        # wNam = "Frame" + str(i)
+        # cv2.imshow(wName, res)
+        # cv2.imshow(wNam, frame)
+
+>>>>>>> 517b18fe6b9f3b976076e5e506a3f39ffffdc9b8
         # Gets all the connected components in the mask
         _, pixelsLabel, stats, centroids = cv2.connectedComponentsWithStats(mask, 4, cv2.CV_32S)
 
