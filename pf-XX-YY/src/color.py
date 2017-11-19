@@ -13,7 +13,7 @@ def initColors():
     # Blue
     hsvColor.append(120)
 
-def filterLargerComponent(areas, selectedLabels):
+def filterLargerComponent(areas, selectedLabels, hough):
     # Dont filter if just background present
     if len(areas) <= 1:
         return []
@@ -27,8 +27,9 @@ def filterLargerComponent(areas, selectedLabels):
     # Get all index different from background
     indexes = indexes[indexes != 0]
 
-    # Get just selected labels from filter
-    indexes = np.intersect1d(indexes, selectedLabels)
+    if hough:
+        # Get just selected labels from filter
+        indexes = np.intersect1d(indexes, selectedLabels)
 
     return indexes
 
@@ -48,7 +49,7 @@ def houghLabelFilter(circles, labels):
 
     return selectedLabels
 
-def detectByColor(frame):
+def detectByColor(frame, hough = False):
     output = []
     maskJoin = np.zeros((frame.shape[0], frame.shape[1]))
 
@@ -68,18 +69,20 @@ def detectByColor(frame):
         # Gets all the connected components in the mask
         _, labels, stats, centroids = cv2.connectedComponentsWithStats(mask, 4, cv2.CV_32S)
 
-        # Fit a circle in the mask
-        circles = hough.find(mask)
-
-        # Filter color using hough circles
+        # Create selected labels by hough filter
         selectedLabels = []
-        if len(circles) > 0:
-            frame = hough.draw(frame, circles)
-            selectedLabels = houghLabelFilter(circles, labels)
+        if hough:
+            # Fit a circle in the mask
+            circles = hough.find(mask)
+
+            # Filter color using hough circles
+            if len(circles) > 0:
+                frame = hough.draw(frame, circles)
+                selectedLabels = houghLabelFilter(circles, labels)
 
         # Gets the index of the largest connected component
         # stats[:, 4] gets all the areas of components
-        indexes = filterLargerComponent(stats[selectedLabels, 4], selectedLabels)
+        indexes = filterLargerComponent(stats[:, 4], selectedLabels, hough)
 
         # Creating ball information
         for ix in indexes:

@@ -38,7 +38,7 @@ while (i < length or WEBCAM):
     if WEBCAM:
         frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
 
-    ballsInfo = color.detectByColor(frame)
+    ballsInfo = color.detectByColor(frame, False)
 
     if len(ballsInfo) > 0:
         frame = utils.drawBallBox(frame, ballsInfo)
