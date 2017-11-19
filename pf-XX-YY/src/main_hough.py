@@ -6,8 +6,9 @@ import numpy as np
 import cv2
 
 # ------------ Params --------------------
-WEBCAM      = True
-input_file  = '../input/same_color.mp4'
+WEBCAM      = False
+RESIZE      = 0.3
+input_file  = '../input/mixed_shape.mp4'
 output_file = '../output/output.mp4'
 # ------------ Params --------------------
 
@@ -17,13 +18,13 @@ if WEBCAM:
 else:
     video = cv2.VideoCapture(input_file)
 
-    fourcc  = cv2.VideoWriter_fourcc(*'DIVX')
+    fourcc  = cv2.VideoWriter_fourcc(*'MPEG')
     length  = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     width   = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
     height  = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps     = video.get(cv2.CAP_PROP_FPS)
 
-    output = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
+    output = cv2.VideoWriter(output_file, fourcc, fps, (int(width * RESIZE), int(height * RESIZE)))
 
 i = 0
 traceBalls = []
@@ -35,10 +36,12 @@ while (i < length or WEBCAM):
     width   = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
     height  = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    if WEBCAM:
-        frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
+    frame = cv2.resize(frame, (int(width * RESIZE), int(height * RESIZE)))
 
+    t = utils.Time()
+    # Detect balls by color using hough transform as filter
     ballsInfo = color.detectByColor(frame, True)
+    print("Time to detect balls: {0}".format(t.elapsed()))
 
     if len(ballsInfo) > 0:
         frame = utils.drawBallBox(frame, ballsInfo)

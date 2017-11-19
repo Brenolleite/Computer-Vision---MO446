@@ -15,12 +15,16 @@ def initColors():
 
 def filterLargerComponent(areas, selectedLabels, hough):
     # Dont filter if just background present
-    if len(areas) <= 1 or len(selectedLabels) == 0:
+    if len(areas) <= 1 or (len(selectedLabels) == 0 and hough):
         return []
 
-    print(selectedLabels)
     # Sort in desc order
-    largest = sorted(areas[selectedLabels], reverse = True)[0]
+    if hough:
+        # If using hough filter select only by chosen labels
+        largest = sorted(areas[selectedLabels], reverse = True)[0]
+    else:
+        # If not using hough get second largest but background
+        largest = sorted(areas, reverse = True)[1]
 
     # Get all indexes higher than threshold
     indexes = np.where(areas > largest / 3)[0]
@@ -45,16 +49,15 @@ def houghLabelFilter(circles, labels):
     for pos in circles:
         x, y, _ = pos
 
-        if y < height and x < width and labels[y][x] != 0:
+        # Get all the labels except background
+        if labels[y][x] != 0:
             selectedLabels.append(labels[y][x])
-        else:
-            print(x, y)
 
+    # Return unique labels selected
     return np.unique(selectedLabels)
 
 def detectByColor(frame, hough_active = False):
     output = []
-    maskJoin = np.zeros((frame.shape[0], frame.shape[1]))
 
     # Transform the color space into HSV
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -82,7 +85,6 @@ def detectByColor(frame, hough_active = False):
             if len(circles) > 0:
                 frame = hough.draw(frame, circles)
                 selectedLabels = houghLabelFilter(circles, labels)
-                print(selectedLabels)
 
         # Gets the index of the largest connected component
         # stats[:, 4] gets all the areas of components

@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import copy as cp
 
-import background as bg
 
 def find(frame):
     # Copy frame
@@ -19,13 +18,12 @@ def find(frame):
     # Find circles using hough
     circles = None
 
-    param = 100
-
     circles = []
+    param = 100
     while(param > 10 and len(circles) < 2):
-        circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT, 1, 10, param2 =
-                param, minRadius = 0, maxRadius = 0)
-        #  print(param)
+        circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT, 1, 10,
+                                   param2 = param, minRadius = 15)
+
         param -= 1
 
         if type(circles) != np.ndarray:
