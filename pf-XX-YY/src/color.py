@@ -15,11 +15,12 @@ def initColors():
 
 def filterLargerComponent(areas, selectedLabels, hough):
     # Dont filter if just background present
-    if len(areas) <= 1:
+    if len(areas) <= 1 or len(selectedLabels) == 0:
         return []
 
+    print(selectedLabels)
     # Sort in desc order
-    largest = sorted(areas, reverse = True)[1]
+    largest = sorted(areas[selectedLabels], reverse = True)[0]
 
     # Get all indexes higher than threshold
     indexes = np.where(areas > largest / 3)[0]
@@ -44,12 +45,14 @@ def houghLabelFilter(circles, labels):
     for pos in circles:
         x, y, _ = pos
 
-        if x < height and y < width and labels[x][y] != 0:
-            selectedLabels.append(labels[x][y])
+        if y < height and x < width and labels[y][x] != 0:
+            selectedLabels.append(labels[y][x])
+        else:
+            print(x, y)
 
-    return selectedLabels
+    return np.unique(selectedLabels)
 
-def detectByColor(frame, hough = False):
+def detectByColor(frame, hough_active = False):
     output = []
     maskJoin = np.zeros((frame.shape[0], frame.shape[1]))
 
@@ -71,7 +74,7 @@ def detectByColor(frame, hough = False):
 
         # Create selected labels by hough filter
         selectedLabels = []
-        if hough:
+        if hough_active:
             # Fit a circle in the mask
             circles = hough.find(mask)
 
@@ -79,10 +82,11 @@ def detectByColor(frame, hough = False):
             if len(circles) > 0:
                 frame = hough.draw(frame, circles)
                 selectedLabels = houghLabelFilter(circles, labels)
+                print(selectedLabels)
 
         # Gets the index of the largest connected component
         # stats[:, 4] gets all the areas of components
-        indexes = filterLargerComponent(stats[:, 4], selectedLabels, hough)
+        indexes = filterLargerComponent(stats[:, 4], selectedLabels, hough_active)
 
         # Creating ball information
         for ix in indexes:
@@ -90,9 +94,9 @@ def detectByColor(frame, hough = False):
             output.append((hsvColor[i], x1, y1, x1 + x2, y1 + y2, int(centroids[ix][0]), int(centroids[ix][1])))
 
         #  maskJoin = cv2.bitwise_or(maskJoin, mask, mask= mask)
-        #wName = 'Mask' + str(i)
-        #cv2.imshow(wName, mask)
-        #cv2.imshow("Hough", frame)
+        # wName = 'Mask' + str(i)
+        # cv2.imshow(wName, mask)
+        # cv2.imshow("Hough", frame)
 
     return output
 

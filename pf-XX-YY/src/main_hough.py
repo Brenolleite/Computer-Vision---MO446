@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 
 # ------------ Params --------------------
-WEBCAM      = False
+WEBCAM      = True
 input_file  = '../input/same_color.mp4'
 output_file = '../output/output.mp4'
 # ------------ Params --------------------
@@ -38,7 +38,7 @@ while (i < length or WEBCAM):
     if WEBCAM:
         frame = cv2.resize(frame, (int(width * 0.3), int(height * 0.3)))
 
-    ballsInfo = color.detectByColor(frame, False)
+    ballsInfo = color.detectByColor(frame, True)
 
     if len(ballsInfo) > 0:
         frame = utils.drawBallBox(frame, ballsInfo)
