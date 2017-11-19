@@ -7,7 +7,7 @@ import cv2
 
 # ------------ Params --------------------
 WEBCAM      = False
-input_file  = '../input/mixed_shape.mp4'
+input_file  = '../input/same_color.mp4'
 output_file = '../output/output.mp4'
 # ------------ Params --------------------
 
@@ -42,13 +42,6 @@ while (i < length or WEBCAM):
 
     if len(ballsInfo) > 0:
         frame = utils.drawBallBox(frame, ballsInfo)
-        # Call Hough Transform
-        # circles = hough.find(frame)
-        # if type(circles) == np.ndarray:
-            # frame = hough.draw(frame, circles)
-
-        # Update traceBalls and draw lines
-        #  traceBalls = utils.drawBallTrace(traceBalls, ballsInfo)
 
     if WEBCAM:
         cv2.imshow('Frame', frame)
