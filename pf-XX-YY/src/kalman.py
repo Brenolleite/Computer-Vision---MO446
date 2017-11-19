@@ -22,8 +22,14 @@ def reset():
     pred=[]
     frame = np.zeros((400,400,3), np.uint8)
 
+<<<<<<< HEAD
 kalman = cv2.KalmanFilter(2, 2)
 
+=======
+cv2.namedWindow("kalman")
+cv2.setMouseCallback("kalman",onmouse);
+kalman = cv2.KalmanFilter(4,2)
+>>>>>>> b84d2eac1dc9e8180c78a1fcd690abbf2c6d1fbb
 kalman.measurementMatrix = np.array([[1,0,0,0],[0,1,0,0]],np.float32)
 kalman.transitionMatrix = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]],np.float32)
 kalman.processNoiseCov = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],np.float32) * 0.03
@@ -33,7 +39,14 @@ while True:
     tp = kalman.predict()
     pred.append((int(tp[0]),int(tp[1])))
     paint()
+<<<<<<< HEAD
     cv2.imwrite("kalman",frame)
     k = cv2.waitKey(30) &0xFF
     if k == 27: break
     if k == 32: reset()
+=======
+    cv2.imshow("kalman",frame)
+    k = cv2.waitKey(30) &0xFF
+    if k == 27: break
+    if k == 32: reset()
+>>>>>>> b84d2eac1dc9e8180c78a1fcd690abbf2c6d1fbb
