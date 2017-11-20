@@ -206,7 +206,9 @@ def start():
             elif key == ord('k')
                 kalman_flag = not kalman_flag
             elif key == ord('d')
-                diff_color_flag = not diff_color_flag
+                diff_color_flag = not diff_color_flags
+            elif key == ord('t')
+                trace_flag = not trace_flag
 
         else:
             # Save frames into file
