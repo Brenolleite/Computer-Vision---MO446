@@ -14,7 +14,7 @@ class Kalman:
 
     def predict(self, measurement):
         # Kalman correction
-        self.kalman.correct(mp)
+        self.kalman.correct(measurement)
 
         # Kalman prediction
         pred = self.kalman.predict()
