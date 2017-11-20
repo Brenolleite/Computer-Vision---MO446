@@ -22,7 +22,7 @@ def start():
     # ------------ Params --------------------
     # Video params
     resize = 0.3
-    input_file = '../input/same_color.mp4'
+    input_file = '../input/collision_diff_color_fail1.mp4'
     output_file = '../output/output.avi'
 
     # Motion params
@@ -147,11 +147,12 @@ def start():
 
         # Keep size and draw motion flow
         raw_centroids = utils.maintain_size(raw_centroids, number_points)
-        frame = utils.drawMotionFlow(frame, raw_centroids, GUI.BGR_COLORS[3])
+
+        if trace_flag:
+            frame = utils.drawMotionFlow(frame, raw_centroids, GUI.BGR_COLORS[3])
 
         # All code related to motion flow
         if motion_flag:
-
             # Every motion_freq frame resamples the centroids to correct the
             # motion error
             if i % motion_freq == 0 or not started:
