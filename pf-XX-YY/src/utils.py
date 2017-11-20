@@ -41,7 +41,7 @@ def drawBoundingBox(img, regions):
 
 # Create dict of colors
 colors = {}
-def drawBallBox(frame, bBox):
+def drawBallBox(frame, bBox, diff_colors = False):
     global colors
 
     for i in range(len(bBox)):
@@ -51,7 +51,12 @@ def drawBallBox(frame, bBox):
         if b_id not in colors:
             colors[b_id] = randint(0, 180)
 
-        bgr = cv2.cvtColor(np.uint8([[[colors[b_id], 255, 127]]]), cv2.COLOR_HSV2BGR)[0][0]
+        if diff_colors:
+            use_color = colors[b_id]
+        else:
+            use_color = color
+
+        bgr = cv2.cvtColor(np.uint8([[[use_color, 255, 127]]]), cv2.COLOR_HSV2BGR)[0][0]
 
         aux = (int(bgr[0]), int(bgr[1]), int(bgr[2]))
 

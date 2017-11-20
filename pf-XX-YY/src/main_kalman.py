@@ -43,7 +43,7 @@ while (i < length or WEBCAM):
 
     if len(ballsInfo) > 0:
         # Call the function to draw ball bounding box
-        frame = utils.drawBallBox(frame, ballsInfo)
+        frame = utils.drawBallBox(frame, ballsInfo, True)
 
         # Update traceBalls and draw lines
         #  traceBalls = utils.drawBallTrace(traceBalls, ballsInfo)
