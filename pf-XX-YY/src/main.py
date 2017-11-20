@@ -2,7 +2,7 @@
 import utils
 import color
 import flow
-
+import kalman as k
 import cv2
 import numpy as np
 
@@ -15,14 +15,20 @@ def start():
     diff_color_flag = False
     hough_flag = True
     motion_flag = True
-    kalman_flag = False
+    kalman_flag = True
 
     # ------------ Params --------------------
-    resize = 0.3
-    motion_freq = 5
+    # Video params
+    resize = 1
     input_file = '../input/mixed_shape.mp4'
     output_file = '../output/output.mp4'
+
+    # Motion params
+    motion_freq = 5
+
+    # Drawing params
     remove_frames = 5
+    number_points = 100
     # ------------ Params --------------------
 
     # Setup  video file or webcam stream
@@ -46,6 +52,13 @@ def start():
     # Reads the first frame out of the loop
     _, frame = video.read()
 
+    # Create kalman filters for balls
+    kalman_filters = {}
+    colors = color.hsvColor
+    for c in colors:
+        kalman_filters[c] = (k.Kalman(), [-1, -1])
+    traceKalman = []
+
     i = 0
     prev_frame = frame
     balls_centroid = np.float32([])
@@ -58,7 +71,7 @@ def start():
     # Loop that either runs over every video frame or keeps getting the webcam
     # stream
     while i < length or webcam:
-        print("\nProgress ", i, "|", length - 1)
+        print("Progress ", i, "|", length - 1)
 
         # Informations from each frame
         _, frame = video.read()
@@ -69,9 +82,57 @@ def start():
         frame = cv2.resize(frame, (int(width * resize), int(height * resize)))
 
         # Detect balls using color and measure the time it took to run
-        t = utils.Time()
+        #t = utils.Time()
         balls_info = color.detectByColor(frame, hough_flag)
-        print("Time to Detect Balls: ", t.elapsed())
+        #print("Time to Detect Balls: ", t.elapsed())
+
+        # If using kalman filter
+        if kalman_flag:
+            # Go over all filters
+            for c in kalman_filters:
+                # Get information for kalman filters
+                kalman_filter = kalman_filters[c][0]
+                last = kalman_filters[c][1]
+
+
+                if len(balls_info) > 0:
+                    # Get balls of c color
+                    kalman_balls = np.array(balls_info)[np.where(np.array(balls_info)[:,0] == c)[0]][:, 5:7]
+                else:
+                    kalman_balls = []
+
+                if len(kalman_balls) > 0:
+                    # Get positions to correct in kalman for each ball
+                    for pos in kalman_balls:
+                        # Checking distance for prediction (threshold)
+                        d = utils.dist(last, np.array(pos))
+
+                        if d < 30 or last == [-1, -1]:
+                            # Corret and predict using kalman
+                            kalman_filter.correct(pos)
+
+                    # Predict after all corrections
+                    pred = kalman_filter.predict()
+                else:
+                    # Predict and feed kalman with prediction
+                    pred = kalman_filter.predict()
+                    kalman_filter.correct(pred)
+
+                if pred != (0,0):
+                    # Creating trace to kalman filter
+                    traceKalman.append(pred)
+
+                    # Keep contant size of array
+                    traceKalman = utils.maintain_size(traceKalman, number_points)
+
+                    # Removes points each 5 frames
+                    if i % remove_frames == 0:
+                        traceKalman = utils.maintain_size(traceKalman,
+                                                          len(traceKalman) - 1)
+
+
+                    # Drawing points to kalman filter
+                    utils.drawPoints(frame, traceKalman, (255, 255, 0))
 
         # Saves and draws the "groundthruth of the centroids
         centroids = utils.parseCentroidInfo(balls_info)
@@ -84,7 +145,7 @@ def start():
                                                 len(raw_centroids) - 1)
 
         # Keep size and draw motion flow
-        raw_centroids = utils.maintain_size(raw_centroids, 100)
+        raw_centroids = utils.maintain_size(raw_centroids, number_points)
         frame = utils.drawMotionFlow(frame, raw_centroids, (0, 0, 255))
 
         # All code related to motion flow
@@ -120,9 +181,10 @@ def start():
                                                       len(balls_trace) - 1)
 
                 # Keep size and draw motion flow
-                balls_trace = utils.maintain_size(balls_trace, 100)
+                balls_trace = utils.maintain_size(balls_trace, number_points)
                 frame = utils.drawMotionFlow(frame, balls_trace)
 
+        print(len(traceKalman), len(balls_trace), len(raw_centroids))
         # Draw all the bounding boxes in the frame
         if len(balls_info) > 0:
             frame = utils.drawBallBox(frame, balls_info, diff_color_flag)
@@ -132,10 +194,19 @@ def start():
             # Show the frame in a window
             cv2.imshow('Frame', frame)
 
-            # Await for key input to stop execution
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            # Await for key input
+            key = cv2.waitKey(1) &0xFF
+            if key == ord('q'):
                 cv2.destroyAllWindows()
                 break
+            elif key == ord('h')
+                hough_flag = not hough_flag
+            elif key == ord('m')
+                motion_flag = not motion_flag
+            elif key == ord('k')
+                kalman_flag = not kalman_flag
+            elif key == ord('d')
+                diff_color_flag = not diff_color_flag
 
         else:
             # Save frames into file
