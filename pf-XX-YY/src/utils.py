@@ -64,9 +64,9 @@ def parseCentroidInfo(balls):
     return np.float32(output)
 
 # Draw the motion flow from the keypoints returned by LucasKanade
-def drawMotionFlow(frame, ballsTrace):
+def drawMotionFlow(frame, ballsTrace, BGR = (0, 255, 0)):
     for i in range(len(ballsTrace)):
-        frame = drawPoints(frame, ballsTrace[i], (0, 255, 0))
+        frame = drawPoints(frame, ballsTrace[i], BGR)
 
     return frame
 
