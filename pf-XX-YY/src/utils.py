@@ -85,4 +85,13 @@ def drawPoints(frame, p, BGR = (255, 0, 255), size = 2):
     return frame
 
 def maintain_size(vec, size):
-    return vec[len(vec)-size:]
+    # Start vector
+    s = len(vec)-size
+
+    # If zeros is negative
+    if  s < 0:
+        s = 0
+
+    # Return last elements of vector
+    # after starting point
+    return vec[s:]

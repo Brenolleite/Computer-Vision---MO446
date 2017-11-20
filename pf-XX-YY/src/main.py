@@ -3,6 +3,7 @@ import utils
 import color
 import flow
 import kalman as k
+import GUI
 import cv2
 import numpy as np
 
@@ -11,24 +12,25 @@ def start():
     """ Starting function """
 
     # ----- Flags -----
-    webcam = False
+    webcam          = False
     diff_color_flag = False
-    hough_flag = True
-    motion_flag = True
-    kalman_flag = True
+    hough_flag      = True
+    motion_flag     = True
+    trace_flag      = True
+    kalman_flag     = True
 
     # ------------ Params --------------------
     # Video params
-    resize = 1
-    input_file = '../input/mixed_shape.mp4'
-    output_file = '../output/output.mp4'
+    resize = 0.3
+    input_file = '../input/same_color.mp4'
+    output_file = '../output/output.avi'
 
     # Motion params
     motion_freq = 5
 
     # Drawing params
     remove_frames = 5
-    number_points = 100
+    number_points = 50
     # ------------ Params --------------------
 
     # Setup  video file or webcam stream
@@ -38,7 +40,7 @@ def start():
     else:
         video = cv2.VideoCapture(input_file)
 
-        fourcc = cv2.VideoWriter_fourcc(*'MPEG')
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
         length = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -69,9 +71,8 @@ def start():
     started = False
 
     # Loop that either runs over every video frame or keeps getting the webcam
-    # stream
-    while i < length or webcam:
-        print("Progress ", i, "|", length - 1)
+    while i < length - 1 or webcam:
+        print("Progress ", i + 1, "|", length - 1)
 
         # Informations from each frame
         _, frame = video.read()
@@ -132,7 +133,7 @@ def start():
 
 
                     # Drawing points to kalman filter
-                    utils.drawPoints(frame, traceKalman, (255, 255, 0))
+                    utils.drawPoints(frame, traceKalman, GUI.BGR_COLORS[4])
 
         # Saves and draws the "groundthruth of the centroids
         centroids = utils.parseCentroidInfo(balls_info)
@@ -146,7 +147,7 @@ def start():
 
         # Keep size and draw motion flow
         raw_centroids = utils.maintain_size(raw_centroids, number_points)
-        frame = utils.drawMotionFlow(frame, raw_centroids, (0, 0, 255))
+        frame = utils.drawMotionFlow(frame, raw_centroids, GUI.BGR_COLORS[3])
 
         # All code related to motion flow
         if motion_flag:
@@ -168,9 +169,9 @@ def start():
             if len(balls_centroid) > 0:
 
                 # Get new centroid using flow
-                balls_centroid, st, err = flow.motion_flow(prev_frame,
-                                                           frame,
-                                                           balls_centroid)
+                balls_centroid, _, _ = flow.motion_flow(prev_frame,
+                                                        frame,
+                                                        balls_centroid)
 
                 # Save the 100s last points and draws them
                 balls_trace.append(balls_centroid)
@@ -182,15 +183,15 @@ def start():
 
                 # Keep size and draw motion flow
                 balls_trace = utils.maintain_size(balls_trace, number_points)
-                frame = utils.drawMotionFlow(frame, balls_trace)
+                frame = utils.drawMotionFlow(frame, balls_trace, GUI.BGR_COLORS[2])
 
-        print(len(traceKalman), len(balls_trace), len(raw_centroids))
         # Draw all the bounding boxes in the frame
         if len(balls_info) > 0:
             frame = utils.drawBallBox(frame, balls_info, diff_color_flag)
 
         # Output setup
         if webcam:
+            GUI.drawGUI(frame, diff_color_flag, hough_flag, motion_flag, trace_flag, kalman_flag)
             # Show the frame in a window
             cv2.imshow('Frame', frame)
 
@@ -199,15 +200,15 @@ def start():
             if key == ord('q'):
                 cv2.destroyAllWindows()
                 break
-            elif key == ord('h')
+            elif key == ord('h'):
                 hough_flag = not hough_flag
-            elif key == ord('m')
+            elif key == ord('m'):
                 motion_flag = not motion_flag
-            elif key == ord('k')
+            elif key == ord('k'):
                 kalman_flag = not kalman_flag
-            elif key == ord('d')
-                diff_color_flag = not diff_color_flags
-            elif key == ord('t')
+            elif key == ord('d'):
+                diff_color_flag = not diff_color_flag
+            elif key == ord('t'):
                 trace_flag = not trace_flag
 
         else:

@@ -1,7 +1,7 @@
 """ GUI creation and manangement """
 import cv2
 
-# Color of: DIFF_COLOR | HOUGH | MOTION | TRACE | KALMAN
+# Color of: [DIFF_COLOR | HOUGH | MOTION | TRACE | KALMAN]
 BGR_COLORS = [(0, 255, 0), (0, 255, 255), (127, 0, 255), (255, 255, 0), (0, 127, 255)]
 
 def drawGUI(frame, diff_color_flag, hough_flag, motion_flag, trace_flag, kalman_flag):
