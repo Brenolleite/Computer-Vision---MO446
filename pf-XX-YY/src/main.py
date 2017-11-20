@@ -22,9 +22,10 @@ def start():
     motion_freq = 5
     input_file = '../input/mixed_shape.mp4'
     output_file = '../output/output.mp4'
+    remove_frames = 5
     # ------------ Params --------------------
 
-    # Setup between a video file or webcam stream
+    # Setup  video file or webcam stream
     if webcam:
         video = cv2.VideoCapture(0)
         length = 0
@@ -51,6 +52,9 @@ def start():
     raw_centroids = []
     balls_trace = []
 
+    # Counter to motion
+    started = False
+
     # Loop that either runs over every video frame or keeps getting the webcam
     # stream
     while i < length or webcam:
@@ -67,13 +71,19 @@ def start():
         # Detect balls using color and measure the time it took to run
         t = utils.Time()
         balls_info = color.detectByColor(frame, hough_flag)
-        print("Delta T to Detect Balls: ", t.elapsed())
+        print("Time to Detect Balls: ", t.elapsed())
 
         # Saves and draws the "groundthruth of the centroids
-        raw_centroids.append(utils.parseCentroidInfo(balls_info))
-        if i % 5 == 0:
+        centroids = utils.parseCentroidInfo(balls_info)
+        if len(centroids) > 0:
+            raw_centroids.append(utils.parseCentroidInfo(balls_info))
+
+        # Removes points each 5 frames
+        if i % remove_frames == 0:
             raw_centroids = utils.maintain_size(raw_centroids,
                                                 len(raw_centroids) - 1)
+
+        # Keep size and draw motion flow
         raw_centroids = utils.maintain_size(raw_centroids, 100)
         frame = utils.drawMotionFlow(frame, raw_centroids, (0, 0, 255))
 
@@ -82,20 +92,34 @@ def start():
 
             # Every motion_freq frame resamples the centroids to correct the
             # motion error
-            if i % motion_freq == 0:
+            if i % motion_freq == 0 or not started:
+                started = False
+
+                # Parse centroid
                 balls_centroid = utils.parseCentroidInfo(balls_info)
+
+                # Just start if any ball was found
+                if len(balls_centroid) > 0:
+                     # Set started to true
+                    started = True
 
             # Calculate the motion flow
             if len(balls_centroid) > 0:
+
+                # Get new centroid using flow
                 balls_centroid, st, err = flow.motion_flow(prev_frame,
                                                            frame,
                                                            balls_centroid)
 
                 # Save the 100s last points and draws them
                 balls_trace.append(balls_centroid)
-                if i % 5 == 0:
-                    balls_centroid = utils.maintain_size(balls_centroid,
-                                                         len(balls_centroid) - 1)
+
+                # Removes points each 5 frames
+                if i % remove_frames == 0:
+                    balls_trace = utils.maintain_size(balls_trace,
+                                                      len(balls_trace) - 1)
+
+                # Keep size and draw motion flow
                 balls_trace = utils.maintain_size(balls_trace, 100)
                 frame = utils.drawMotionFlow(frame, balls_trace)
 
@@ -122,6 +146,5 @@ def start():
         i += 1
 
     video.release()
-
 
 start()
