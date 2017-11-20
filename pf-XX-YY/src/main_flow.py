@@ -8,11 +8,11 @@ import cv2
 import math
 
 # ------------ Params --------------------
-WEBCAM      = False
+WEBCAM      = True
 RESIZE      = 0.3
-input_file  = '../input/mixed_shape.mp4'
+input_file  = '../input/volley-1.mp4'
 output_file = '../output/output.mp4'
-motionFreq  = 30
+motionFreq  = 15
 # ------------ Params --------------------
 
 def sift(img):
@@ -50,6 +50,7 @@ motionFrame = frame
 prevFrameCircleInfo = []
 kp = []
 ballsCentroid = np.float32([])
+ballsTrace = []
 
 lk_params = dict(winSize = (15, 15),
                  maxLevel = 2,
@@ -73,21 +74,21 @@ while (i < length or WEBCAM):
     print("Time to detect balls: {0}".format(t.elapsed()))
 
     # HERE
+     #  ballsInfo = color.detectByColor(frame, True)
     if i % motionFreq == 0:
         ballsInfo = color.detectByColor(frame, True)
-        print("One ", utils.parseCentroidInfo(ballsInfo))
-        ballsCentroid = np.append(ballsCentroid, utils.parseCentroidInfo(ballsInfo), axis=0)
-        ballsCentroid = np.append(ballsCentroid, utils.parseCentroidInfo(ballsInfo), axis=0)
-        print("All ", ballsCentroid)
+        ballsCentroid = utils.parseCentroidInfo(ballsInfo)
+
+    #  ballsInfo = color.detectByColor(frame, True)
 
     if len(ballsCentroid) > 0:
-        newBallsCentroid, st, err = cv2.calcOpticalFlowPyrLK(prevFrame, frame, (NDARRAY), None, **lk_params)
-        ballsCentroid = np.append(ballsCentroid, newBallsCentroid)
-
-    frame = utils.drawPoints(frame, ballsCentroid)
+        ballsCentroid, st, err = cv2.calcOpticalFlowPyrLK(prevFrame, frame, ballsCentroid, None, **lk_params)
+    
+    ballsTrace.append(ballsCentroid)
+    frame = utils.drawMotionFlow(frame, ballsTrace)
 
     if len(ballsInfo) > 0:
-        frame = utils.drawBallBox(frame, ballsCentroid)
+        frame = utils.drawBallBox(frame, ballsInfo)
 
     if WEBCAM:
         cv2.imshow('Frame', frame)
