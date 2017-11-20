@@ -98,8 +98,8 @@ def getBallsId(balls):
         # Calculate distances
         idx, dist = pairwise_distances_argmin_min(cur_pos, last_pos)
 
-        # Create dictionary
-        dic = list(zip(idx, dist))
+        # Create dictionary using ball ids
+        dic = list(zip(np.array(last_frame_balls)[idx,0], dist))
 
         # Create indexes to dictionary to sort
         dic = list(zip(np.arange(len(dic)), dic))
@@ -109,10 +109,10 @@ def getBallsId(balls):
 
         # Create or delete balls
         dic_size = len(dic)
-        last_dize = len(last_frame_balls)
-        if dic_size > last_dize:
+        last_size = len(last_frame_balls)
+        if dic_size > last_size:
             # Verify difference on size
-            diff = dic_size - last_dize
+            diff = dic_size - last_size
 
             # create new array
             new_array = dic[dic_size-diff:]
@@ -130,8 +130,12 @@ def getBallsId(balls):
                 # Add balls to last_frame
                 last_frame_balls.append([ball_id, balls[index][5], balls[index][6]])
 
-        elif dic_size < last_dize:
-            print("LUL")
+        elif dic_size < last_size:
+            # Get ids to keep
+            ids = np.array(list(dict(dic).values()))[:,0]
+
+            # Remove items not in ids
+            last_frame_balls = list(filter(lambda x : x[0] in ids, last_frame_balls))
 
         # Loop over dictionay
         i = 0
@@ -143,11 +147,11 @@ def getBallsId(balls):
             b_id = item[1][0]
 
             # Get index in last frame by id
-            ix = np.where(last_frame_balls[0] == b_id)[0][0]
+            ix = np.where(np.array(last_frame_balls)[:,0] == b_id)[0][0]
 
             # Update last frame centroids x,y
-            last_frame_balls[ix][1] = cur_pos[i][0]
-            last_frame_balls[ix][2] = cur_pos[i][1]
+            last_frame_balls[ix][1] = cur_pos[index][0]
+            last_frame_balls[ix][2] = cur_pos[index][1]
 
              # Append id to ballsInfo
             balls, _ = append_id(balls, b_id, index)
@@ -161,11 +165,6 @@ def getBallsId(balls):
 
             # Add balls to last_frame
             last_frame_balls.append([ball_id, balls[i][5], balls[i][6]])
-
-        # Transform to ndarray after append
-        #last_frame_balls = np.array(last_frame_balls)
-
-    print(balls, last_frame_balls)
 
     return balls
 

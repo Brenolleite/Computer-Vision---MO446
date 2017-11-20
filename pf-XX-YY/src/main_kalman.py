@@ -7,8 +7,8 @@ import trace
 
 # ------------ Params --------------------
 WEBCAM      = False
-RESIZE      = 1
-input_file  = '../input/blue.mp4'
+RESIZE      = 0.3
+input_file  = '../input/mixed_shape.mp4'
 output_file = '../output/kalman.mp4'
 # ------------ Params --------------------
 
