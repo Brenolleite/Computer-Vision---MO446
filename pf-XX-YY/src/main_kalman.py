@@ -6,9 +6,9 @@ import cv2
 
 # ------------ Params --------------------
 WEBCAM      = False
-RESIZE      = 0.3
+RESIZE      = 0.5
 kalman_flag = True
-input_file  = '../input/unique_color.mp4'
+input_file  = '../input/occclusion.mp4'
 output_file = '../output/kalman.mp4'
 # ------------ Params --------------------
 
@@ -16,7 +16,7 @@ output_file = '../output/kalman.mp4'
 kalman_filters = {}
 colors = color.hsvColor
 for c in colors:
-    kalman_filters[c] = k.Kalman()
+    kalman_filters[c] = (k.Kalman(), [-1, -1])
 traceKalman = []
 
 if WEBCAM:
@@ -50,29 +50,53 @@ while (i < length or WEBCAM):
 
     # If using kalman filter
     if kalman_flag:
+        # Go over all filters
+        for c in kalman_filters:
+            # Get information for kalman filters
+            kalman_filter = kalman_filters[c][0]
+            last = kalman_filters[c][1]
 
-        # Aplly kalman filter to all balls
-        for ball in ballsInfo:
-            # Get color and position
-            c = ball[0]
-            pos = ball[5:7]
 
-            # Corret and predict using kalman
-            pred = kalman_filters[c].predict(pos)
+            if len(ballsInfo) > 0:
+                # Get balls of c color
+                kalman_balls = np.array(ballsInfo)[np.where(np.array(ballsInfo)[:,0] == c)[0]][:, 5:7]
+            else:
+                kalman_balls = []
 
-            # Checking distance for prediction (threshold)
-            d = utils.dist(pred, np.array(pos))
-            print(d)
-            if d < 30:
+            if len(kalman_balls) > 0:
+                # Get positions to correct in kalman for each ball
+                for pos in kalman_balls:
+                    # Checking distance for prediction (threshold)
+                    d = utils.dist(last, np.array(pos))
+
+                    print(last)
+                    if d < 30 or last == (-1, -1):
+                        # Corret and predict using kalman
+                        kalman_filter.correct(pos)
+
+                # Predict after all corrections
+                pred = kalman_filter.predict()
+                print("1", pred)
+            else:
+                # Predict and feed kalman with prediction
+                pred = kalman_filter.predict()
+                kalman_filter.correct(pred)
+                print("2", pred)
+
+            if pred != (0,0):
                 # Creating trace to kalman filter
                 traceKalman.append(pred)
 
+                # Keep contant size of array
+                utils.maintain_size(traceKalman, 50)
+
                 # Drawing points to kalman filter
-                utils.drawPoints(frame, traceKalman)
+                utils.drawPoints(frame, traceKalman, period=20)
+
 
     if len(ballsInfo) > 0:
         # Call the function to draw ball bounding box
-        frame = utils.drawBallBox(frame, ballsInfo, True)
+        frame = utils.drawBallBox(frame, ballsInfo, False)
 
         # Update traceBalls and draw lines
         #  traceBalls = utils.drawBallTrace(traceBalls, ballsInfo)

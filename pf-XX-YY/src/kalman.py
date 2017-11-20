@@ -13,7 +13,7 @@ class Kalman:
         self.kalman.transitionMatrix = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]], np.float32)
         self.kalman.processNoiseCov = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]], np.float32) * 0.03
 
-    def predict(self, meas):
+    def correct(self, meas):
         # Get x and y from measurement
         x, y = meas
 
@@ -23,6 +23,7 @@ class Kalman:
         # Kalman correction
         self.kalman.correct(meas)
 
+    def predict(self):
         # Kalman prediction
         pred = self.kalman.predict()
 

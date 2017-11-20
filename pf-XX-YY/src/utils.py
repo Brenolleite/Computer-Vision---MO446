@@ -71,7 +71,7 @@ def drawMotionFlow(frame, ballsTrace):
     return frame
 
 # Draw points
-def drawPoints(frame, p, BGR = (255, 0, 255), size = 2):
+def drawPoints(frame, p, BGR = (255, 0, 255), size = 2, period = 0):
     # Transform to ndarray
     p = np.array(p)
 
@@ -80,6 +80,12 @@ def drawPoints(frame, p, BGR = (255, 0, 255), size = 2):
         x = math.floor(p[i, 0])
         y = math.floor(p[i, 1])
 
+        if i % period == 0:
+            size += 1
+
         frame = cv2.circle(frame, (x, y), size, BGR, -1)
 
     return frame
+
+def maintain_size(vec, size):
+    return vec[len(vec)-size:]
