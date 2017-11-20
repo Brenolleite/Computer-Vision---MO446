@@ -69,8 +69,7 @@ while (i < length or WEBCAM):
                     # Checking distance for prediction (threshold)
                     d = utils.dist(last, np.array(pos))
 
-                    print(last)
-                    if d < 30 or last == (-1, -1):
+                    if d < 30 or last == [-1, -1]:
                         # Corret and predict using kalman
                         kalman_filter.correct(pos)
 
@@ -91,7 +90,7 @@ while (i < length or WEBCAM):
                 utils.maintain_size(traceKalman, 50)
 
                 # Drawing points to kalman filter
-                utils.drawPoints(frame, traceKalman, period=20)
+                utils.drawPoints(frame, traceKalman)
 
 
     if len(ballsInfo) > 0:
