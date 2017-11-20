@@ -3,6 +3,7 @@ import utils
 import color
 import flow
 import kalman as k
+import GUI
 import cv2
 import numpy as np
 
@@ -11,15 +12,16 @@ def start():
     """ Starting function """
 
     # ----- Flags -----
-    webcam = False
+    webcam = True
     diff_color_flag = False
     hough_flag = True
     motion_flag = True
+    trace_flag = True
     kalman_flag = True
 
     # ------------ Params --------------------
     # Video params
-    resize = 1
+    resize = 0.3
     input_file = '../input/mixed_shape.mp4'
     output_file = '../output/output.mp4'
 
@@ -191,6 +193,7 @@ def start():
 
         # Output setup
         if webcam:
+            GUI.drawGUI(frame, diff_color_flag, hough_flag, motion_flag, trace_flag, kalman_flag)
             # Show the frame in a window
             cv2.imshow('Frame', frame)
 
@@ -199,13 +202,13 @@ def start():
             if key == ord('q'):
                 cv2.destroyAllWindows()
                 break
-            elif key == ord('h')
+            elif key == ord('h'):
                 hough_flag = not hough_flag
-            elif key == ord('m')
+            elif key == ord('m'):
                 motion_flag = not motion_flag
-            elif key == ord('k')
+            elif key == ord('k'):
                 kalman_flag = not kalman_flag
-            elif key == ord('d')
+            elif key == ord('d'):
                 diff_color_flag = not diff_color_flag
 
         else:
