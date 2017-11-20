@@ -42,7 +42,7 @@ def drawBoundingBox(img, regions):
 
 def drawBallBox(frame, bBox):
     for i in range(len(bBox)):
-        color, box_x1, box_y1, box_x2, box_y2, cen_x, cen_y = bBox[i]
+        color, box_x1, box_y1, box_x2, box_y2, cen_x, cen_y, _ = bBox[i]
 
         bgr = cv2.cvtColor(np.uint8([[[color, 255, 127]]]), cv2.COLOR_HSV2BGR)[0][0]
 
@@ -57,8 +57,9 @@ def drawBallBox(frame, bBox):
 def dist(x,y):
     return np.sqrt(np.sum((x-y)**2))
 
+# Create random color
 def random_color():
-    return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+    return (randint(0, 255), randint(0, 255), randint(0, 255))
 
 def drawBallTrace(traceBalls, ballsInfo, frame):
     # Create list of already chosen balls
