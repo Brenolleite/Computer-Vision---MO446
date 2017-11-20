@@ -117,21 +117,19 @@ def drawBallTrace(traceBalls, ballsInfo, frame):
 # Parse the circles info into the keypoints that will be used in motion flow
 def parseCentroidInfo(balls):
     output = []
-    print("isso ", output)
     for i in balls:
         output.append([i[5], i[6]])
 
-    return np.array(output)
+    return np.float32(output)
 
 # Draw the motion flow from the keypoints returned by LucasKanade
-def drawMotionFlow(frame, kp):
-    for i in kp:
-        cv2.circle(frame, (i[0], i[1]), 2, (255, 0, 255), thickness = -1)
+def drawMotionFlow(frame, ballsTrace):
+    for i in range(len(ballsTrace)):
+        frame = drawPoints(frame, ballsTrace[i], (0, 255, 0))
 
     return frame
 
 def drawPoints(frame, p, BGR = (255, 0, 255), size = 2):
-    print("points", p)
     for i in range(len(p)):
         x = math.floor(p[i, 0])
         y = math.floor(p[i, 1])
