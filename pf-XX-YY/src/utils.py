@@ -13,7 +13,6 @@ class Time:
     def elapsed(self):
         return t.time() - self.start_time
 
-
 # Save kmeans colored image
 def k_image(img, center, label):
     center = np.uint8(center)
@@ -40,11 +39,19 @@ def drawBoundingBox(img, regions):
 
     return img
 
+# Create dict of colors
+colors = {}
 def drawBallBox(frame, bBox):
-    for i in range(len(bBox)):
-        color, box_x1, box_y1, box_x2, box_y2, cen_x, cen_y, _ = bBox[i]
+    global colors
 
-        bgr = cv2.cvtColor(np.uint8([[[color, 255, 127]]]), cv2.COLOR_HSV2BGR)[0][0]
+    for i in range(len(bBox)):
+        color, box_x1, box_y1, box_x2, box_y2, cen_x, cen_y, b_id = bBox[i]
+
+        # Create new color for new ID
+        if b_id not in colors:
+            colors[b_id] = randint(0, 180)
+
+        bgr = cv2.cvtColor(np.uint8([[[colors[b_id], 255, 127]]]), cv2.COLOR_HSV2BGR)[0][0]
 
         aux = (int(bgr[0]), int(bgr[1]), int(bgr[2]))
 
