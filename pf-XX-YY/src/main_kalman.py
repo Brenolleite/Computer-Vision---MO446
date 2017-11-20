@@ -1,16 +1,23 @@
 import utils
 import color
-import kalman
+import kalman as k
 import numpy as np
 import cv2
-import trace
 
 # ------------ Params --------------------
 WEBCAM      = False
 RESIZE      = 0.3
-input_file  = '../input/mixed_shape.mp4'
+kalman_flag = True
+input_file  = '../input/unique_color.mp4'
 output_file = '../output/kalman.mp4'
 # ------------ Params --------------------
+
+# Create kalman filters for balls
+kalman_filters = {}
+colors = color.hsvColor
+for c in colors:
+    kalman_filters[c] = k.Kalman()
+traceKalman = []
 
 if WEBCAM:
     video = cv2.VideoCapture(0)
@@ -40,6 +47,28 @@ while (i < length or WEBCAM):
 
     # Detect balls using color and no hough filter
     ballsInfo = color.detectByColor(frame, True)
+
+    # If using kalman filter
+    if kalman_flag:
+
+        # Aplly kalman filter to all balls
+        for ball in ballsInfo:
+            # Get color and position
+            c = ball[0]
+            pos = ball[5:7]
+
+            # Corret and predict using kalman
+            pred = kalman_filters[c].predict(pos)
+
+            # Checking distance for prediction (threshold)
+            d = utils.dist(pred, np.array(pos))
+            print(d)
+            if d < 30:
+                # Creating trace to kalman filter
+                traceKalman.append(pred)
+
+                # Drawing points to kalman filter
+                utils.drawPoints(frame, traceKalman)
 
     if len(ballsInfo) > 0:
         # Call the function to draw ball bounding box

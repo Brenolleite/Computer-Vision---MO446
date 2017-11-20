@@ -2,7 +2,6 @@ import utils
 import numpy as np
 import cv2
 import hough
-
 from sklearn.metrics import pairwise_distances_argmin_min
 
 hsvColor = []
