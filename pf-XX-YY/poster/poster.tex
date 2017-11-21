@@ -123,26 +123,26 @@ Same color balls:
 	\label{fig:same_color}
 \end{figure}
 
-Mixed shaped objects with the balls:
+Object detection without Hough Transform:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{images/mixed_shape}}
-	\caption{Track of the balls alongside mixed shaped objects.}
-	\label{fig:mixed_shape}
+			\fbox{\includegraphics[scale=0.5]{images/not_hough}}
+	\caption{Detector mistakenly taking the pen as a subject.}
+	\label{fig:not_hough}
 \end{figure}
 
-Collision between same color balls:
+Object detection with Hough Transform:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{images/coll_same_color}}
-	\caption{Track of two same color balls with collision.}
-	\label{fig:call_same_color}
+			\fbox{\includegraphics[scale=0.5]{images/yes_hough}}
+	\caption{Detector ignoring the pen, since its shape is not rounded.}
+	\label{fig:yes_hough}
 \end{figure}
 
 Lucas Kanade Motion Flow:
