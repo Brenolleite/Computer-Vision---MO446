@@ -190,9 +190,10 @@ def start():
         if len(balls_info) > 0:
             frame = utils.drawBallBox(frame, balls_info, diff_color_flag)
 
+        GUI.drawGUI(frame, diff_color_flag, hough_flag, motion_flag, trace_flag, kalman_flag)
+
         # Output setup
         if webcam:
-            GUI.drawGUI(frame, diff_color_flag, hough_flag, motion_flag, trace_flag, kalman_flag)
             # Show the frame in a window
             cv2.imshow('Frame', frame)
 
