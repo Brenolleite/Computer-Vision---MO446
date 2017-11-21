@@ -71,17 +71,12 @@ In all the experiments the tracking was performed in a controlled environment. O
 
 \bigbreak
 
-The following scenarios were used to analyze the overall performance of the proposed system.
+The following scenarios were used to analyze the overall performance of the proposal.
 
 \begin{itemize}
 
-\item Single colored ball;
-\item Two different colored balls;
-\item Two same color balls;
-\item All three balls;
-\item Other objects with the balls;
-\item Collision between same color balls;
-\item Real world application;
+\item Controlled environment - Under artificial light, using the same objects on a clean bland background, along simple trajectories.
+\item Real World environment - Noisy and moving background, under natural light with 
 
 \end{itemize}
 
@@ -156,6 +151,26 @@ We approached all the scenarios listed above in a incremental manner in complexi
 	\label{fig:motion}
 \end{figure}
 
+\textbf{Limitations of the Motion Flow}:
+
+\begin{figure}[!h]
+	\centering
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{images/motion_10}}
+	\caption{Motion flow with a interval of 10 frames between resamples.}
+	\label{fig:motion_10}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{images/motion_50}}
+	\caption{Motion flow with a interval of 50 frames between resamples.}
+	\label{fig:motion_50}
+\end{figure}
+
 \textbf{Kalman Filter Occlusion}:
 
 \begin{figure}[!h]
@@ -173,50 +188,23 @@ We approached all the scenarios listed above in a incremental manner in complexi
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{images/miguel_1}}
+	\caption{All implemented features working together to track the colored balls with a noisy background.}
+	\label{fig:miguel_1}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/robocup_1}}
-	\caption{All implemented features working together to track a soccer match at Robocup.}
+	\caption{All implemented features working together to track a soccer match at Robo-cup.}
 	\label{fig:robocup_1}
 \end{figure}
 
 \section{Conclusions}
 
 The classic methods can present good results in a controlled environment, however it might have some difficulties in a noisy scenario as the real world. To perform in those complex scenarios, different set of tools are used in the literature, from physics model to deep neural networks.
-
-%%% References
-
-%% Note: use of BibTeX als works!!
-
-\bibliographystyle{plain}
-\begin{thebibliography}{1}
-
-\bibitem{Flusser:Suk:93}
-J.~Flusser and T.~Suk.
-\newblock Pattern recognition by affine moment invariants.
-\newblock {\em Pattern Recognition}, 26:167--174, 1993.
-
-\bibitem{Hu:62}
-M.~K. Hu.
-\newblock Visual pattern recognition by moment invariants.
-\newblock {\em IRE Transactions on Information Theory}, IT-8:179--187, 1962.
-
-\bibitem{maragos89:_patter}
-P.~Maragos.
-\newblock Pattern spectrum and multiscale shape representation.
-\newblock {\em IEEE Trans. Patt. Anal. Mach. Intell.}, 11:701--715, 1989.
-
-\bibitem{Meijster:Wilkinson:PAMI}
-A.~Meijster and M.~H.~F. Wilkinson.
-\newblock A comparison of algorithms for connected set openings and closings.
-\newblock {\em IEEE Trans. Patt. Anal. Mach. Intell.}, 24(4):484--494, 2002.
-
-\bibitem{Nacken:thesis}
-P.~F.~M. Nacken.
-\newblock {\em Image Analysis Methods Based on Hierarchies of Graphs and
-  Multi-Scale Mathematical Morphology}.
-\newblock PhD thesis, University of Amsterdam, Amsterdam, The Netherlands,
-  1994.
-
-\end{thebibliography}
 
 \end{multicols}
 
