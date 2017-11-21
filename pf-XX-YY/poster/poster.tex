@@ -90,48 +90,37 @@ The following scenarios were used to analyze the overall performance of the prop
 We approached all the scenarios listed above in a incremental manner in complexity order. Below are listed
 
 \bigbreak
-A single colored ball:
+Single color ball:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/single_color}}
-	\caption{Track of a single colored ball}
+	\caption{Detection of a colored ball.}
 	\label{fig:single_color}
 \end{figure}
 
-Two different colored balls:
+Different color balls:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/diff_color}}
-	\caption{Track of two differently colored balls}
+	\caption{Detection of different color balls as unique subjects.}
 	\label{fig:diff_color}
 \end{figure}
 
-Two different colored balls:
+Same color balls:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{images/two_same}}
-	\caption{Track of two same color balls}
-	\label{fig:two_same}
-\end{figure}
-
-All three colored balls:
-
-\begin{figure}[!h]
-	\centering
-			\setlength{\fboxsep}{1pt}
-			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{images/three_balls}}
-	\caption{Track of all three colored balls}
-	\label{fig:three_balls}
+			\fbox{\includegraphics[scale=0.5]{images/same_color}}
+	\caption{Detection of same color balls as unique subjects.}
+	\label{fig:same_color}
 \end{figure}
 
 Mixed shaped objects with the balls:
@@ -141,7 +130,7 @@ Mixed shaped objects with the balls:
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/mixed_shape}}
-	\caption{Track of the balls alongside mixed shaped objects}
+	\caption{Track of the balls alongside mixed shaped objects.}
 	\label{fig:mixed_shape}
 \end{figure}
 
@@ -152,8 +141,30 @@ Collision between same color balls:
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/coll_same_color}}
-	\caption{Track of two same color balls with collision}
+	\caption{Track of two same color balls with collision.}
 	\label{fig:call_same_color}
+\end{figure}
+
+Lucas Kanade Motion Flow:
+
+\begin{figure}[!h]
+	\centering
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{images/motion}}
+	\caption{Motion flow (pink) compared with ball detection (light blue).}
+	\label{fig:motion}
+\end{figure}
+
+Kalman Filter Occlusion:
+
+\begin{figure}[!h]
+	\centering
+			\setlength{\fboxsep}{1pt}
+			\setlength{\fboxrule}{1pt}
+			\fbox{\includegraphics[scale=0.5]{images/occlusion}}
+	\caption{Kalman filter (orange) predicting an occluded route, ball detection (light blue).}
+	\label{fig:occlusion}
 \end{figure}
 
 Real world application:
@@ -163,7 +174,7 @@ Real world application:
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/robocup_1}}
-	\caption{Track of one colored ball in the Robocup soccer competition}
+	\caption{Track of one colored ball in the Robocup soccer competition.}
 	\label{fig:robocup_1}
 \end{figure}
 
