@@ -211,14 +211,14 @@ def detectByColor(frame, hough_active = False):
             output.append((hsvColor[i], x1, y1, x1 + x2, y1 + y2, int(centroids[ix][0]), int(centroids[ix][1])))
 
         #  maskJoin = cv2.bitwise_or(maskJoin, mask, mask= mask)
-        wName = 'Mask' + str(i)
-        cv2.imshow(wName, mask)
+        #wName = 'Mask' + str(i)
+        #cv2.imshow(wName, mask)
         # cv2.imshow("Hough", frame)
 
-        key = cv2.waitKey(1) &0xFF
-        if key == ord('q'):
-            cv2.destroyAllWindows()
-            break
+        #key = cv2.waitKey(1) &0xFF
+        #if key == ord('q'):
+        #    cv2.destroyAllWindows()
+        #    break
 
     # Find balls IDs
     output = getBallsId(output)
