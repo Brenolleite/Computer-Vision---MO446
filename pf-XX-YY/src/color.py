@@ -176,7 +176,11 @@ def detectByColor(frame, hough_active = False):
     for i in range(len(hsvColor)):
         # Gets a black and white image, all the pixels in the color range will be
         # painted white, everything else will be black
-        mask = cv2.inRange(hsv, (hsvColor[i] - 40, 86, 6), (hsvColor[i] + 60, 255, 255))
+        # i = 0 for a specific yellow calibration and i = 1 for the blue one
+        if i == 0:
+            mask = cv2.inRange(hsv, (hsvColor[i] - 10, 86, 6), (hsvColor[i] + 5, 255, 255))
+        if i == 1:
+            mask = cv2.inRange(hsv, (hsvColor[i] - 40, 86, 6), (hsvColor[i] + 60, 255, 255))
 
         # Remove some noise from image
         kernel = np.ones((5, 5), np.uint8)
@@ -207,9 +211,14 @@ def detectByColor(frame, hough_active = False):
             output.append((hsvColor[i], x1, y1, x1 + x2, y1 + y2, int(centroids[ix][0]), int(centroids[ix][1])))
 
         #  maskJoin = cv2.bitwise_or(maskJoin, mask, mask= mask)
-        # wName = 'Mask' + str(i)
-        # cv2.imshow(wName, mask)
+        wName = 'Mask' + str(i)
+        cv2.imshow(wName, mask)
         # cv2.imshow("Hough", frame)
+
+        key = cv2.waitKey(1) &0xFF
+        if key == ord('q'):
+            cv2.destroyAllWindows()
+            break
 
     # Find balls IDs
     output = getBallsId(output)
