@@ -75,17 +75,17 @@ The following scenarios were used to analyze the overall performance of the prop
 
 \begin{itemize}
 
-\item Controlled environment - Under artificial light, using the same objects on a clean bland background, along simple trajectories.
-\item Real World environment - Noisy and moving background, under natural light with 
+\item \textbf{Controlled environment} - Under artificial light, using the same objects on a clean bland background, in which simple trajectories are performed.
+\item \textbf{Real World environment} - Noisy and moving background, under different light sources, in which unpredictable trajectories are performed.  
 
 \end{itemize}
 
 \section{Experiments}
 
-We approached all the scenarios listed above in a incremental manner in complexity order. Below are listed
+We approached all the scenarios listed above in a incremental complexity manner.
 
 \bigbreak
-\textbf{Single color ball}:
+\textbf{Single colored ball detection}:
 
 \begin{figure}[!h]
 	\centering
@@ -96,18 +96,18 @@ We approached all the scenarios listed above in a incremental manner in complexi
 	\label{fig:single_color}
 \end{figure}
 
-\textbf{Different color balls}:
+\textbf{Different colored balls detection}:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/diff_color}}
-	\caption{Detection of different color balls as unique subjects.}
+	\caption{Detection of two different colored balls.}
 	\label{fig:diff_color}
 \end{figure}
 
-\textbf{Same color balls}:
+\textbf{Same colored balls detection}:
 
 \begin{figure}[!h]
 	\centering
@@ -125,18 +125,18 @@ We approached all the scenarios listed above in a incremental manner in complexi
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/not_hough}}
-	\caption{Detector mistakenly taking the pen as a subject.}
+	\caption{Detector mistakenly detecting the pen as a ball.}
 	\label{fig:not_hough}
 \end{figure}
 
-\textbf{Object detection with Hough Transform}:
+\textbf{Object detection with Hough  Transform}:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/yes_hough}}
-	\caption{Detector ignoring the pen, since its shape is not rounded.}
+	\caption{Detector ignoring the pen.}
 	\label{fig:yes_hough}
 \end{figure}
 
@@ -147,18 +147,18 @@ We approached all the scenarios listed above in a incremental manner in complexi
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/motion}}
-	\caption{Motion flow (pink) compared with ball detection (light blue).}
+	\caption{Trajectory of the motion flow (pink) compared to the ball detection (light blue) on a bouncing ball.}
 	\label{fig:motion}
 \end{figure}
 
-\textbf{Limitations of the Motion Flow}:
+\textbf{Limitations of the Motion Flow and Hough Transform}:
 
 \begin{figure}[!h]
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{images/motion_10}}
-	\caption{Motion flow with a interval of 10 frames between resamples.}
+			\fbox{\includegraphics[scale=0.5]{images/motion_5}}
+	\caption{Motion flow with an interval of 5 frames between resamples.}
 	\label{fig:motion_10}
 \end{figure}
 
@@ -166,8 +166,8 @@ We approached all the scenarios listed above in a incremental manner in complexi
 	\centering
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
-			\fbox{\includegraphics[scale=0.5]{images/motion_50}}
-	\caption{Motion flow with a interval of 50 frames between resamples.}
+			\fbox{\includegraphics[scale=0.5]{images/motion_30}}
+	\caption{Motion flow with an interval of 30 frames between resamples.}
 	\label{fig:motion_50}
 \end{figure}
 
@@ -178,7 +178,7 @@ We approached all the scenarios listed above in a incremental manner in complexi
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/occlusion}}
-	\caption{Kalman filter (orange) predicting an occluded route, ball detection (light blue).}
+	\caption{Kalman filter (orange) predicting an occluded trajectory.}
 	\label{fig:occlusion}
 \end{figure}
 
@@ -189,7 +189,7 @@ We approached all the scenarios listed above in a incremental manner in complexi
 			\setlength{\fboxsep}{1pt}
 			\setlength{\fboxrule}{1pt}
 			\fbox{\includegraphics[scale=0.5]{images/miguel_1}}
-	\caption{All implemented features working together to track the colored balls with a noisy background.}
+	\caption{All implemented features working together to track the colored balls in a noisy background.}
 	\label{fig:miguel_1}
 \end{figure}
 
