@@ -1,9 +1,0 @@
-*.aux
-*.log
-*.gz
-.DS_Store
-.vscode/*
-*.fls
-*.fdb_latexmk
-*.orig
-*.pdf
