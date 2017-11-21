@@ -19,7 +19,7 @@ def find(frame):
     circles = None
 
     circles = []
-    param = 100
+    param = 80
     while(param > 10 and len(circles) < 2):
         circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT, 1, 10,
                                    param2 = param, minRadius = 15)

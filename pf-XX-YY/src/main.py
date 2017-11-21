@@ -12,25 +12,25 @@ def start():
     """ Starting function """
 
     # ----- Flags -----
-    webcam          = False
+    webcam          = True
     diff_color_flag = False
-    hough_flag      = True
-    motion_flag     = True
-    trace_flag      = True
-    kalman_flag     = True
+    hough_flag      = False
+    motion_flag     = False
+    trace_flag      = False
+    kalman_flag     = False
 
     # ------------ Params --------------------
     # Video params
-    resize = 0.3
+    resize = 0.4
     input_file = '../input/collision_diff_color_fail1.mp4'
     output_file = '../output/output.avi'
 
     # Motion params
-    motion_freq = 5
+    motion_freq = 10
 
     # Drawing params
-    remove_frames = 5
-    number_points = 50
+    remove_frames = 3
+    number_points = 15
     # ------------ Params --------------------
 
     # Setup  video file or webcam stream
@@ -83,9 +83,9 @@ def start():
         frame = cv2.resize(frame, (int(width * resize), int(height * resize)))
 
         # Detect balls using color and measure the time it took to run
-        #t = utils.Time()
+        # t = utils.Time()
         balls_info = color.detectByColor(frame, hough_flag)
-        #print("Time to Detect Balls: ", t.elapsed())
+        # print("Time to Detect Balls: ", t.elapsed())
 
         # If using kalman filter
         if kalman_flag:
@@ -95,10 +95,9 @@ def start():
                 kalman_filter = kalman_filters[c][0]
                 last = kalman_filters[c][1]
 
-
                 if len(balls_info) > 0:
                     # Get balls of c color
-                    kalman_balls = np.array(balls_info)[np.where(np.array(balls_info)[:,0] == c)[0]][:, 5:7]
+                    kalman_balls = np.array(balls_info)[np.where(np.array(balls_info)[:, 0] == c)[0]][:, 5:7]
                 else:
                     kalman_balls = []
 
@@ -119,7 +118,7 @@ def start():
                     pred = kalman_filter.predict()
                     kalman_filter.correct(pred)
 
-                if pred != (0,0):
+                if pred != (0, 0):
                     # Creating trace to kalman filter
                     traceKalman.append(pred)
 
@@ -130,7 +129,6 @@ def start():
                     if i % remove_frames == 0:
                         traceKalman = utils.maintain_size(traceKalman,
                                                           len(traceKalman) - 1)
-
 
                     # Drawing points to kalman filter
                     utils.drawPoints(frame, traceKalman, GUI.BGR_COLORS[4])
