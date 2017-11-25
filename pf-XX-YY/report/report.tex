@@ -1,0 +1,158 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[breaklinks=true,bookmarks=false]{hyperref}
+
+\cvprfinalcopy{} % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+\setcounter{page}{1}
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Classic Methods on Color Based Ball Tracking}
+
+\author{Breno Leite\\ Guilherme Leite\\
+Instituto de Computa\cc\~ao --- UNICAMP\\
+Cidade Universit\'aria, Campinas/SP\\
+{\tt\small brenolleite@gmail.com\\ \tt\small guilherme.vieira.leite@gmail.com}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+% \and
+% Guilherme Leite\\
+% Instituto de Computa\cc\~ao --- UNICAMP\\
+% Cidade Universit\'aria, Campinas/SP\\
+% {\tt\small guilherme.vieira.leite@gmail.com}
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+  Abstract
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+
+  Ball tracking is a classical problem present in a diverse range of
+  applications. Nowadays it is used in sports events to automatically track the
+  focus of the action and game score, it is also widely used in robotics,
+  specially in robocup’s soccer competitions.
+
+%-------------------------------------------------------------------------
+
+\section{Related Work}
+
+  Related work
+
+%-------------------------------------------------------------------------
+\section{Methodology}
+
+  Initially the tracking was done alone by a color detector. Using the color
+  space HSV to select a color range that would create a mask, in this mask every
+  pixel in the range is set to white and everything else black, afterwards two
+  erosions and dilations are applied to reduce noise. The connected components
+  are extracted from the resulting mask, and the largest connected component is
+  selected as a region that contains a colored ball of such range. Every other
+  connected component region with size of at least 30\% of the largest one is
+  also selected as another object. Each of these selected regions has a center
+  of mass, the coordinate of this point is used as a rough estimate of
+  the ball's position and is taken as the tracking parameter, later on this
+  information will be called `tracking position'.
+
+  The previous steps should insure the detection of a colored blue, but it can't
+  distinguish between a ball and a cube. The Hough Circle Transform is used in
+  the mask obtained previously, and it tries to fit circles in the mask, using
+  the edges detected by its internal canny filter. To ensure the best fit the
+  parameter SUCH, WHAT SUCH DOES, is started with a value high enough to not
+  find a single circle in the mask, from this high value it is decreased by one
+  until it finds its first circle, the region below this circle is selected as a
+  ball region. This process is repeated until up to $K$ balls are fit. Using
+  Hough Circle Transform the tracking narrows down to track only the roughly
+  rounded shapes in the mask.
+
+  Applying the color detection every frame is redundant, add hough transform to
+  that and it becomes expensive and redundant. Hough is applyed every $N$ frame,
+  in each of these frames the position of the ball is corrected and from then it
+  is estimated by the difference of its velocity and direction between two
+  frames. These steps are faster, enabling the overall solution to perform in
+  real time.
+
+  LK motion flow is enough to estimate the ball position, but it always depends
+  on the last frame. Add a scenario in which the ball is occluded for more than
+  a couple frame and LK motion will completely lose its estimative. Kalman
+  filter is used to keep up with those scenarios.
+
+%-------------------------------------------------------------------------
+\section{Experiments}
+
+  The experiments were designed to highlight the effect of each new feature that
+  was incrementally added.
+
+  Start
+  We approached the scenarios listed above in a incremental
+complexity manner.
+Single colored ball detection:
+Different colored balls detection:
+Same colored balls detection:
+
+Object detection without Hough Transform:
+Object detection with Hough Transform:
+Lucas Kanade Motion Flow:
+Limitations of the Motion Flow and Hough Transform:
+Kalman Filter Occlusion:
+Real world application:
+
+%-------------------------------------------------------------------------
+\section{Results}
+
+  Results
+
+  HOUGH too slow, too much per frame
+  Kalman filter can't keep up if the trajectory changes mid occlusion
+
+%-------------------------------------------------------------------------
+\section{Conclusion}
+
+  Even though the classic methods were able to track and overcome some of the
+  challenges presented in this report they could't keep their precision in a real world
+  scenario. Some other approaches to detect and track are needed for scenarios
+  like a volleyball match, where the ball is white and the people watching the
+  game are often caught in the camera along side with the game. Other works used deep
+  learning to train a network into detecting the ball, some used a physics model
+  to calculate the parabolic trajectory of the ball and some used completely
+  different clues, like the fact that a baskball player moves differently from
+  the others when he/she pocess the ball.
+
+  To go through the classic methods many of the course's topics were covered and
+  applyed, clearing our sights towards their weakness, strenght and how they are
+  applied. It is instigating to think the power that a neural network would have
+  in such context, and realize from other works the vast number of ways to
+  tackle a single problem.
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{egbib}
+}
+
+\end{document}
