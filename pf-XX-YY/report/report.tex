@@ -106,30 +106,200 @@ Cidade Universit\'aria, Campinas/SP\\
 %-------------------------------------------------------------------------
 \section{Experiments}
 
-  The experiments were designed to highlight the effect of each new feature that
-  was incrementally added.
+  The experiments were designed to stress the effect of each new feature that
+  was incrementally added. A controlled environment was set to perform these
+  experiments, including a blank background, artificial white lighting, fixed
+  camera and three balls of the same size and material, two yellow and a blue
+  one.
 
-  Start
-  We approached the scenarios listed above in a incremental
-complexity manner.
-Single colored ball detection:
-Different colored balls detection:
-Same colored balls detection:
+  Single color detection
 
-Object detection without Hough Transform:
-Object detection with Hough Transform:
-Lucas Kanade Motion Flow:
-Limitations of the Motion Flow and Hough Transform:
-Kalman Filter Occlusion:
-Real world application:
+  The goal was to precisely track a single ball throughout the camera's view.
+
+  Two different color tracking
+
+  The goal was to track each colored ball throughout the camera's view, not ever
+  mistaking one with another.
+
+  Two same color tracking
+
+  The goal was to track each ball throughout the camera's view, not ever
+  mistanking one with another, now differentiating between two balls of the same
+  color.
+
+  Ball tracking alongside with other shapes
+
+  The goal was to track a ball in a setup with many objects with different
+  shapes, but same color as the ball.
+
+  Motion flow tracking compared with color tracking
+
+  The goal was to compare both solutions, Lucas Kanade motion flow tracking and
+  every frame color detection.
+
+  Occlusion tracking
+
+  The goal was to compare the LK motion flow tracking and kalman filter
+  tracking, both applied towards a occlusion scenario.
+
+  Real world tracking
+
+  The goal was to hard test all the features implemented in a real world
+  scenario to avaliate their precision.
 
 %-------------------------------------------------------------------------
 \section{Results}
 
-  Results
+  \textbf{Single color detection:}
+  \bigbreak
 
-  HOUGH too slow, too much per frame
-  Kalman filter can't keep up if the trajectory changes mid occlusion
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/single_color}}
+    \caption{Detection of a colored ball.}
+    \label{fig:single_color}
+  \end{figure}
+
+  The color detection applied to every frame was able to track the ball
+  throughout the camera's view. This solution showed itself insuficient when
+  sme objects were introduced, with different shapes other than of a sphere but
+  same color as the ball.
+
+  \bigbreak
+  \textbf{Two different color tracking:}
+  \bigbreak
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/diff_color}}
+    \caption{Detection of two balls with different colors.}
+    \label{fig:diff_color}
+  \end{figure}
+
+  The fine tunning of the colors enabled the solution to isolate one ball from
+  the other, tracking them throughout the camera's view. This limits the
+  solution to be tunned at every application, indoor  and outdoor pocess
+  distinct calibrations.
+
+  \bigbreak
+  \textbf{Two same color tracking:}
+  \bigbreak
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/same_color}}
+    \caption{Detection of two balls with the same color.}
+    \label{fig:same_color}
+  \end{figure}
+
+  The size of the connected components regions found in the mask were used the
+  discriminate between the balls, the ratio between the first and second was
+  used and enabled the tracking to work, the solution is limited when the object
+  of interest moves away from the camera and becomes too small to pass the
+  threshold.
+
+  \bigbreak
+  \textbf{Ball tracking alongside with other shapes:}
+  \bigbreak
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/not_hough}}
+    \caption{Detection before the Hough Circle Transfom.}
+    \label{fig:not_hough}
+  \end{figure}
+
+  As seen in Figure \ref{fig:not_hough} the solution wasn't able to
+  differentiate the ball from the pen top.
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/yes_hough}}
+    \caption{Detection after the Hough Circle Transfom.}
+    \label{fig:yes_hough}
+  \end{figure}
+
+  In Figure \ref{fig:yes_hough} using the Hough Circle Transform the solution
+  was able to ignore the pen top and track only the ball shaped object. This
+  solution is still limited by the time it took to adjust the parameters into
+  differentiate a pen top and a ball.
+
+  \bigbreak
+  \textbf{Motion flow tracking compared with color tracking:}
+  \bigbreak
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/motion_5}}
+    \caption{Lucas Kanade motion flow applied every 30 frames.}
+    \label{fig:motion_30}
+  \end{figure}
+
+  Using the Lucas Kanade motion flow the solution would only apply the color
+  detection every $N$ frames, this gap between detection speed up the tracking
+  and enabled it to perform in real time (greater than 20 fps). The precision of
+  the tracking depended on the gap size, and this experiment showed that a gap
+  of 30 frames was too large.
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/motion_5}}
+    \caption{Lucas Kanade motion flow applied every 5 frames.}
+    \label{fig:motion_5}
+  \end{figure}
+
+  Using a 5 frames gap the precision of the tracking was close to the color
+  tracking and the solution was still fast enough to operate in real time.
+  Altough this solution couldn't keep tracking of the ball when it was occluded.
+
+  \bigbreak
+  \textbf{Occlusion tracking:}
+  \bigbreak
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/occlusion}}
+    \caption{Kalman filter applied to overcome occlusion.}
+    \label{fig:occlusion}
+  \end{figure}
+
+  The solution was able to overcome occlusion when the kalman filter was used in
+  such scenarios, since it was able to estimate the ball's trajectory. The
+  filter worked best with low speeds and couldn't estimate a position if the
+  ball changed directions whilst occluded.
+
+  \bigbreak
+  \textbf{Real world tracking:}
+  \bigbreak
+
+  \begin{figure}[!h]
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{\includegraphics[scale=0.15]{images/robocup_1}}
+    \caption{All features applied in a Robocup soccer match.}
+    \label{fig:robocup_1}
+  \end{figure}
+
+  When applied to a real world scenario the solution can keep tracking up to a
+  point, it fails whenever the ball changes direction while occluded, or when
+  the ball moves too fast.
 
 %-------------------------------------------------------------------------
 \section{Conclusion}
