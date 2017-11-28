@@ -107,12 +107,15 @@ Cidade Universit\'aria, Campinas/SP\\
   distinguish between a ball and a cube. The Hough Circle Transform is used in
   the mask obtained previously, and it tries to fit circles in the mask, using
   the edges detected by its internal canny filter. To ensure the best fit the
-  parameter SUCH, WHAT SUCH DOES, is started with a value high enough to not
-  find a single circle in the mask, from this high value it is decreased by one
-  until it finds its first circle, the region below this circle is selected as a
-  ball region. This process is repeated until up to $K$ balls are fit. Using
-  Hough Circle Transform the tracking narrows down to track only the roughly
-  rounded shapes in the mask.
+  parameter $param2$ also called accumulator threshold, since hough circle
+  transform uses a voting system to better estimate the center of the circle it
+  has found, this accumulator influences on how loose the fitting is, lowest
+  values being responsible for false circles detection, so the threshold is
+  initiated with a value high enough to not find a single circle in the mask,
+  from this high value it is decreased by one until it finds its first circle,
+  the region below this circle is selected as a ball region. This process is
+  repeated until up to $K$ balls are fit. Using Hough Circle Transform the
+  tracking narrows down to track only the roughly rounded shapes in the mask.
 
   Applying the color detection every frame is redundant, add hough transform to
   that and it becomes expensive and redundant. Hough is applied every $N$ frame,
@@ -196,6 +199,11 @@ Cidade Universit\'aria, Campinas/SP\\
   of interest moves away from the camera and becomes too small to pass the
   threshold.
 
+  At this point the solution is able to detect and track the balls, it lacks the
+  ability to differentiate between $yellow\_ball\_1$ and $yellow\_ball\_2$, it
+  also mistakes other objects for balls and is quite expensive by detecting the
+  balls every frame.
+
   \bigbreak{}
   \textbf{Ball tracking alongside with other shapes:}
   \bigbreak{}
@@ -212,7 +220,10 @@ Cidade Universit\'aria, Campinas/SP\\
   \end{figure}
 
   As seen in Figure~\ref{fig:not_hough} the solution wasn't able to
-  differentiate the ball from the pen top.
+  differentiate the ball from the pen top. It happens because the shape of the
+  object has no weight in the detection process, so every object big enough and
+  in the color range of the chosen color will be detected as a ball. To solve
+  this we used the Hough Circle Transform.
 
   \begin{figure}[!h]
     \centering
@@ -226,6 +237,9 @@ Cidade Universit\'aria, Campinas/SP\\
   was able to ignore the pen top and track only the ball shaped object. This
   solution is still limited by the time it took to adjust the parameters into
   differentiate a pen top and a ball.
+
+  At this point the detection process is producing unambiguous results, but
+  since it happens at every frame it became too expensive to run in real time.
 
   \bigbreak{}
   \textbf{Motion flow tracking compared with color tracking:}
@@ -243,10 +257,11 @@ Cidade Universit\'aria, Campinas/SP\\
   \end{figure}
 
   Using the Lucas Kanade motion flow the solution would only apply the color
-  detection every $N$ frames, this gap between detection speed up the tracking
-  and enabled it to perform in real time (greater than 20 fps). The precision of
-  the tracking depended on the gap size, and this experiment showed that a gap
-  of 30 frames was too large.
+  detection every $N$ frames and estimate the ball position in between
+  detection, this gap eliminated the need to detect it every frame enabling it
+  to perform in real time. The trade off is that the precision of the tracking
+  can diminish substantially depending on the gap size, and this experiment
+  showed that a gap of 30 frames was too large.
 
   \begin{figure}[!h]
     \centering
@@ -265,7 +280,7 @@ Cidade Universit\'aria, Campinas/SP\\
   \bigbreak{}
 
   The goal was to compare the LK motion flow tracking and kalman filter
-  tracking, both applied towards a occlusion scenario.
+  tracking, both applied towards an occlusion scenario.
 
   \begin{figure}[!h]
     \centering
@@ -277,8 +292,8 @@ Cidade Universit\'aria, Campinas/SP\\
 
   The solution was able to overcome occlusion when the kalman filter was used in
   such scenarios, since it was able to estimate the ball's trajectory. The
-  filter worked best with low speeds and couldn't estimate a position if the
-  ball changed directions whilst occluded.
+  filter worked best with balls in low speed and couldn't estimate a position
+  if the ball changed directions whilst occluded.
 
   \bigbreak{}
   \textbf{Real world tracking:}
@@ -296,8 +311,8 @@ Cidade Universit\'aria, Campinas/SP\\
   \end{figure}
 
   When applied to a real world scenario the solution can keep tracking up to a
-  point, it fails whenever the ball changes direction while occluded, or when
-  the ball moves too fast.
+  point, it fails whenever the ball drastically changes direction, specially
+  occluded, or when it moves too fast.
 
 %-------------------------------------------------------------------------
   \section{Conclusion}\label{sec:conclusion}
