@@ -1,3 +1,9 @@
-\begin{thebibliography}{}\itemsep=-1pt
+\begin{thebibliography}{1}\itemsep=-1pt
+
+\bibitem{satoh2004color}
+Y.~Satoh, T.~Okatani, and K.~Deguchi.
+\newblock A color-based tracking by kalman particle filter.
+\newblock In {\em Pattern Recognition, 2004. ICPR 2004. Proceedings of the 17th
+  International Conference on}, volume~3, pages 502--505. IEEE, 2004.
 
 \end{thebibliography}
