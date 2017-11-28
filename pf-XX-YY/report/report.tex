@@ -57,7 +57,7 @@ Cidade Universit\'aria, Campinas/SP\\
   Ball tracking is a classical problem present in a diverse range of
   applications. Nowadays it is used in sports events to automatically track the
   focus of the action and game score, it is also widely used in robotics,
-  specially in robocup’s soccer competitions.
+  specially in Robocup’s soccer competitions.
 
 %-------------------------------------------------------------------------
 
@@ -71,7 +71,7 @@ Cidade Universit\'aria, Campinas/SP\\
   Initially the tracking was done alone by a color detector. Using the color
   space HSV to select a color range that would create a mask, in this mask every
   pixel in the range is set to white and everything else black, afterwards two
-  erosions and dilations are applied to reduce noise. The connected components
+  erosion and dilation are applied to reduce noise. The connected components
   are extracted from the resulting mask, and the largest connected component is
   selected as a region that contains a colored ball of such range. Every other
   connected component region with size of at least 30\% of the largest one is
@@ -92,7 +92,7 @@ Cidade Universit\'aria, Campinas/SP\\
   rounded shapes in the mask.
 
   Applying the color detection every frame is redundant, add hough transform to
-  that and it becomes expensive and redundant. Hough is applyed every $N$ frame,
+  that and it becomes expensive and redundant. Hough is applied every $N$ frame,
   in each of these frames the position of the ball is corrected and from then it
   is estimated by the difference of its velocity and direction between two
   frames. These steps are faster, enabling the overall solution to perform in
@@ -104,7 +104,7 @@ Cidade Universit\'aria, Campinas/SP\\
   filter is used to keep up with those scenarios.
 
 %-------------------------------------------------------------------------
-\section{Experiments}
+\section{Results}
 
   The experiments were designed to stress the effect of each new feature that
   was incrementally added. A controlled environment was set to perform these
@@ -112,90 +112,59 @@ Cidade Universit\'aria, Campinas/SP\\
   camera and three balls of the same size and material, two yellow and a blue
   one.
 
-  Single color detection
+  \bigbreak{}
+  \textbf{Single color detection:}
+  \bigbreak{}
 
   The goal was to precisely track a single ball throughout the camera's view.
-
-  Two different color tracking
-
-  The goal was to track each colored ball throughout the camera's view, not ever
-  mistaking one with another.
-
-  Two same color tracking
-
-  The goal was to track each ball throughout the camera's view, not ever
-  mistanking one with another, now differentiating between two balls of the same
-  color.
-
-  Ball tracking alongside with other shapes
-
-  The goal was to track a ball in a setup with many objects with different
-  shapes, but same color as the ball.
-
-  Motion flow tracking compared with color tracking
-
-  The goal was to compare both solutions, Lucas Kanade motion flow tracking and
-  every frame color detection.
-
-  Occlusion tracking
-
-  The goal was to compare the LK motion flow tracking and kalman filter
-  tracking, both applied towards a occlusion scenario.
-
-  Real world tracking
-
-  The goal was to hard test all the features implemented in a real world
-  scenario to avaliate their precision.
-
-%-------------------------------------------------------------------------
-\section{Results}
-
-  \textbf{Single color detection:}
-  \bigbreak
 
   \begin{figure}[!h]
     \centering
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/single_color}}
-    \caption{Detection of a colored ball.}
-    \label{fig:single_color}
+    \caption{Detection of a colored ball.}\label{fig:single_color}
   \end{figure}
 
   The color detection applied to every frame was able to track the ball
-  throughout the camera's view. This solution showed itself insuficient when
-  sme objects were introduced, with different shapes other than of a sphere but
+  throughout the camera's view. This solution showed itself insufficient when
+  some objects were introduced, with different shapes other than of a sphere but
   same color as the ball.
 
-  \bigbreak
+  \bigbreak{}
   \textbf{Two different color tracking:}
-  \bigbreak
+  \bigbreak{}
+
+  The goal was to track each colored ball throughout the camera's view, not ever
+  mistaking one with another.
 
   \begin{figure}[!h]
     \centering
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/diff_color}}
-    \caption{Detection of two balls with different colors.}
-    \label{fig:diff_color}
+    \caption{Detection of two balls with different colors.}\label{fig:diff_color}
   \end{figure}
 
-  The fine tunning of the colors enabled the solution to isolate one ball from
+  The fine tuning of the colors enabled the solution to isolate one ball from
   the other, tracking them throughout the camera's view. This limits the
-  solution to be tunned at every application, indoor  and outdoor pocess
+  solution to be tuned at every application, indoor  and outdoor needs
   distinct calibrations.
 
-  \bigbreak
+  \bigbreak{}
   \textbf{Two same color tracking:}
-  \bigbreak
+  \bigbreak{}
+
+  The goal was to track each ball throughout the camera's view, not ever
+  mistaking one with another, now differentiating between two balls of the same
+  color.
 
   \begin{figure}[!h]
     \centering
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/same_color}}
-    \caption{Detection of two balls with the same color.}
-    \label{fig:same_color}
+    \caption{Detection of two balls with the same color.}\label{fig:same_color}
   \end{figure}
 
   The size of the connected components regions found in the mask were used the
@@ -204,20 +173,22 @@ Cidade Universit\'aria, Campinas/SP\\
   of interest moves away from the camera and becomes too small to pass the
   threshold.
 
-  \bigbreak
+  \bigbreak{}
   \textbf{Ball tracking alongside with other shapes:}
-  \bigbreak
+  \bigbreak{}
+
+  The goal was to track a ball in a setup with many objects with different
+  shapes, but same color as the ball.
 
   \begin{figure}[!h]
     \centering
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/not_hough}}
-    \caption{Detection before the Hough Circle Transfom.}
-    \label{fig:not_hough}
+    \caption{Detection before the Hough Circle Transform.}\label{fig:not_hough}
   \end{figure}
 
-  As seen in Figure \ref{fig:not_hough} the solution wasn't able to
+  As seen in Figure~\ref{fig:not_hough} the solution wasn't able to
   differentiate the ball from the pen top.
 
   \begin{figure}[!h]
@@ -225,26 +196,27 @@ Cidade Universit\'aria, Campinas/SP\\
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/yes_hough}}
-    \caption{Detection after the Hough Circle Transfom.}
-    \label{fig:yes_hough}
+    \caption{Detection after the Hough Circle Transform.}\label{fig:yes_hough}
   \end{figure}
 
-  In Figure \ref{fig:yes_hough} using the Hough Circle Transform the solution
+  In Figure~\ref{fig:yes_hough} using the Hough Circle Transform the solution
   was able to ignore the pen top and track only the ball shaped object. This
   solution is still limited by the time it took to adjust the parameters into
   differentiate a pen top and a ball.
 
-  \bigbreak
+  \bigbreak{}
   \textbf{Motion flow tracking compared with color tracking:}
-  \bigbreak
+  \bigbreak{}
+
+  The goal was to compare both solutions, Lucas Kanade motion flow tracking and
+  every frame color detection.
 
   \begin{figure}[!h]
     \centering
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/motion_5}}
-    \caption{Lucas Kanade motion flow applied every 30 frames.}
-    \label{fig:motion_30}
+    \caption{Lucas Kanade motion flow applied every 30 frames.}\label{fig:motion_30}
   \end{figure}
 
   Using the Lucas Kanade motion flow the solution would only apply the color
@@ -258,25 +230,26 @@ Cidade Universit\'aria, Campinas/SP\\
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/motion_5}}
-    \caption{Lucas Kanade motion flow applied every 5 frames.}
-    \label{fig:motion_5}
+    \caption{Lucas Kanade motion flow applied every 5 frames.}\label{fig:motion_5}
   \end{figure}
 
   Using a 5 frames gap the precision of the tracking was close to the color
   tracking and the solution was still fast enough to operate in real time.
-  Altough this solution couldn't keep tracking of the ball when it was occluded.
+  Although this solution couldn't keep tracking of the ball when it was occluded.
 
-  \bigbreak
+  \bigbreak{}
   \textbf{Occlusion tracking:}
-  \bigbreak
+  \bigbreak{}
+
+  The goal was to compare the LK motion flow tracking and kalman filter
+  tracking, both applied towards a occlusion scenario.
 
   \begin{figure}[!h]
     \centering
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/occlusion}}
-    \caption{Kalman filter applied to overcome occlusion.}
-    \label{fig:occlusion}
+    \caption{Kalman filter applied to overcome occlusion.}\label{fig:occlusion}
   \end{figure}
 
   The solution was able to overcome occlusion when the kalman filter was used in
@@ -284,17 +257,19 @@ Cidade Universit\'aria, Campinas/SP\\
   filter worked best with low speeds and couldn't estimate a position if the
   ball changed directions whilst occluded.
 
-  \bigbreak
+  \bigbreak{}
   \textbf{Real world tracking:}
-  \bigbreak
+  \bigbreak{}
+
+  The goal was to hard test all the features implemented in a real world
+  scenario to evaluate their precision.
 
   \begin{figure}[!h]
     \centering
     \setlength{\fboxsep}{1pt}
     \setlength{\fboxrule}{1pt}
     \fbox{\includegraphics[scale=0.15]{images/robocup_1}}
-    \caption{All features applied in a Robocup soccer match.}
-    \label{fig:robocup_1}
+    \caption{All features applied in a Robocup soccer match.}\label{fig:robocup_1}
   \end{figure}
 
   When applied to a real world scenario the solution can keep tracking up to a
@@ -305,17 +280,17 @@ Cidade Universit\'aria, Campinas/SP\\
 \section{Conclusion}
 
   Even though the classic methods were able to track and overcome some of the
-  challenges presented in this report they could't keep their precision in a real world
+  challenges presented in this report they couldn't keep their precision in a real world
   scenario. Some other approaches to detect and track are needed for scenarios
   like a volleyball match, where the ball is white and the people watching the
   game are often caught in the camera along side with the game. Other works used deep
   learning to train a network into detecting the ball, some used a physics model
   to calculate the parabolic trajectory of the ball and some used completely
-  different clues, like the fact that a baskball player moves differently from
-  the others when he/she pocess the ball.
+  different clues, like the fact that a basketball player moves differently from
+  the others when he/she has the ball in hands.
 
   To go through the classic methods many of the course's topics were covered and
-  applyed, clearing our sights towards their weakness, strenght and how they are
+  applied, clearing our sights towards their weakness, strength and how they are
   applied. It is instigating to think the power that a neural network would have
   in such context, and realize from other works the vast number of ways to
   tackle a single problem.
