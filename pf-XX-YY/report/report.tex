@@ -28,19 +28,7 @@
 \title{Classic Methods on Color Based Ball Tracking}
 
 \author{Breno Leite\\ Guilherme Leite\\
-Instituto de Computa\cc\~ao --- UNICAMP\\
-Cidade Universit\'aria, Campinas/SP\\
-{\tt\small brenolleite@gmail.com\\ \tt\small guilherme.vieira.leite@gmail.com}
-% For a paper whose authors are all at the same institution,
-% omit the following lines up until the closing ``}''.
-% Additional authors and addresses can be added with ``\and'',
-% just like the second author.
-% To save space, use either the email address or home page, not both
-% \and
-% Guilherme Leite\\
-% Instituto de Computa\cc\~ao --- UNICAMP\\
-% Cidade Universit\'aria, Campinas/SP\\
-% {\tt\small guilherme.vieira.leite@gmail.com}
+Instituto de Computa\c{c}\~ao --- UNICAMP\\
 }
 
 \maketitle
@@ -63,9 +51,15 @@ Cidade Universit\'aria, Campinas/SP\\
 
 \section{Related Work}
 
-  A wide range of techniques were encountered while researching this subject,
-  here follows some of them:
-
+  Ball Tracking has been studied for a long time, in a diverse range of applications.  Some projects  are interested in soccer's ball tracking \cite{seo1997ball,  tong2004effective, choi2004probabilistic}, others are interested in  volleyball \cite{chen2007physics} and basketball \cite{ maksai2016players}.   Normally, These works use a wide range of techniques to overcome the problems,  in which motion estimation, Hough circle transform and Kalman filter are included. 
+  
+  In this project the focus is on colored balls, which was very popular in the robot-cup competition \cite{kitano1997robocup, simon2000robust, kitano1998robocup}.  In order to overcome the problem some usual techniques were studied. Lucas and Kanade motion flow \cite{tomasi1992shape, tomasi1991detection} was studied in order to reduce total cost of the algorithm.  It predicts the motion flow, which helps the algorithm of detection to be faster and reduce computational cost.
+  
+  Another technique used in the project is the Hough circle transform, which helps the algorithm to find circles in the data.  
+  
+  
+  	
+  
   \bigbreak{}
   Using a kalman particle filter modified for color based tracking
   Satoh et at.~\cite{satoh2004color} used less particles then previous solutions
@@ -286,21 +280,12 @@ Cidade Universit\'aria, Campinas/SP\\
 %-------------------------------------------------------------------------
 \section{Conclusion}
 
-  Even though the classic methods were able to track and overcome some of the
-  challenges presented in this report they couldn't keep their precision in a real world
-  scenario. Some other approaches to detect and track are needed for scenarios
-  like a volleyball match, where the ball is white and the people watching the
-  game are often caught in the camera along side with the game. Other works used deep
-  learning to train a network into detecting the ball, some used a physics model
-  to calculate the parabolic trajectory of the ball and some used completely
-  different clues, like the fact that a basketball player moves differently from
-  the others when he/she has the ball in hands.
-
-  To go through the classic methods many of the course's topics were covered and
-  applied, clearing our sights towards their weakness, strength and how they are
-  applied. It is instigating to think the power that a neural network would have
-  in such context, and realize from other works the vast number of ways to
-  tackle a single problem.
+ As seen the classic methods were able to track and overcome some of the
+  challenges presented in this project. It could even work good in a real example like the Robocup soccer match, however it is noticeable that the algorithm's precision is worse than in a totally controlled environment. 
+  
+  In harder scenarios, as a soccer, volleyball, and basketball games the algorithm had  bad results, in those scenarios physics models are used to describe the parabolic trajectory of the ball, or even  more complex models, which uses different clues, like the fact that a basketball player handling the ball o moves differently from the others.
+  
+  In this project  many of the course's topics were covered and applied, clearing our sights towards their weakness and strength in each scenario. As future work, the color based detection could be replaced with a deep neural network in order to locate the initial position of the ball. This approach could improve the overall results, and enable the algorithm to deal with harder environments.
 
 {\small
 \bibliographystyle{ieee}

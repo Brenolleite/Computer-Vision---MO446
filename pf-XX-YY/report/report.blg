@@ -1,46 +1,48 @@
-This is BibTeX, Version 0.99d (TeX Live 2017)
+This is BibTeX, Version 0.99d (TeX Live 2017/Arch Linux)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: report.aux
 The style file: ieee.bst
 Database file #1: egbib.bib
-You've used 1 entry,
+Warning--empty journal in tomasi1991detection
+You've used 11 entries,
             2120 wiz_defined-function locations,
-            505 strings with 3945 characters,
-and the built_in function-call counts, 530 in all, are:
-= -- 55
-> -- 18
-< -- 2
-+ -- 8
-- -- 6
-* -- 36
-:= -- 80
-add.period$ -- 4
-call.type$ -- 1
-change.case$ -- 6
+            562 strings with 5868 characters,
+and the built_in function-call counts, 5052 in all, are:
+= -- 526
+> -- 213
+< -- 12
++ -- 85
+- -- 72
+* -- 331
+:= -- 758
+add.period$ -- 40
+call.type$ -- 11
+change.case$ -- 69
 chr.to.int$ -- 0
-cite$ -- 1
-duplicate$ -- 23
-empty$ -- 42
-format.name$ -- 6
-if$ -- 119
+cite$ -- 12
+duplicate$ -- 216
+empty$ -- 395
+format.name$ -- 72
+if$ -- 1132
 int.to.chr$ -- 0
-int.to.str$ -- 1
-missing$ -- 1
-newline$ -- 8
-num.names$ -- 2
-pop$ -- 8
+int.to.str$ -- 11
+missing$ -- 11
+newline$ -- 58
+num.names$ -- 22
+pop$ -- 90
 preamble$ -- 1
-purify$ -- 5
+purify$ -- 58
 quote$ -- 0
-skip$ -- 19
+skip$ -- 169
 stack$ -- 0
-substring$ -- 38
-swap$ -- 12
-text.length$ -- 2
+substring$ -- 345
+swap$ -- 91
+text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 4
-warning$ -- 0
-while$ -- 5
-width$ -- 2
-write$ -- 15
+type$ -- 44
+warning$ -- 1
+while$ -- 51
+width$ -- 13
+write$ -- 131
+(There was 1 warning)

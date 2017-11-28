@@ -1,9 +1,69 @@
-\begin{thebibliography}{1}\itemsep=-1pt
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{chen2007physics}
+H.-T. Chen, H.-S. Chen, and S.-Y. Lee.
+\newblock Physics-based ball tracking in volleyball videos with its
+  applications to set type recognition and action detection.
+\newblock In {\em Acoustics, Speech and Signal Processing, 2007. ICASSP 2007.
+  IEEE International Conference on}, volume~1, pages I--1097. IEEE, 2007.
+
+\bibitem{choi2004probabilistic}
+K.~Choi and Y.~Seo.
+\newblock Probabilistic tracking of the soccer ball.
+\newblock {\em Statistical Methods in Video Processing}, pages 99--123, 2004.
+
+\bibitem{kitano1997robocup}
+H.~Kitano, M.~Asada, Y.~Kuniyoshi, I.~Noda, and E.~Osawa.
+\newblock Robocup: The robot world cup initiative.
+\newblock In {\em Proceedings of the first international conference on
+  Autonomous agents}, pages 340--347. ACM, 1997.
+
+\bibitem{kitano1998robocup}
+H.~Kitano, M.~Asada, Y.~Kuniyoshi, I.~Noda, E.~Osawai, and H.~Matsubara.
+\newblock Robocup: A challenge problem for ai and robotics.
+\newblock In {\em RoboCup-97: Robot Soccer World Cup I}, pages 1--19. Springer,
+  1998.
+
+\bibitem{maksai2016players}
+A.~Maksai, X.~Wang, and P.~Fua.
+\newblock What players do with the ball: A physically constrained interaction
+  modeling.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 972--981, 2016.
 
 \bibitem{satoh2004color}
 Y.~Satoh, T.~Okatani, and K.~Deguchi.
 \newblock A color-based tracking by kalman particle filter.
 \newblock In {\em Pattern Recognition, 2004. ICPR 2004. Proceedings of the 17th
   International Conference on}, volume~3, pages 502--505. IEEE, 2004.
+
+\bibitem{seo1997ball}
+Y.~Seo, S.~Choi, H.~Kim, and K.-S. Hong.
+\newblock Where are the ball and players? soccer game analysis with color-based
+  tracking and image mosaick.
+\newblock In {\em International Conference on Image Analysis and Processing},
+  pages 196--203. Springer, 1997.
+
+\bibitem{simon2000robust}
+M.~Simon, S.~Behnke, and R.~Rojas.
+\newblock Robust real time color tracking.
+\newblock In {\em Robot Soccer World Cup}, pages 239--248. Springer, 2000.
+
+\bibitem{tomasi1991detection}
+C.~Tomasi and T.~Kanade.
+\newblock Detection and tracking of point features.
+\newblock 1991.
+
+\bibitem{tomasi1992shape}
+C.~Tomasi and T.~Kanade.
+\newblock Shape and motion from image streams under orthography: a
+  factorization method.
+\newblock {\em International Journal of Computer Vision}, 9(2):137--154, 1992.
+
+\bibitem{tong2004effective}
+X.-F. Tong, H.-Q. Lu, and Q.-S. Liu.
+\newblock An effective and fast soccer ball detection and tracking method.
+\newblock In {\em Pattern Recognition, 2004. ICPR 2004. Proceedings of the 17th
+  International Conference on}, volume~4, pages 795--798. IEEE, 2004.
 
 \end{thebibliography}
