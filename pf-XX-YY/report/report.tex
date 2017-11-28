@@ -52,16 +52,32 @@ Cidade Universit\'aria, Campinas/SP\\
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
-\section{Introduction}
+\section{Introduction}\label{sec:intro}
 
   Ball tracking is a classical problem present in a diverse range of
-  applications. Nowadays it is used in sports events to automatically track the
-  focus of the action and game score, it is also widely used in robotics,
-  specially in Robocup’s soccer competitions.
+  applications. Since the early days of robotics where it was used to track
+  balls in a controlled environment up to today's sports coverage with cluttered
+  background, occlusion, many players in field and camera's shot with spectators
+  in the background. To cope with such noisy situations ball tracking nowadays
+  has to make use of a range of techniques to operate, like training a neural
+  network to learn and detect a ball at a given frame, use a physics model to
+  estimate the probable trajectory of the ball or use tiny details such as the
+  way a player moves when in possession of the ball.
+
+  In this work we focus on the classical methods that lead these researches up
+  to this point today, in Section~\ref{sec:work} we cover some the literature
+  around the problem, classical and modern approaches to solve the problem, in
+  Section~\ref{sec:method} we explain our step by step into constructing the
+  solution, in Section~\ref{sec:result} we cover the experiments performed,
+  explaining the weakness and strength of the solution for each experiment and
+  how they were solved in the next one, at last we show how the solution
+  performs in a real world environment, a Robocup's soccer match and in
+  Section~\ref{sec:conclusion} are related the importance of implementing this
+  work and how far this branch of computer vision has come.
 
 %-------------------------------------------------------------------------
 
-\section{Related Work}
+  \section{Related Work}\label{sec:work}
 
   A wide range of techniques were encountered while researching this subject,
   here follows some of them:
@@ -71,9 +87,9 @@ Cidade Universit\'aria, Campinas/SP\\
   Satoh et at.~\cite{satoh2004color} used less particles then previous solutions
   and was able to track a pedestrian with partial occlusion crossing a crowned
   intersection.
-  
+
 %-------------------------------------------------------------------------
-\section{Methodology}
+  \section{Methodology}\label{sec:method}
 
   Initially the tracking was done alone by a color detector. Using the color
   space HSV to select a color range that would create a mask, in this mask every
@@ -111,7 +127,7 @@ Cidade Universit\'aria, Campinas/SP\\
   filter is used to keep up with those scenarios.
 
 %-------------------------------------------------------------------------
-\section{Results}
+  \section{Results}\label{sec:result}
 
   The experiments were designed to stress the effect of each new feature that
   was incrementally added. A controlled environment was set to perform these
@@ -284,7 +300,7 @@ Cidade Universit\'aria, Campinas/SP\\
   the ball moves too fast.
 
 %-------------------------------------------------------------------------
-\section{Conclusion}
+  \section{Conclusion}\label{sec:conclusion}
 
   Even though the classic methods were able to track and overcome some of the
   challenges presented in this report they couldn't keep their precision in a real world
