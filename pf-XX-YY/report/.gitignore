@@ -1,2 +1,11 @@
 *.pdf
-
+.vscode/*
+*.#*
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.orig
+*.aux
+*.log
+*.bbl
+*.blg
