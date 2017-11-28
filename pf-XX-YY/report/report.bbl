@@ -12,6 +12,12 @@ K.~Choi and Y.~Seo.
 \newblock Probabilistic tracking of the soccer ball.
 \newblock {\em Statistical Methods in Video Processing}, pages 99--123, 2004.
 
+\bibitem{illingworth1987adaptive}
+J.~Illingworth and J.~Kittler.
+\newblock The adaptive hough transform.
+\newblock {\em IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  (5):690--698, 1987.
+
 \bibitem{kitano1997robocup}
 H.~Kitano, M.~Asada, Y.~Kuniyoshi, I.~Noda, and E.~Osawa.
 \newblock Robocup: The robot world cup initiative.
@@ -30,6 +36,12 @@ A.~Maksai, X.~Wang, and P.~Fua.
   modeling.
 \newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
   Pattern Recognition}, pages 972--981, 2016.
+
+\bibitem{ristic2004beyond}
+B.~Ristic, S.~Arulampalam, and N.~J. Gordon.
+\newblock {\em Beyond the Kalman filter: Particle filters for tracking
+  applications}.
+\newblock Artech house, 2004.
 
 \bibitem{satoh2004color}
 Y.~Satoh, T.~Okatani, and K.~Deguchi.

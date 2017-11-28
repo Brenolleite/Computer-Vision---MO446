@@ -51,58 +51,25 @@ Instituto de Computa\c{c}\~ao --- UNICAMP\\
 
 \section{Related Work}
 
-  Ball Tracking has been studied for a long time, in a diverse range of applications.  Some projects  are interested in soccer's ball tracking \cite{seo1997ball,  tong2004effective, choi2004probabilistic}, others are interested in  volleyball \cite{chen2007physics} and basketball \cite{ maksai2016players}.   Normally, These works use a wide range of techniques to overcome the problems,  in which motion estimation, Hough circle transform and Kalman filter are included. 
+  Ball Tracking has been studied for a long time, in a diverse range of applications.  Some projects  are interested in soccer's ball tracking~\cite{seo1997ball,  tong2004effective, choi2004probabilistic}, others are interested in  volleyball~\cite{chen2007physics} and basketball \cite{ maksai2016players}.   Normally, These works use a wide range of techniques to overcome the problems,  in which motion estimation, Hough circle transform and Kalman filter are included. 
   
-  In this project the focus is on colored balls, which was very popular in the robot-cup competition \cite{kitano1997robocup, simon2000robust, kitano1998robocup}.  In order to overcome the problem some usual techniques were studied. Lucas and Kanade motion flow \cite{tomasi1992shape, tomasi1991detection} was studied in order to reduce total cost of the algorithm.  It predicts the motion flow, which helps the algorithm of detection to be faster and reduce computational cost.
+  In this project the focus is on colored balls, which was very popular in the robot-cup competition~\cite{kitano1997robocup, simon2000robust, kitano1998robocup}.  In order to overcome the problem some usual techniques were studied. Lucas and Kanade motion flow~\cite{tomasi1992shape, tomasi1991detection} was studied in order to reduce total cost of the algorithm.  It predicts the motion flow, which helps the algorithm of detection to be faster and reduce computational cost.
   
-  Another technique used in the project is the Hough circle transform, which helps the algorithm to find circles in the data.  
-  
-  
-  	
-  
-  \bigbreak{}
-  Using a kalman particle filter modified for color based tracking
-  Satoh et at.~\cite{satoh2004color} used less particles then previous solutions
-  and was able to track a pedestrian with partial occlusion crossing a crowned
-  intersection.
+  Another technique used in the project is the Hough circle transform~\cite{illingworth1987adaptive}, which enable  the algorithm to find circles in the data turning it more robust to noise present in the scene. And lastly, Kalman particle filter was studied in order to overcome occlusion problems~\cite{ristic2004beyond}, a vast number of tracking problems use the power of Kalman filter to improve the tracking performance~\cite{satoh2004color}.
+
   
 %-------------------------------------------------------------------------
 \section{Methodology}
 
-  Initially the tracking was done alone by a color detector. Using the color
-  space HSV to select a color range that would create a mask, in this mask every
-  pixel in the range is set to white and everything else black, afterwards two
-  erosion and dilation are applied to reduce noise. The connected components
-  are extracted from the resulting mask, and the largest connected component is
-  selected as a region that contains a colored ball of such range. Every other
-  connected component region with size of at least 30\% of the largest one is
-  also selected as another object. Each of these selected regions has a center
-  of mass, the coordinate of this point is used as a rough estimate of
-  the ball's position and is taken as the tracking parameter, later on this
-  information will be called `tracking position'.
+Initially the tracking was done alone by a color detector., using the color space HSV to select a color range that would create a mask. In this mask every pixel in the range is set to a white color and everything else to black, afterwards two erosion and dilation are applied to reduce noise. In sequence, the connected components are extracted from the resulting mask in order to filter out small areas, the resulting components are possible balls found in the scene. Each of these selected regions has a center of mass, the coordinate of this point is the supposed ball's position in the scene, later on this information will be called ``tracking position''.
 
-  The previous steps should insure the detection of a colored blue, but it can't
-  distinguish between a ball and a cube. The Hough Circle Transform is used in
-  the mask obtained previously, and it tries to fit circles in the mask, using
-  the edges detected by its internal canny filter. To ensure the best fit the
-  parameter SUCH, WHAT SUCH DOES, is started with a value high enough to not
-  find a single circle in the mask, from this high value it is decreased by one
-  until it finds its first circle, the region below this circle is selected as a
-  ball region. This process is repeated until up to $K$ balls are fit. Using
-  Hough Circle Transform the tracking narrows down to track only the roughly
-  rounded shapes in the mask.
+After detecting these supposed areas (``balls'') a Hough Circle Transform  is used, and it tries to fit circles in these areas. The Hough Circle Transform depends of two parameters passed to the Canny Edge Detector, which is used inside the Hough algorithm.  One of this parameters is directly related to the number of edges found by the Canny algorithm, high number of edges means more circles found, and low number of edges indicates the opposite. 
 
-  Applying the color detection every frame is redundant, add hough transform to
-  that and it becomes expensive and redundant. Hough is applied every $N$ frame,
-  in each of these frames the position of the ball is corrected and from then it
-  is estimated by the difference of its velocity and direction between two
-  frames. These steps are faster, enabling the overall solution to perform in
-  real time.
+In the videos a high value ($param2 = 200$) was used to this parameter, and it was decreased while no circles were found. This approach ensures the algorithm to get best circle predictions, but it has a really slow performance. In order to make the system to work on real time, this parameter needs to be set as a small value ($param2 = 80$), which could decrease the precision of the detection. Using Hough Circle Transform the tracking narrows down to track only the roughly rounded shapes in the mask.
 
-  LK motion flow is enough to estimate the ball position, but it always depends
-  on the last frame. Add a scenario in which the ball is occluded for more than
-  a couple frame and LK motion will completely lose its estimative. Kalman
-  filter is used to keep up with those scenarios.
+Applying the color detection every frame is not efficient, even worse when using Hough transform to filter the results. In order to overcome this problem the LK motion flow was implemented, enabling the detection to be applied  in every $N$ frames, which is called re-sampling. There is a trade-off using the LK motion, as higher the re-sampling worse is the precision of the model, and better is the efficiency.
+  
+LK motion flow is enough to estimate the ball position, but it always depends on the last frame. In a scenario in which the ball is occluded for more than a couple frames  LK motion will completely lose its estimative. In order to overcome this problem, Kalman filter is used to keep predict the ball trajectory when it is occluded using previous estimates.
 
 %-------------------------------------------------------------------------
 \section{Results}

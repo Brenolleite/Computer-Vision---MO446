@@ -3,46 +3,47 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: report.aux
 The style file: ieee.bst
 Database file #1: egbib.bib
+Warning--there's a number but no volume in illingworth1987adaptive
 Warning--empty journal in tomasi1991detection
-You've used 11 entries,
+You've used 13 entries,
             2120 wiz_defined-function locations,
-            562 strings with 5868 characters,
-and the built_in function-call counts, 5052 in all, are:
-= -- 526
-> -- 213
+            573 strings with 6188 characters,
+and the built_in function-call counts, 5671 in all, are:
+= -- 585
+> -- 244
 < -- 12
-+ -- 85
-- -- 72
-* -- 331
-:= -- 758
-add.period$ -- 40
-call.type$ -- 11
-change.case$ -- 69
++ -- 98
+- -- 82
+* -- 375
+:= -- 863
+add.period$ -- 46
+call.type$ -- 13
+change.case$ -- 79
 chr.to.int$ -- 0
-cite$ -- 12
-duplicate$ -- 216
-empty$ -- 395
-format.name$ -- 72
-if$ -- 1132
+cite$ -- 15
+duplicate$ -- 239
+empty$ -- 444
+format.name$ -- 82
+if$ -- 1258
 int.to.chr$ -- 0
-int.to.str$ -- 11
-missing$ -- 11
-newline$ -- 58
-num.names$ -- 22
-pop$ -- 90
+int.to.str$ -- 13
+missing$ -- 14
+newline$ -- 68
+num.names$ -- 26
+pop$ -- 104
 preamble$ -- 1
-purify$ -- 58
+purify$ -- 67
 quote$ -- 0
-skip$ -- 169
+skip$ -- 181
 stack$ -- 0
-substring$ -- 345
-swap$ -- 91
+substring$ -- 381
+swap$ -- 93
 text.length$ -- 12
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 44
-warning$ -- 1
-while$ -- 51
-width$ -- 13
-write$ -- 131
-(There was 1 warning)
+type$ -- 50
+warning$ -- 2
+while$ -- 57
+width$ -- 15
+write$ -- 152
+(There were 2 warnings)
