@@ -34,11 +34,6 @@ Instituto de Computa\c{c}\~ao --- UNICAMP\\
 \maketitle
 %\thispagestyle{empty}
 
-%%%%%%%%% ABSTRACT
-\begin{abstract}
-  Abstract
-\end{abstract}
-
 %%%%%%%%% BODY TEXT
 \section{Introduction}\label{sec:intro}
 
@@ -109,7 +104,7 @@ when it is occluded using previous estimatives.
 %-------------------------------------------------------------------------
 \section{Results}\label{sec:result}
 
-The experiments were designed to stress the effect of each new feature that was incrementally added in the project. A controlled environment was set to perform the experiments, including a blank background, artificial white lighting, fixed camera and three balls of the same size and material, two yellow and one blue.
+The experiments were designed to stress the effect of each new feature that was incrementally added in the project. A controlled environment was set to perform the experiments, including a blank background, artificial white lighting, fixed camera and three balls of the same size and material, two yellow and one blue. All the images shown in this report was taken from the videos uploaded on this \href{https:\/\/www.youtube.com\/playlist?list=PLK4X-xqdmWaKhqpoLLpr7LF9g5MUMJaY\_}{Youtube Playlist}
 
 \subsection{Single color detection}
 
@@ -220,7 +215,7 @@ In order to check the results of the Kalman filter implemented, a scenario with 
 
 As seen, the solution was able to overcome occlusion, since it was able to estimate the ball's trajectory under occlusion. The filter worked best with balls in low speed and couldn't estimate a position if the ball changed directions whilst occluded, as was already expected.
 
-\subsection{Robotcub ball tracking}
+\subsection{Robocup ball tracking}
 
 In this experiment the algorithm was tested under a competition's environment, some adjustments were made in order to tune the color to the orange ball. The Figure~\ref{fig:robocup_1} shows a example of the algorithm working on this scenario.
 
@@ -241,6 +236,8 @@ As seen, the algorithm was able to detect and predict the ball's position, the m
 	\fbox{\includegraphics[scale=0.15]{images/robocup_2}}
 	\caption{All features applied in a Robocup soccer match.}\label{fig:robocup2}
 \end{figure}
+
+As seen, the Kalman filter predicts the wrong direction of the ball because it hit the wall and stooped drastically. The overall results for the proposed architecture were really good, although all the problems a good tracking was obtained in the Robocup scenarios, in broader scenarios the algorithm did not have good results, but it was already expected that the classical methods would not be enough to deal with those type of problems.
 
 %-------------------------------------------------------------------------
 \section{Conclusion}\label{sec:conclusion}
