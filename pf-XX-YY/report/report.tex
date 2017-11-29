@@ -90,16 +90,11 @@ LK motion flow is enough to estimate the ball position, but it always depends on
 %-------------------------------------------------------------------------
 \section{Results}\label{sec:result}
 
-The experiments were designed to stress the effect of each new feature that was incrementally added. A controlled environment was set to perform these
-experiments, including a blank background, artificial white lighting, fixed
-camera and three balls of the same size and material, two yellow and a blue
-one.
+The experiments were designed to stress the effect of each new feature that was incrementally added in the project. A controlled environment was set to perform the experiments, including a blank background, artificial white lighting, fixed camera and three balls of the same size and material, two yellow and one blue.
 
-\bigbreak{}
-\textbf{Single color detection:}
-\bigbreak{}
+\subsection{Single color detection}
 
-The goal was to precisely track a single ball throughout the camera's view.
+In this experiment the goal was to precisely track a single ball throughout the camera's view. The Figure \ref{fig:single_color} shows the result of the algorithm implemented.
 
 \begin{figure}[!h]
 \centering
@@ -109,17 +104,15 @@ The goal was to precisely track a single ball throughout the camera's view.
 \caption{Detection of a colored ball.}\label{fig:single_color}
 \end{figure}
 
-The color detection applied to every frame was able to track the ball
-throughout the camera's view. This solution showed itself insufficient when
-some objects were introduced, with different shapes other than of a sphere but
-same color as the ball.
+The color detection applied to every frame was able to track the ball throughout the camera's view. This solution showed itself insufficient when some objects were introduced, with different shapes other than a sphere but same color as the ball.
 
-\bigbreak{}
-\textbf{Two different color tracking:}
-\bigbreak{}
+\subsection{Two different color tracking}
 
-The goal was to track each colored ball throughout the camera's view, not ever
-mistaking one with another.
+In this experiment the algorithm has to detect two different balls in the camera's view at the same time, the objective is to show that the algorithm is able to recognize different balls in the same frame. 
+
+\subsubsection{Different colors}
+
+In this the object is to detect two different colored balls in the same frame. The Figure \ref{fig:diff_color} shows the result of the detection, in which each ball's  bounding box is shown in different colors.
 
 \begin{figure}[!h]
 \centering
@@ -129,18 +122,12 @@ mistaking one with another.
 \caption{Detection of two balls with different colors.}\label{fig:diff_color}
 \end{figure}
 
-The fine tuning of the colors enabled the solution to isolate one ball from
-the other, tracking them throughout the camera's view. This limits the
-solution to be tuned at every application, indoor  and outdoor needs
+The fine tuning of the colors enabled the solution to isolate one ball from the other, tracking them throughout the camera's view. This limits the solution to be tuned at every application, indoor  and outdoor needs
 distinct calibrations.
 
-\bigbreak{}
-\textbf{Two same color tracking:}
-\bigbreak{}
+\subsubsection{Two same color tracking}
 
-The goal was to track each ball throughout the camera's view, not ever
-mistaking one with another, now differentiating between two balls of the same
-color.
+In this experiment the objective stills detecting two balls, however they have the same color, which creates a harder problem as the algorithm is relying on colors to detect each one. The results are shown in Figure~\ref{fig:same_color}.
 
 \begin{figure}[!h]
 \centering
@@ -150,23 +137,11 @@ color.
 \caption{Detection of two balls with the same color.}\label{fig:same_color}
 \end{figure}
 
-The size of the connected components regions found in the mask were used the
-discriminate between the balls, the ratio between the first and second was
-used and enabled the tracking to work, the solution is limited when the object
-of interest moves away from the camera and becomes too small to pass the
-threshold.
+As seen both balls are detected using different bounding boxes colors, which indicates two different balls. As the algorithm relies on the connected components when both balls are to close it might identify both as just one ball, which is a problem that the proposed architecture could not overcome.
 
-At this point the solution is able to detect and track the balls, it lacks the
-ability to differentiate between $yellow\_ball\_1$ and $yellow\_ball\_2$, it
-also mistakes other objects for balls and is quite expensive by detecting the
-balls every frame.
+\subsection{Ball tracking alongside with other shapes}
 
-\bigbreak{}
-\textbf{Ball tracking alongside with other shapes:}
-\bigbreak{}
-
-The goal was to track a ball in a setup with many objects with different
-shapes, but same color as the ball.
+In this experiment a new problem with the color based method is introduced, Figure~\ref{fig:not_hough} shows a confusion made by the detection algorithm.
 
 \begin{figure}[!h]
 \centering
@@ -176,11 +151,7 @@ shapes, but same color as the ball.
 \caption{Detection before the Hough Circle Transform.}\label{fig:not_hough}
 \end{figure}
 
-As seen in Figure~\ref{fig:not_hough} the solution wasn't able to
-differentiate the ball from the pen top. It happens because the shape of the
-object has no weight in the detection process, so every object big enough and
-in the color range of the chosen color will be detected as a ball. To solve
-this we used the Hough Circle Transform.
+As seen, the solution was not able to differentiate the ball from the pen top. It happens because of the blue color in the pen top, which is considered a blue ball by the mask generated. In order to solve this problem the Hough Circle Transform was used, which filters out the non circle components found in the mask. The results after applying the Hough Transform is shown in Figure~\ref{fig:yes_hough}
 
 \begin{figure}[!h]
 \centering
@@ -190,54 +161,35 @@ this we used the Hough Circle Transform.
 \caption{Detection after the Hough Circle Transform.}\label{fig:yes_hough}
 \end{figure}
 
-In Figure~\ref{fig:yes_hough} using the Hough Circle Transform the solution
-was able to ignore the pen top and track only the ball shaped object. This
-solution is still limited by the time it took to adjust the parameters into
-differentiate a pen top and a ball.
+In this way,  using the Hough Circle Transform the solution was able to ignore the pen top and track only the ball shaped object. 
 
-At this point the detection process is producing unambiguous results, but
-since it happens at every frame it became too expensive to run in real time.
+\subsection{Motion flow tracking compared with color tracking}
 
-\bigbreak{}
-\textbf{Motion flow tracking compared with color tracking:}
-\bigbreak{}
+Detecting the ball and applying Hough Transform in every frame has a high computational cost, in order to improve the efficiency of the algorithm the Lucas Kanade motion flow was implemented. In this experiment a contrast between the precision and effectiveness is shown. The Figure~\ref{fig:motion_30} shows the motion with a re-sampling of each 5 frames, which increases a little bit the performance of the algorithm. The pink trace indicates the route of the motion, while the blue shows the detection trace made in each frame.
 
-The goal was to compare both solutions, Lucas Kanade motion flow tracking and
-every frame color detection.
+\begin{figure}[!h]
+	\centering
+	\setlength{\fboxsep}{1pt}
+	\setlength{\fboxrule}{1pt}
+	\fbox{\includegraphics[scale=0.15]{images/motion_5}}
+	\caption{Lucas Kanade motion flow applied every 5 frames.}\label{fig:motion_5}
+\end{figure}
+
+The results shows a trajectory almost identical, it is noticeable a little lost when the ball hits something, however it is able to recover fast because of the low gap between detections. In contrast, Figure~\ref{fig:motion_30} shows the motion re-sampling in each 30 frames, which increases even more the performance of the algorithm enabling it to become real time in most image sizes.
 
 \begin{figure}[!h]
 \centering
 \setlength{\fboxsep}{1pt}
 \setlength{\fboxrule}{1pt}
-\fbox{\includegraphics[scale=0.15]{images/motion_5}}
+\fbox{\includegraphics[scale=0.15]{images/motion_30}}
 \caption{Lucas Kanade motion flow applied every 30 frames.}\label{fig:motion_30}
 \end{figure}
 
-Using the Lucas Kanade motion flow the solution would only apply the color
-detection every $N$ frames and estimate the ball position in between
-detection, this gap eliminated the need to detect it every frame enabling it
-to perform in real time. The trade off is that the precision of the tracking
-can diminish substantially depending on the gap size, and this experiment
-showed that a gap of 30 frames was too large.
+This experiment shows that the motion lose a good amount of frames in the beginning of the video, mainly because the flow takes some time to be detected which is even harder with the re-sampling rate. It is also noticeable that in the ball hits the motion takes more time to correct the position, however it is still a good assumption when comparing the overall performance (precision vs time performance).
 
-\begin{figure}[!h]
-\centering
-\setlength{\fboxsep}{1pt}
-\setlength{\fboxrule}{1pt}
-\fbox{\includegraphics[scale=0.15]{images/motion_5}}
-\caption{Lucas Kanade motion flow applied every 5 frames.}\label{fig:motion_5}
-\end{figure}
+\subsection{Occlusion}
 
-Using a 5 frames gap the precision of the tracking was close to the color
-tracking and the solution was still fast enough to operate in real time.
-Although this solution couldn't keep tracking of the ball when it was occluded.
-
-\bigbreak{}
-\textbf{Occlusion tracking:}
-\bigbreak{}
-
-The goal was to compare the LK motion flow tracking and kalman filter
-tracking, both applied towards an occlusion scenario.
+In order to check the results of the Kalman filter implemented, a scenario with occlusion is shown in the Figure~\ref{fig:occlusion}. The blue trace is the detection positions, and the orange is the position estimated by the Kalman filter implemented.
 
 \begin{figure}[!h]
 \centering
@@ -247,17 +199,11 @@ tracking, both applied towards an occlusion scenario.
 \caption{Kalman filter applied to overcome occlusion.}\label{fig:occlusion}
 \end{figure}
 
-The solution was able to overcome occlusion when the kalman filter was used in
-such scenarios, since it was able to estimate the ball's trajectory. The
-filter worked best with balls in low speed and couldn't estimate a position
-if the ball changed directions whilst occluded.
+As seen, the solution was able to overcome occlusion, since it was able to estimate the ball's trajectory under occlusion. The filter worked best with balls in low speed and couldn't estimate a position if the ball changed directions whilst occluded, as was already expected.
 
-\bigbreak{}
-\textbf{Real world tracking:}
-\bigbreak{}
+\subsection{Robotcub ball tracking}
 
-The goal was to hard test all the features implemented in a real world
-scenario to evaluate their precision.
+In this experiment the algorithm was tested under a competition's environment, some adjustments were made in order to tune the color to the orange ball. The Figure~\ref{fig:robocup_1} shows a example of the algorithm working on this scenario.
 
 \begin{figure}[!h]
 \centering
@@ -267,9 +213,15 @@ scenario to evaluate their precision.
 \caption{All features applied in a Robocup soccer match.}\label{fig:robocup_1}
 \end{figure}
 
-When applied to a real world scenario the solution can keep tracking up to a
-point, it fails whenever the ball drastically changes direction, specially
-occluded, or when it moves too fast.
+As seen, the algorithm was able to detect and predict the ball's position, the motion (pink trace) and the Kalman filter (orange trace) shows good results compared with the detection position trace (blue trace). The LK motion flow obtained a really good result in overall, even when the ball drastically changes direction  the algorithm could rapidly correct the trace.  However,  the Kalman filter easily lost track when the ball drastically changes direction, specially when occluded. The Figure~\ref{fig:robocup2} shows one example that the Kalman filter is lost because of the ball stopping at the wall.
+
+\begin{figure}[!h]
+	\centering
+	\setlength{\fboxsep}{1pt}
+	\setlength{\fboxrule}{1pt}
+	\fbox{\includegraphics[scale=0.15]{images/robocup_2}}
+	\caption{All features applied in a Robocup soccer match.}\label{fig:robocup2}
+\end{figure}
 
 %-------------------------------------------------------------------------
 \section{Conclusion}\label{sec:conclusion}
