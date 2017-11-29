@@ -14,10 +14,10 @@ def start():
     # ----- Flags -----
     webcam          = True
     diff_color_flag = False
-    hough_flag      = False
-    motion_flag     = False
-    trace_flag      = False
-    kalman_flag     = False
+    hough_flag      = True
+    motion_flag     = True
+    trace_flag      = True
+    kalman_flag     = True
 
     # ------------ Params --------------------
     # Video params
